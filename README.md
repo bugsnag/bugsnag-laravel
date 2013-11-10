@@ -48,7 +48,7 @@ How to Install
 Configuration
 -------------
 
-The [Bugsnag PHP Client](https://bugsnag.com/docs/notifier/php)
+The [Bugsnag PHP Client](https://bugsnag.com/docs/notifiers/php)
 is available as `$app['bugsnag']`, which allows you to set various
 configuration options, for example:
 
@@ -56,5 +56,5 @@ configuration options, for example:
 $app['bugsnag']->setReleaseStage("production");
 ```
 
-See the [Bugsnag Notifier for PHP documentation](https://bugsnag.com/docs/notifier/php#additional-configuration)
+See the [Bugsnag Notifier for PHP documentation](https://bugsnag.com/docs/notifiers/php#additional-configuration)
 for full configuration details.
