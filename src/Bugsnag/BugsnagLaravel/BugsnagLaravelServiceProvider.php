@@ -18,7 +18,12 @@ class BugsnagLaravelServiceProvider extends ServiceProvider {
 	 */
 	public function boot()
 	{
-		$this->package('bugsnag/bugsnag-laravel');
+		$this->package('bugsnag/bugsnag-laravel', 'bugsnag');
+
+		$app = $this->app;
+		$app->error(function(\Exception $exception) use ($app) {
+			$app['bugsnag']->notifyException($exception);
+		});
 	}
 
 	/**
@@ -28,7 +33,15 @@ class BugsnagLaravelServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		//
+		$this->app->singleton('bugsnag', function($app) {
+			$config = $app['config']['bugsnag'] ?: $app['config']['bugsnag::config'];
+
+			$client = new \Bugsnag_Client($config['api_key']);
+
+			// TODO: Set releaseStage, etc from config if present
+
+			return $client;
+		});
 	}
 
 	/**
@@ -38,7 +51,7 @@ class BugsnagLaravelServiceProvider extends ServiceProvider {
 	 */
 	public function provides()
 	{
-		return array();
+		return array("bugsnag");
 	}
 
 }

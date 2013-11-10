@@ -1,6 +1,7 @@
 {
     "name": "bugsnag/bugsnag-laravel",
-    "description": "",
+    "description": "Official Bugsnag notifier for Laravel applications.",
+    "keywords": ["bugsnag", "exceptions", "errors", "logging", "tracking", "laravel"],
     "authors": [
         {
             "name": "James Smith",
@@ -13,9 +14,6 @@
         "bugsnag/bugsnag": "2.*"
     },
     "autoload": {
-        "classmap": [
-            "src/migrations"
-        ],
         "psr-0": {
             "Bugsnag\\BugsnagLaravel\\": "src/"
         }
