@@ -48,7 +48,8 @@ How to Install
 Configuration
 -------------
 
-The Bugsnag client is available as `$app['bugsnag']`, which allows you to set various
+The [Bugsnag PHP Client](https://bugsnag.com/docs/notifier/php)
+is available as `$app['bugsnag']`, which allows you to set various
 configuration options, for example:
 
 ```php
