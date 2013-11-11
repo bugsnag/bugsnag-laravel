@@ -46,7 +46,9 @@ class BugsnagLaravelServiceProvider extends ServiceProvider {
 
 			$client = new \Bugsnag_Client($config['api_key']);
 
-			// TODO: Set releaseStage, etc from config if present
+			//Set releaseStage, etc from config if present
+
+            		$client->setReleaseStage($this->app->environment());
 
 			return $client;
 		});
