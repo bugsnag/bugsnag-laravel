@@ -2,6 +2,8 @@
     "name": "bugsnag/bugsnag-laravel",
     "description": "Official Bugsnag notifier for Laravel applications.",
     "keywords": ["bugsnag", "exceptions", "errors", "logging", "tracking", "laravel"],
+    "homepage": "https://github.com/bugsnag/bugsnag-laravel",
+    "license": "MIT",
     "authors": [
         {
             "name": "James Smith",
@@ -11,7 +13,7 @@
     "require": {
         "php": ">=5.3.0",
         "illuminate/support": "4.0.*",
-        "bugsnag/bugsnag": "2.*"
+        "bugsnag/bugsnag": ">=2.0.3"
     },
     "autoload": {
         "psr-0": {

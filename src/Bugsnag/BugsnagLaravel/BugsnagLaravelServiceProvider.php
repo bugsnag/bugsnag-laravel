@@ -45,6 +45,8 @@ class BugsnagLaravelServiceProvider extends ServiceProvider
             $config = $app['config']['bugsnag'] ?: $app['config']['bugsnag::config'];
 
             $client = new \Bugsnag_Client($config['api_key']);
+            $client->setAutoNotify(false);
+            $client->setBatchSending(false);
             $client->setReleaseStage($this->app->environment());
 
             return $client;
