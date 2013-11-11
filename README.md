@@ -44,6 +44,12 @@ How to Install
     );
     ```
 
+5.  Finally update `app/config/app.php` and add a new item to the providers array:
+
+    ```
+    'Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider'
+    ```
+
 
 Configuration
 -------------
