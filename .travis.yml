@@ -10,3 +10,7 @@ before_script:
   - php composer.phar install --dev
 
 script: phpunit
+
+notifications:
+  hipchat:
+    secure: "FDav6oNt2zrwDVc3TquTD5bc9E2WC/uoolyi9PRLUB+0zGBFhxBbLN6JgFf/fi/Z1oIUAi6yBD3uRmDAg0tLnOru01nt+qiqfNYtRv++QkB0wmh0+KLQJhYC3R71xtDgyV9MM9DuS9ma0nx0o1SPxz+dQcwDK6jdW3QJihs3Kwo="
