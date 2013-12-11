@@ -44,10 +44,16 @@ How to Install
     );
     ```
 
-5.  Finally update `app/config/app.php` and add a new item to the providers array:
+5.  Update `app/config/app.php` and add a new item to the providers array:
 
     ```
     'Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider'
+    ```
+    
+6.  Finally update `app/config/app.php` and add a new item to the aliases array:
+
+    ```
+    'Bugsnag' => 'Bugsnag\BugsnagLaravel\BugsnagFacade'
     ```
 
 
@@ -55,11 +61,11 @@ Configuration
 -------------
 
 The [Bugsnag PHP Client](https://bugsnag.com/docs/notifiers/php)
-is available as `$app['bugsnag']`, which allows you to set various
+is available as `Bugsnag`, which allows you to set various
 configuration options, for example:
 
 ```php
-$app['bugsnag']->setReleaseStage("production");
+Bugsnag::setReleaseStage("production");
 ```
 
 See the [Bugsnag Notifier for PHP documentation](https://bugsnag.com/docs/notifiers/php#additional-configuration)
