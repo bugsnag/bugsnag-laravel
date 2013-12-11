@@ -13,29 +13,21 @@ capturing errors from your applications.
 How to Install
 --------------
 
-### Using [Composer](http://getcomposer.org/) (Recommended)
+### Using [Laravel Package Installer](https://github.com/rtablada/package-installer) (Recommended)
 
-1.  Add `bugsnag/bugsnag-laravel` to your `composer.json` requirements
-
-    ```json
-    "require": {
-        "bugsnag/bugsnag-laravel": "1.*"
-    }
-    ```
-
-2.  Install the package
+1.  Install the bugsnag/bugsnag-laravel package
 
     ```shell
-    $ composer install
+    $ php artisan package:install bugsnag/bugsnag-laravel
     ```
 
-3.  Generate a template Bugsnag config file
+2.  Generate a template Bugsnag config file
 
     ```shell
     $ php artisan config:publish bugsnag/bugsnag-laravel
     ```
 
-4.  Update `app/config/packages/bugsnag/bugsnag-laravel/config.php` with your
+3.  Update `app/config/packages/bugsnag/bugsnag-laravel/config.php` with your
     Bugsnag API key:
 
     ```php
@@ -44,13 +36,36 @@ How to Install
     );
     ```
 
-5.  Update `app/config/app.php` and add a new item to the providers array:
+### Using [Composer](http://getcomposer.org/)
+
+1.  Install the `bugsnag/bugsnag-laravel` package
+
+    ```shell
+    $ composer require "bugsnag/bugsnag-laravel:1.*"
+    ```
+
+2.  Generate a template Bugsnag config file
+
+    ```shell
+    $ php artisan config:publish bugsnag/bugsnag-laravel
+    ```
+
+3.  Update `app/config/packages/bugsnag/bugsnag-laravel/config.php` with your
+    Bugsnag API key:
+
+    ```php
+    return array(
+        'api_key' => 'YOUR-API-KEY-HERE'
+    );
+    ```
+
+4.  Update `app/config/app.php` and add a new item to the providers array:
 
     ```
     'Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider'
     ```
     
-6.  Finally update `app/config/app.php` and add a new item to the aliases array:
+5.  Finally update `app/config/app.php` and add a new item to the aliases array:
 
     ```
     'Bugsnag' => 'Bugsnag\BugsnagLaravel\BugsnagFacade'
