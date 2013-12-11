@@ -122,6 +122,20 @@ $metaData =  array(
 ```
 
 
+Error Reporting Levels
+----------------------
+
+By default we'll use the value of `error_reporting` from your `php.ini`
+or any value you set at runtime using the `error_reporting(...)` function.
+
+If you'd like to send different levels of errors to Bugsnag, you can call
+`setErrorReportingLevel`, for example:
+
+```php
+Bugsnag::setErrorReportingLevel(E_ALL & ~E_NOTICE);
+```
+
+
 Additional Configuration
 ------------------------
 
