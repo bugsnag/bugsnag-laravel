@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.0.3
+-----
+-   Fix bug when setting releaseStage in the ServiceProvider
+
 1.0.2
 -----
 -   Fix laravel requirement to work with 4.1
