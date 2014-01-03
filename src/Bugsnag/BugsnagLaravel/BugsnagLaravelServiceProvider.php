@@ -49,6 +49,10 @@ class BugsnagLaravelServiceProvider extends ServiceProvider
             $client->setBatchSending(false);
             $client->setReleaseStage($app->environment());
 
+            if (is_array($stages = $config['notify_release_stages'])) {
+                $client->setNotifyReleaseStages($stages);
+            }
+
             return $client;
         });
     }
