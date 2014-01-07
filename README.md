@@ -31,17 +31,19 @@ How to Install
     $ composer require "bugsnag/bugsnag-laravel:1.*"
     ```
 
-2.  Update `app/config/app.php` and add a new item to the providers array:
+2.  Update `app/config/app.php` to activate Bugsnag
 
-    ```
-    'Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider'
-    ```
-    
-3.  Finally update `app/config/app.php` and add a new item to the aliases array:
+    -   Add `BugsnagLaravelServiceProvider` to the `providers` array
 
-    ```
-    'Bugsnag' => 'Bugsnag\BugsnagLaravel\BugsnagFacade'
-    ```
+        ```
+        'Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider',
+        ```
+
+    -   Add the `BugsnagFacade` to the `aliases` array
+
+        ```
+        'Bugsnag' => 'Bugsnag\BugsnagLaravel\BugsnagFacade',
+        ```
 
 
 Configuration
