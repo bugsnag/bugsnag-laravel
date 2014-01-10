@@ -27,10 +27,16 @@ How to Install
 
     ```
     # Add `BugsnagLaravelServiceProvider` to the `providers` array
-    'Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider',
+    'providers' => array(
+        # ...
+        'Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider',
+    )
 
     # Add the `BugsnagFacade` to the `aliases` array
-    'Bugsnag' => 'Bugsnag\BugsnagLaravel\BugsnagFacade',
+    'aliases' => array(
+        # ...
+        'Bugsnag' => 'Bugsnag\BugsnagLaravel\BugsnagFacade',
+    )
     ```
 
 ### Using [Laravel Package Installer](https://github.com/rtablada/package-installer)
