@@ -25,7 +25,7 @@ How to Install
 
 2.  Update `app/config/app.php` to activate Bugsnag
 
-    ```
+    ```php
     # Add `BugsnagLaravelServiceProvider` to the `providers` array
     'providers' => array(
         # ...
