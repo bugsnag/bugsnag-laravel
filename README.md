@@ -15,15 +15,7 @@ Check out this excellent [Laracasts screencast](https://laracasts.com/lessons/be
 How to Install
 --------------
 
-### Using [Laravel Package Installer](https://github.com/rtablada/package-installer) (Recommended)
-
-1.  Install the bugsnag/bugsnag-laravel package
-
-    ```shell
-    $ php artisan package:install bugsnag/bugsnag-laravel
-    ```
-
-### Using [Composer](http://getcomposer.org/)
+### Using [Composer](http://getcomposer.org/) (Recommended)
 
 1.  Install the `bugsnag/bugsnag-laravel` package
 
@@ -33,17 +25,21 @@ How to Install
 
 2.  Update `app/config/app.php` to activate Bugsnag
 
-    -   Add `BugsnagLaravelServiceProvider` to the `providers` array
+    ```
+    # Add `BugsnagLaravelServiceProvider` to the `providers` array
+    'Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider',
 
-        ```
-        'Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider',
-        ```
+    # Add the `BugsnagFacade` to the `aliases` array
+    'Bugsnag' => 'Bugsnag\BugsnagLaravel\BugsnagFacade',
+    ```
 
-    -   Add the `BugsnagFacade` to the `aliases` array
+### Using [Laravel Package Installer](https://github.com/rtablada/package-installer)
 
-        ```
-        'Bugsnag' => 'Bugsnag\BugsnagLaravel\BugsnagFacade',
-        ```
+1.  Install the bugsnag/bugsnag-laravel package
+
+    ```shell
+    $ php artisan package:install bugsnag/bugsnag-laravel
+    ```
 
 
 Configuration
