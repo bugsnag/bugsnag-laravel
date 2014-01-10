@@ -28,7 +28,6 @@ class BugsnagLaravelServiceProvider extends ServiceProvider
         });
 
         // Register for fatal error handling
-        // TODO: For some reason, Bugsnag_Client#shutdownHandler is never called
         $app->fatal(function ($exception) use ($app) {
             $app['bugsnag']->notifyException($exception);
         });
