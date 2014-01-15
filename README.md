@@ -26,18 +26,16 @@ How to Install
     ```php
     # Add `BugsnagLaravelServiceProvider` to the `providers` array
     'providers' => array(
-        # ...
+        ...
         'Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider',
     )
 
     # Add the `BugsnagFacade` to the `aliases` array
     'aliases' => array(
-        # ...
+        ...
         'Bugsnag' => 'Bugsnag\BugsnagLaravel\BugsnagFacade',
     )
     ```
-
-If you are using the [Laravel Package Installer](https://github.com/rtablada/package-installer) you can instead run `php artisan package:install bugsnag/bugsnag-laravel`.
 
 
 Configuration
