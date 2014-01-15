@@ -15,8 +15,6 @@ Check out this excellent [Laracasts screencast](https://laracasts.com/lessons/be
 How to Install
 --------------
 
-### Using [Composer](http://getcomposer.org/) (Recommended)
-
 1.  Install the `bugsnag/bugsnag-laravel` package
 
     ```shell
@@ -39,13 +37,7 @@ How to Install
     )
     ```
 
-### Using [Laravel Package Installer](https://github.com/rtablada/package-installer)
-
-1.  Install the bugsnag/bugsnag-laravel package
-
-    ```shell
-    $ php artisan package:install bugsnag/bugsnag-laravel
-    ```
+If you are using the [Laravel Package Installer](https://github.com/rtablada/package-installer) you can instead run `php artisan package:install bugsnag/bugsnag-laravel`.
 
 
 Configuration
