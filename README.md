@@ -168,4 +168,4 @@ License
 -------
 
 The Bugsnag Laravel notifier is free software released under the MIT License. 
-See [LICENSE.txt](https://github.com/bugsnag/bugsnag-php/blob/master/LICENSE.txt) for details.
+See [LICENSE.txt](https://github.com/bugsnag/bugsnag-laravel/blob/master/LICENSE.txt) for details.
