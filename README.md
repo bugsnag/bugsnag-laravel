@@ -55,6 +55,16 @@ Configuration
         'api_key' => 'YOUR-API-KEY-HERE'
     );
     ```
+    
+3.  Optionally, you can add the `notify_release_stages` key to the same file
+    above to define which Laravel environments will send Exceptions to BugSnag.
+
+    ```php
+    return array(
+        'api_key' => 'YOUR-API-KEY-HERE',
+        'notify_release_stages' => ['production', 'staging']
+    );
+    ```
 
 
 Sending Custom Data With Exceptions
