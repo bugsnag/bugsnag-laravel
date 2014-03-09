@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.0.4
+-----
+-   Identify as Laravel notifier instead of PHP
+
 1.0.3
 -----
 -   Fix bug when setting releaseStage in the ServiceProvider
