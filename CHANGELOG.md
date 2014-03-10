@@ -1,9 +1,13 @@
 Changelog
 =========
 
-1.0.4
+1.0.5
 -----
 -   Identify as Laravel notifier instead of PHP
+
+1.0.4
+-----
+-   Allow configuration of notify_release_stages from config file
 
 1.0.3
 -----

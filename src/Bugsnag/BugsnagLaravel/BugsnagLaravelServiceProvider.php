@@ -6,7 +6,7 @@ class BugsnagLaravelServiceProvider extends ServiceProvider
 {
     private static $NOTIFIER = array(
         'name' => 'Bugsnag Laravel',
-        'version' => '1.0.4',
+        'version' => '1.0.5',
         'url' => 'https://github.com/bugsnag/bugsnag-laravel'
     );
 
