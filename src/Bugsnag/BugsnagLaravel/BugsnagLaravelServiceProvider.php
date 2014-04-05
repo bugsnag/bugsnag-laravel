@@ -46,14 +46,16 @@ class BugsnagLaravelServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('bugsnag', function ($app) {
+        $notifier = self::$NOTIFIER;
+        
+        $this->app->singleton('bugsnag', function ($app, $notifier) {
             $config = $app['config']['bugsnag'] ?: $app['config']['bugsnag::config'];
 
             $client = new \Bugsnag_Client($config['api_key']);
             $client->setAutoNotify(false);
             $client->setBatchSending(false);
             $client->setReleaseStage($app->environment());
-            $client->setNotifier(self::$NOTIFIER);
+            $client->setNotifier($notifier);
 
             if (is_array($stages = $config['notify_release_stages'])) {
                 $client->setNotifyReleaseStages($stages);
