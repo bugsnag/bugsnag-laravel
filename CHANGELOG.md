@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.0.6
+-----
+-   Fix incompatibility with PHP 5.3
+
 1.0.5
 -----
 -   Identify as Laravel notifier instead of PHP
