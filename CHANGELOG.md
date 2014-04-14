@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.0.7
+-----
+-   Fix major notification bug introduced in 1.0.6
+
 1.0.6
 -----
 -   Fix incompatibility with PHP 5.3
