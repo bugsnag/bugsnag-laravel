@@ -4,12 +4,6 @@ use Illuminate\Support\ServiceProvider;
 
 class BugsnagLaravelServiceProvider extends ServiceProvider
 {
-    private static $NOTIFIER = array(
-        'name' => 'Bugsnag Laravel',
-        'version' => '1.0.6',
-        'url' => 'https://github.com/bugsnag/bugsnag-laravel'
-    );
-
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -46,16 +40,18 @@ class BugsnagLaravelServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $notifier = self::$NOTIFIER;
-        
-        $this->app->singleton('bugsnag', function ($app, $notifier) {
+        $this->app->singleton('bugsnag', function ($app) {
             $config = $app['config']['bugsnag'] ?: $app['config']['bugsnag::config'];
 
             $client = new \Bugsnag_Client($config['api_key']);
             $client->setAutoNotify(false);
             $client->setBatchSending(false);
             $client->setReleaseStage($app->environment());
-            $client->setNotifier($notifier);
+            $client->setNotifier(array(
+                'name'    => 'Bugsnag Laravel',
+                'version' => '1.0.6',
+                'url'     => 'https://github.com/bugsnag/bugsnag-laravel'
+            ));
 
             if (is_array($stages = $config['notify_release_stages'])) {
                 $client->setNotifyReleaseStages($stages);
