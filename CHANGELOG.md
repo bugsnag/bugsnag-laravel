@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.0.8
+-----
+-   Bump the bugsnag-php dependency to include recent fixes
+
 1.0.7
 -----
 -   Fix major notification bug introduced in 1.0.6
