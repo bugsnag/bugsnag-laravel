@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.0.9
+------
+-   Split strip paths from `inProject`
+
 1.0.8
 -----
 -   Bump the bugsnag-php dependency to include recent fixes
