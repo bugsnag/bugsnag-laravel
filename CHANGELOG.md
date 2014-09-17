@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.0.10
+------
+-   Laravel 5 support
+
 1.0.9
 ------
 -   Split strip paths from `inProject`
