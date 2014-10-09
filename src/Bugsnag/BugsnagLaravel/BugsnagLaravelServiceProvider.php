@@ -59,6 +59,15 @@ class BugsnagLaravelServiceProvider extends ServiceProvider
                 $client->setNotifyReleaseStages($stages);
             }
 
+            // Check if someone is logged in.
+            if ($app['auth']->check()) {
+                // User is logged in.
+                $user = $app['auth']->user()->toArray();
+
+                // If these attributes are available: pass them on.
+                $client->setUser(array_only($user, array('id', 'email')));
+            }
+
             return $client;
         });
     }
