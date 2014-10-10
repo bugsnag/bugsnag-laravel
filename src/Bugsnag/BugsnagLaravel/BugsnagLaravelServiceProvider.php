@@ -51,7 +51,7 @@ class BugsnagLaravelServiceProvider extends ServiceProvider
             $client->setReleaseStage($app->environment());
             $client->setNotifier(array(
                 'name'    => 'Bugsnag Laravel',
-                'version' => '1.0.10',
+                'version' => '1.1.0',
                 'url'     => 'https://github.com/bugsnag/bugsnag-laravel'
             ));
 

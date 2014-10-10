@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.1.0
+-----
+-   Send user/auth information if available (thanks @hannesvdvreken!)
+
 1.0.10
 ------
 -   Laravel 5 support
