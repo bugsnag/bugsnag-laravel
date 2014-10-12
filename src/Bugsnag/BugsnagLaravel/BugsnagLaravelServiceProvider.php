@@ -59,6 +59,22 @@ class BugsnagLaravelServiceProvider extends ServiceProvider
                 $client->setNotifyReleaseStages($stages);
             }
 
+            if (isset($config['endpoint'])) {
+                $client->setEndpoint($config['endpoint']);
+            }
+
+            if (isset($config['use_ssl'])) {
+                $client->setUseSSL($config['use_ssl']);
+            }
+
+            if (is_array($filters = $config['filters'])) {
+                $client->setFilters($filters);
+            }
+
+            if (is_array($proxy = $config['proxy'])) {
+                $client->setProxySettings($proxy);
+            }
+
             // Check if someone is logged in.
             if ($app['auth']->check()) {
                 // User is logged in.
