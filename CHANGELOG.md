@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.1.1
+-----
+-   Fix issue where sending auth information with complex users could fail (thanks @hannesvdvreken!)
+
 1.1.0
 -----
 -   Send user/auth information if available (thanks @hannesvdvreken!)
