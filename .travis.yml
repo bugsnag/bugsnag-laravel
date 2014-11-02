@@ -1,16 +1,18 @@
 language: php
 
-php: 
+php:
   - 5.3
   - 5.4
   - 5.5
+  - 5.6
 
 before_script:
-  - curl -s http://getcomposer.org/installer | php
-  - php composer.phar install --dev
+  - travis_retry composer install --no-interaction --prefer-source
 
-script: phpunit
+script:
+  - phpunit
 
 notifications:
   hipchat:
-    secure: "FDav6oNt2zrwDVc3TquTD5bc9E2WC/uoolyi9PRLUB+0zGBFhxBbLN6JgFf/fi/Z1oIUAi6yBD3uRmDAg0tLnOru01nt+qiqfNYtRv++QkB0wmh0+KLQJhYC3R71xtDgyV9MM9DuS9ma0nx0o1SPxz+dQcwDK6jdW3QJihs3Kwo="
+    rooms:
+      secure: h9501ANwjT/oDK9YM1fmLV9+1WuhEWpRu35VCqJrOHEHpDQjk7W0LZw4xJo/kK10AKCN861U5VT1U5ncxujFLBZ2HnrKGraTCvXRss/dC2wn+fG2P+T4hsQGWAyU/rU/A8uPwZT71gqCmNtt1Xo/uGHt1UHT+H59J3d3GoFjgBY=

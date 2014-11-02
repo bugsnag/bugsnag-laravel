@@ -12,13 +12,12 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "illuminate/support": "~4.0",
-        "bugsnag/bugsnag": ">=2.2.0"
+        "illuminate/support": "4.*|5.*",
+        "bugsnag/bugsnag": "~2.3"
     },
     "autoload": {
         "psr-0": {
             "Bugsnag\\BugsnagLaravel\\": "src/"
         }
-    },
-    "minimum-stability": "dev"
+    }
 }
