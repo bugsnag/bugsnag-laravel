@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.2.0
+-   Update `bugsnag-php` dependency to enable support for code snippets on
+    your Bugsnag dashboard
+-   Allow configuring of more Bugsnag settings from your `config.php`
+    (thanks @jacobmarshall!)
+
 1.1.1
 -----
 -   Fix issue where sending auth information with complex users could fail (thanks @hannesvdvreken!)
