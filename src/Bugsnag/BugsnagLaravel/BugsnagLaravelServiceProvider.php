@@ -67,10 +67,6 @@ class BugsnagLaravelServiceProvider extends ServiceProvider
                 $client->setEndpoint($config['endpoint']);
             }
 
-            if (isset($config['use_ssl'])) {
-                $client->setUseSSL($config['use_ssl']);
-            }
-
             if (is_array($filters = $config['filters'])) {
                 $client->setFilters($filters);
             }

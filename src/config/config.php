@@ -33,21 +33,11 @@ return array(
 	|--------------------------------------------------------------------------
 	|
 	| Set what server the Bugsnag notifier should send errors to. By default
-	| this is set to 'notify.bugsnag.com', but for Bugsnag Enterprise this
-	| should be your server's hostname.
+	| this is set to 'https://notify.bugsnag.com', but for Bugsnag Enterprise
+	| this should be the URL to your Bugsnag instance.
 	|
 	*/
 	'endpoint' => null,
-
-	/*
-	|--------------------------------------------------------------------------
-	| Use SSL
-	|--------------------------------------------------------------------------
-	|
-	| Enforces all communication with the endpoint to be made via SSL.
-	|
-	*/
-	'use_ssl' => true,
 
 	/*
 	|--------------------------------------------------------------------------
