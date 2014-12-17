@@ -59,8 +59,8 @@ class BugsnagLaravelServiceProvider extends ServiceProvider
                 'url'     => 'https://github.com/bugsnag/bugsnag-laravel'
             ));
 
-            if (is_array($stages = $config['notify_release_stages'])) {
-                $client->setNotifyReleaseStages($stages);
+            if (isset($config['notify_release_stages']) && is_array($config['notify_release_stages'])) {
+                $client->setNotifyReleaseStages($config['notify_release_stages']);
             }
 
             if (isset($config['endpoint'])) {
