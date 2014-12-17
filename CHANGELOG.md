@@ -1,7 +1,12 @@
 Changelog
 =========
 
+1.2.1
+-----
+-   Protect against missing configuration variables (thanks @jasonlfunk!)
+
 1.2.0
+-----
 -   Update `bugsnag-php` dependency to enable support for code snippets on
     your Bugsnag dashboard
 -   Allow configuring of more Bugsnag settings from your `config.php`
