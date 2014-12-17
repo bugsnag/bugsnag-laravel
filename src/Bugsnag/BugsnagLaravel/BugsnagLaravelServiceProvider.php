@@ -67,12 +67,12 @@ class BugsnagLaravelServiceProvider extends ServiceProvider
                 $client->setEndpoint($config['endpoint']);
             }
 
-            if (is_array($filters = $config['filters'])) {
-                $client->setFilters($filters);
+            if (isset($config['filters']) && is_array($config['filters'])) {
+                $client->setFilters($config['filters']);
             }
 
-            if (is_array($proxy = $config['proxy'])) {
-                $client->setProxySettings($proxy);
+            if (isset($config['proxy']) && is_array($config['proxy'])) {
+                $client->setProxySettings($config['proxy']);
             }
 
             // Check if someone is logged in.
