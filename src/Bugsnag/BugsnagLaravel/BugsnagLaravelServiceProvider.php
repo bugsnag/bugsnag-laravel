@@ -4,6 +4,7 @@ use Illuminate\Support\ServiceProvider;
 
 class BugsnagLaravelServiceProvider extends ServiceProvider
 {
+
     /**
      * Indicates if loading of the provider is deferred.
      *
@@ -18,22 +19,18 @@ class BugsnagLaravelServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->package('bugsnag/bugsnag-laravel', 'bugsnag');
-
         $app = $this->app;
-
-        // Register for exception handling
-        $app->error(function (\Exception $exception) use ($app) {
-            if ('Symfony\Component\Debug\Exception\FatalErrorException'
+        
+        // Listen to log messages.
+        $app['log']->listen(function($level, $message, $context) use ($app)
+        {
+            if($message instanceof \Exception &&
+                'Symfony\Component\Debug\Exception\FatalErrorException'
                 !== get_class($exception)
-            ) {
-                $app['bugsnag']->notifyException($exception);
+            )
+            {
+                $app['bugsnag']->notifyException($message);
             }
-        });
-
-        // Register for fatal error handling
-        $app->fatal(function ($exception) use ($app) {
-            $app['bugsnag']->notifyException($exception);
         });
     }
 
@@ -45,7 +42,7 @@ class BugsnagLaravelServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('bugsnag', function ($app) {
-            $config = $app['config']['bugsnag'] ?: $app['config']['bugsnag::config'];
+            $config = $app['config']->get('services.bugsnag');
 
             $client = new \Bugsnag_Client($config['api_key']);
             $client->setStripPath(base_path());
@@ -95,6 +92,7 @@ class BugsnagLaravelServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return array("bugsnag");
+        return ['bugsnag'];
     }
+
 }
