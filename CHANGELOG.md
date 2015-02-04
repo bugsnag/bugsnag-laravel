@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.3.0
+-----
+-   Laravel 5 support!
+
 1.2.1
 -----
 -   Protect against missing configuration variables (thanks @jasonlfunk!)

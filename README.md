@@ -2,7 +2,8 @@ Bugsnag Notifier for Laravel
 ============================
 
 The Bugsnag Notifier for Laravel gives you instant notification of errors and
-exceptions in your Laravel PHP applications.
+exceptions in your Laravel PHP applications. We support Laravel 5, Laravel 4
+and Laravel 3.
 
 [Bugsnag](https://bugsnag.com) captures errors in real-time from your web, 
 mobile and desktop applications, helping you to understand and resolve them 
@@ -21,7 +22,7 @@ How to Install
     $ composer require "bugsnag/bugsnag-laravel:1.*"
     ```
 
-2.  Update `app/config/app.php` to activate Bugsnag
+2.  Update `config/app.php` (or `app/config/app.php` for Laravel 4) to activate Bugsnag
 
     ```php
     # Add `BugsnagLaravelServiceProvider` to the `providers` array
@@ -37,9 +38,33 @@ How to Install
     )
     ```
 
+Configuration (Laravel 5)
+-------------------------
 
-Configuration
--------------
+1. Create a file `config/bugsnag.php` that contains your API key:
+
+2. Configure your `api_key`:
+
+    ```php
+    <?php # config/bugsnag.php
+
+    return array(
+        'api_key' => 'YOUR-API-KEY-HERE'
+    );
+    ```
+
+3.  Optionally, you can add the `notify_release_stages` key to the same file
+    above to define which Laravel environments will send Exceptions to Bugsnag.
+
+    ```php
+    return array(
+        'api_key' => 'YOUR-API-KEY-HERE',
+        'notify_release_stages' => ['production', 'staging']
+    );
+    ```
+
+Configuration (Laravel 3,4)
+---------------------------
 
 1.  Generate a template Bugsnag config file
 
@@ -55,9 +80,9 @@ Configuration
         'api_key' => 'YOUR-API-KEY-HERE'
     );
     ```
-    
+
 3.  Optionally, you can add the `notify_release_stages` key to the same file
-    above to define which Laravel environments will send Exceptions to BugSnag.
+    above to define which Laravel environments will send Exceptions to Bugsnag.
 
     ```php
     return array(
