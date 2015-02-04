@@ -40,6 +40,8 @@
 			<div class="content">
 				<div class="title">Laravel 5</div>
 				<div class="quote">{{ Inspiring::quote() }}</div>
+				<div class="quote">{{ thsi_mdehtt_Dasda() }}</div>
+				<div class="quote">{{ thsi_mdehtt_Dasda() }}</div>
 			</div>
 		</div>
 	</body>
