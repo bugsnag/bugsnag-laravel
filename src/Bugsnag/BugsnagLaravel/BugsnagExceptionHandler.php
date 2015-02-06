@@ -2,7 +2,7 @@
 
 use App;
 use Exception;
-use App\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class BugsnagExceptionHandler extends ExceptionHandler {
     /**
