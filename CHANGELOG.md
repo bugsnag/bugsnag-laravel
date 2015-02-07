@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.4.0
+-----
+-   Better laravel 5 support!
+
 1.3.0
 -----
 -   Laravel 5 support!
