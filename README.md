@@ -38,6 +38,32 @@ How to Install
     )
     ```
 
+3. (Laravel 5 only) Use the Bugsnag exception handler from `App/Exceptions/Handler.php`.
+
+    ```php
+    # DELETE this line
+    use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+    ```
+
+    ```php
+    # ADD this line instead
+    use Bugsnag\BugsnagLaravel\BugsnagExceptionHandler as ExceptionHandler
+    ```
+
+    After this change, your file should look like this:
+
+    ```php
+    <?php namespace App\Exceptions;
+
+    use Exception;
+    use Bugsnag\BugsnagLaravel\BugsnagExceptionHandler as ExceptionHandler;
+
+    class Handler extends ExceptionHandler {
+        ...
+    }
+
+    ```
+
 Configuration (Laravel 5)
 -------------------------
 

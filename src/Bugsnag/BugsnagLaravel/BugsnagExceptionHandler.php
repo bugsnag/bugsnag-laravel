@@ -1,8 +1,7 @@
 <?php namespace Bugsnag\BugsnagLaravel;
 
-use App;
 use Exception;
-use App\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class BugsnagExceptionHandler extends ExceptionHandler {
     /**
@@ -15,17 +14,19 @@ class BugsnagExceptionHandler extends ExceptionHandler {
      */
     public function report(Exception $e)
     {
-         $shouldReport = true;
-         foreach ($this->dontReport as $type)
-         {
-             if ($e instanceof $type)
-                 $shouldReport = false;
-         }
+        $shouldReport = true;
+        foreach ($this->dontReport as $type)
+        {
+            if ($e instanceof $type)
+                return parent::report($e);
+        }
 
-         if ($shouldReport) {
-            $bugsnag = App::make('bugsnag');
+        global $app;
+        $bugsnag = $app['bugsnag'];
+
+        if ($bugsnag) {
             $bugsnag->notifyException($e);
-         }
-         return parent::report($e);
+        }
+        return parent::report($e);
     }
 }

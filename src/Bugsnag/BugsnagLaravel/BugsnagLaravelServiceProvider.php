@@ -38,11 +38,6 @@ class BugsnagLaravelServiceProvider extends ServiceProvider
             $app->fatal(function ($exception) use ($app) {
                 $app['bugsnag']->notifyException($exception);
             });
-
-        } else {
-
-            $app->singleton('Illuminate\Contracts\Debug\ExceptionHandler', 'Bugsnag\BugsnagLaravel\BugsnagExceptionHandler');
-
         }
     }
 
