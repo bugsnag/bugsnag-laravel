@@ -35,5 +35,5 @@ Releasing
 
     git commit -am v1.x.x
     git tag v1.x.x
-    git puth origin master v1.x.x
+    git push origin master v1.x.x
 
