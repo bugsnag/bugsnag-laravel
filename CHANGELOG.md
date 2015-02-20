@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.4.1
+-----
+-   Default severity to 'error'
+
 1.4.0
 -----
 -   Better laravel 5 support!
