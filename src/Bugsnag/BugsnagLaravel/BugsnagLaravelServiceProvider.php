@@ -30,13 +30,13 @@ class BugsnagLaravelServiceProvider extends ServiceProvider
                 if ('Symfony\Component\Debug\Exception\FatalErrorException'
                     !== get_class($exception)
                 ) {
-                    $app['bugsnag']->notifyException($exception);
+                    $app['bugsnag']->notifyException($exception, null, "error");
                 }
             });
 
             // Register for fatal error handling
             $app->fatal(function ($exception) use ($app) {
-                $app['bugsnag']->notifyException($exception);
+                $app['bugsnag']->notifyException($exception, null, "error");
             });
         }
     }
