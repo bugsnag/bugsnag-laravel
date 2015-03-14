@@ -80,7 +80,7 @@ class BugsnagLaravelServiceProvider extends ServiceProvider
             }
 
             // Check if someone is logged in.
-            if ($app['auth']->check()) {
+            if ($app->bound('auth') && $app['auth']->check()) {
                 // User is logged in.
                 $user = $app['auth']->user();
 
