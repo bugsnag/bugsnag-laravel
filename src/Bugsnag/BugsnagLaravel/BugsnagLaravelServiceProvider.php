@@ -80,12 +80,16 @@ class BugsnagLaravelServiceProvider extends ServiceProvider
             }
 
             // Check if someone is logged in.
-            if ($app['auth']->check()) {
-                // User is logged in.
-                $user = $app['auth']->user();
-
-                // If these attributes are available: pass them on.
-                $client->setUser(array('id' => $user->getAuthIdentifier()));
+            try {
+                if ($app['auth']->check()) {
+                    // User is logged in.
+                    $user = $app['auth']->user();
+    
+                    // If these attributes are available: pass them on.
+                    $client->setUser(array('id' => $user->getAuthIdentifier()));
+                }
+            } catch (\Exception $e) {
+                // Do nothing.
             }
 
             return $client;
