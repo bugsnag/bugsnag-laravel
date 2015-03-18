@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.4.2
+-----
+-   Try/catch for missing/nonstandard auth service
+
 1.4.1
 -----
 -   Default severity to 'error'
