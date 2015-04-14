@@ -47,7 +47,7 @@ How to Install
 
     ```php
     # ADD this line instead
-    use Bugsnag\BugsnagLaravel\BugsnagExceptionHandler as ExceptionHandler
+    use Bugsnag\BugsnagLaravel\BugsnagExceptionHandler as ExceptionHandler;
     ```
 
     After this change, your file should look like this:
