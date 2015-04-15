@@ -19,7 +19,7 @@ How to Install
 1.  Install the `bugsnag/bugsnag-laravel` package
 
     ```shell
-    $ composer require "bugsnag/bugsnag-laravel:1.*"
+    $ composer require "bugsnag/bugsnag-laravel": "1.*"
     ```
 
 2.  Update `config/app.php` (or `app/config/app.php` for Laravel 4) to activate Bugsnag
@@ -47,7 +47,7 @@ How to Install
 
     ```php
     # ADD this line instead
-    use Bugsnag\BugsnagLaravel\BugsnagExceptionHandler as ExceptionHandler
+    use Bugsnag\BugsnagLaravel\BugsnagExceptionHandler as ExceptionHandler;
     ```
 
     After this change, your file should look like this:
