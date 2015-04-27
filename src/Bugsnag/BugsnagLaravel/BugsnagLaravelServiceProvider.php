@@ -49,7 +49,10 @@ class BugsnagLaravelServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('bugsnag', function ($app) {
-            $config = $app['config']['bugsnag'] ?: $app['config']['bugsnag::config'];
+            $config = isset($app['config']['services']['bugsnag']) ? $app['config']['services']['bugsnag'] : null;
+            if (is_null($config)) {
+                $config = $app['config']['bugsnag'] ?: $app['config']['bugsnag::config'];
+            }
 
             $client = new \Bugsnag_Client($config['api_key']);
             $client->setStripPath(base_path());
