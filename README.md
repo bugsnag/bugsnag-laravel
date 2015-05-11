@@ -1,9 +1,8 @@
-Bugsnag Notifier for Laravel
-============================
+Bugsnag Notifier for Laravel and Lumen
+=====================================
 
 The Bugsnag Notifier for Laravel gives you instant notification of errors and
-exceptions in your Laravel PHP applications. We support Laravel 5, Laravel 4
-and Laravel 3.
+exceptions in your Laravel PHP applications. We support Laravel 5, Laravel 4, Laravel 3, and Lumen.
 
 [Bugsnag](https://bugsnag.com) captures errors in real-time from your web, 
 mobile and desktop applications, helping you to understand and resolve them 
@@ -13,8 +12,10 @@ capturing errors from your applications.
 Check out this excellent [Laracasts screencast](https://laracasts.com/lessons/better-error-tracking-with-bugsnag) for a quick overview of how to use Bugsnag with your Laravel apps.
 
 
-How to Install
---------------
+How to Install 
+---------------
+
+### Laravel
 
 1.  Install the `bugsnag/bugsnag-laravel` package
 
@@ -22,7 +23,7 @@ How to Install
     $ composer require "bugsnag/bugsnag-laravel": "1.*"
     ```
 
-2.  Update `config/app.php` (or `app/config/app.php` for Laravel 4) to activate Bugsnag
+2. Update `config/app.php` (or `app/config/app.php` for Laravel 4) to activate Bugsnag
 
     ```php
     # Add `BugsnagLaravelServiceProvider` to the `providers` array
@@ -64,8 +65,7 @@ How to Install
 
     ```
 
-Configuration (Laravel 5)
--------------------------
+#### Configuration (Laravel 5)
 
 1. Create a file `config/bugsnag.php` that contains your API key:
 
@@ -89,8 +89,7 @@ Configuration (Laravel 5)
     );
     ```
 
-Configuration (Laravel 3,4)
----------------------------
+#### Configuration (Laravel 3,4)
 
 1.  Generate a template Bugsnag config file
 
@@ -116,6 +115,42 @@ Configuration (Laravel 3,4)
         'notify_release_stages' => ['production', 'staging']
     );
     ```
+
+    
+### Lumen
+
+1. In `bootstrap/app.php` add the line
+    
+    ```php
+    $app->register('Bugsnag\BugsnagLaravel\BugsnagLumenServiceProvider');
+    ```
+    
+    just before the line 
+    
+    ```php
+    require __DIR__ . '/../app/Http/routes.php';
+    ```
+    
+2. Change the function `report` in `app/Exceptions/Handler.php` to look like this:
+    
+    ```php
+    public function report(Exception $e) {
+        app('bugsnag')->notifyException($e, []);
+        return parent::report($e);
+    }
+    ```
+
+3. Create a file `config/bugsnag.php` that contains your API key
+
+    ```php
+    <?php # config/bugsnag.php
+
+    return array(
+        'api_key' => 'YOUR-API-KEY-HERE'
+    );
+    ```
+    
+
 
 
 Sending Custom Data With Exceptions
