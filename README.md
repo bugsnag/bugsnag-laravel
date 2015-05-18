@@ -122,7 +122,7 @@ How to Install
 1. In `bootstrap/app.php` add the line
     
     ```php
-    $app->register('Bugsnag\BugsnagLaravel\BugsnagLumenServiceProvider');
+    $app->register('Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider');
     ```
     
     just before the line 
