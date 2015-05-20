@@ -20,7 +20,7 @@ How to Install
 1.  Install the `bugsnag/bugsnag-laravel` package
 
     ```shell
-    $ composer require "bugsnag/bugsnag-laravel": "1.*"
+    $ composer require bugsnag/bugsnag-laravel:1.*
     ```
 
 2. Update `config/app.php` (or `app/config/app.php` for Laravel 4) to activate Bugsnag
