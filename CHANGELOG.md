@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.5.0
+-----
+-   Lumen support
+-   Fix bug in instructions
+-   Fix bug with reading settings from service file
+
 1.4.2
 -----
 -   Try/catch for missing/nonstandard auth service

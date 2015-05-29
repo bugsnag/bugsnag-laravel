@@ -29,7 +29,7 @@ Releasing
 =========
 
 1. Commit all outstanding changes
-1. Bump the version in `src/Bugsnag/BugsnagLaravel/BugsnagLaravelServiceProvider.php`.
+1. Bump the version in `src/Bugsnag/BugsnagLaravel/BugsnagLaravelServiceProvider.php` and `src/Bugsnag/BugsnagLaravel/BugsnagLumenServiceProvider.php`
 2. Update the CHANGELOG.md, and README if appropriate.
 3. Commit, tag push
 
