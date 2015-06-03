@@ -1,5 +1,7 @@
 <?php namespace Bugsnag\BugsnagLaravel;
 
+use Illuminate\Support\ServiceProvider;
+
 class BugsnagLumenServiceProvider extends ServiceProvider
 {
     /**
