@@ -54,7 +54,7 @@ class BugsnagLaravelServiceProvider extends ServiceProvider
                 $config = $app['config']['bugsnag'] ?: $app['config']['bugsnag::config'];
             }
 
-            $client = new \Bugsnag_Client($config['api_key']);
+            $client = new \Bugsnag_Client($config['key']);
             $client->setStripPath(base_path());
             $client->setProjectRoot(app_path());
             $client->setAutoNotify(false);
