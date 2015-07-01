@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.5.1
+-----
+-   Lumen Service Provider use statement
+
 1.5.0
 -----
 -   Lumen support

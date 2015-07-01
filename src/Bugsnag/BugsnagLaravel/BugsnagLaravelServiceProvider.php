@@ -62,7 +62,7 @@ class BugsnagLaravelServiceProvider extends ServiceProvider
             $client->setReleaseStage($app->environment());
             $client->setNotifier(array(
                 'name'    => 'Bugsnag Laravel',
-                'version' => '1.5.0',
+                'version' => '1.5.1',
                 'url'     => 'https://github.com/bugsnag/bugsnag-laravel'
             ));
 
@@ -87,7 +87,7 @@ class BugsnagLaravelServiceProvider extends ServiceProvider
                 if ($app['auth']->check()) {
                     // User is logged in.
                     $user = $app['auth']->user();
-    
+
                     // If these attributes are available: pass them on.
                     $client->setUser(array('id' => $user->getAuthIdentifier()));
                 }
