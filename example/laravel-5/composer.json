@@ -43,9 +43,9 @@
 		"preferred-install": "dist"
 	},
 	"repositories": [
-    {
-        "type": "vcs",
-        "url": "../../"
-    }
+		{
+				"type": "vcs",
+				"url": "../../"
+		}
 	]
 }
