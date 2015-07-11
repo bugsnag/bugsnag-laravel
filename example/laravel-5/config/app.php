@@ -145,7 +145,7 @@ return [
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
 
-		'Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider',
+		Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider::class,
 
 	],
 
@@ -166,7 +166,7 @@ return [
 		'Artisan'   => 'Illuminate\Support\Facades\Artisan',
 		'Auth'      => 'Illuminate\Support\Facades\Auth',
 		'Blade'     => 'Illuminate\Support\Facades\Blade',
-		'Bugsnag'   => 'Bugsnag\BugsnagLaravel\BugsnagLaravelFacade',
+		'Bugsnag'   => Bugsnag\BugsnagLaravel\BugsnagLaravelFacade::class,
 		'Bus'       => 'Illuminate\Support\Facades\Bus',
 		'Cache'     => 'Illuminate\Support\Facades\Cache',
 		'Config'    => 'Illuminate\Support\Facades\Config',
