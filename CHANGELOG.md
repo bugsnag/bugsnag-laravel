@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.6.0
+-----
+-   Move to using .env for api key in laravel 5+
+-   Support for artisan vendor:publish
+
 1.5.1
 -----
 -   Lumen Service Provider use statement
