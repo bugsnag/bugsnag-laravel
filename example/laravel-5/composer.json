@@ -41,5 +41,11 @@
 	},
 	"config": {
 		"preferred-install": "dist"
-	}
+	},
+	"repositories": [
+		{
+				"type": "vcs",
+				"url": "../../"
+		}
+	]
 }

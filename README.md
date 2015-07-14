@@ -4,18 +4,18 @@ Bugsnag Notifier for Laravel and Lumen
 The Bugsnag Notifier for Laravel gives you instant notification of errors and
 exceptions in your Laravel PHP applications. We support Laravel 5, Laravel 4, Laravel 3, and Lumen.
 
-[Bugsnag](https://bugsnag.com) captures errors in real-time from your web, 
-mobile and desktop applications, helping you to understand and resolve them 
-as fast as possible. [Create a free account](https://bugsnag.com) to start 
+[Bugsnag](https://bugsnag.com) captures errors in real-time from your web,
+mobile and desktop applications, helping you to understand and resolve them
+as fast as possible. [Create a free account](https://bugsnag.com) to start
 capturing errors from your applications.
 
 Check out this excellent [Laracasts screencast](https://laracasts.com/lessons/better-error-tracking-with-bugsnag) for a quick overview of how to use Bugsnag with your Laravel apps.
 
 
-How to Install 
+How to Install
 ---------------
 
-### Laravel
+### Laravel 5.0 +
 
 1.  Install the `bugsnag/bugsnag-laravel` package
 
@@ -23,23 +23,23 @@ How to Install
     $ composer require bugsnag/bugsnag-laravel:1.*
     ```
 
-2. Update `config/app.php` (or `app/config/app.php` for Laravel 4) to activate Bugsnag
+1. Update `config/app.php` to activate Bugsnag
 
     ```php
     # Add `BugsnagLaravelServiceProvider` to the `providers` array
     'providers' => array(
         ...
-        'Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider',
+        Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider::class,
     )
 
     # Add the `BugsnagFacade` to the `aliases` array
     'aliases' => array(
         ...
-        'Bugsnag' => 'Bugsnag\BugsnagLaravel\BugsnagFacade',
+        'Bugsnag' => Bugsnag\BugsnagLaravel\BugsnagFacade::class,
     )
     ```
 
-3. (Laravel 5 only) Use the Bugsnag exception handler from `App/Exceptions/Handler.php`.
+1. Use the Bugsnag exception handler from `App/Exceptions/Handler.php`.
 
     ```php
     # DELETE this line
@@ -65,31 +65,51 @@ How to Install
 
     ```
 
-#### Configuration (Laravel 5)
+1. Create the configuration file `config/bugsnag.php`:
 
-1. Create a file `config/bugsnag.php` that contains your API key:
-
-2. Configure your `api_key`:
-
-    ```php
-    <?php # config/bugsnag.php
-
-    return array(
-        'api_key' => 'YOUR-API-KEY-HERE'
-    );
+    ```shell
+    $ php artisan vendor:publish
     ```
 
-3.  Optionally, you can add the `notify_release_stages` key to the same file
-    above to define which Laravel environments will send Exceptions to Bugsnag.
+1. Configure your `api_key` in your `.env` file:
+
+    ```shell
+    BUGSNAG_API_KEY=YOUR-API-KEY-HERE
+    ```
+
+1.  Optionally, you can add the `notify_release_stages` key to the `config/bugsnag.php` file
+    to define which Laravel environments will send Exceptions to Bugsnag.
 
     ```php
     return array(
-        'api_key' => 'YOUR-API-KEY-HERE',
+        'api_key' => env('BUGSNAG_API_KEY'),
         'notify_release_stages' => ['production', 'staging']
     );
     ```
 
-#### Configuration (Laravel 3,4)
+### Laravel < 5.0
+
+1.  Install the `bugsnag/bugsnag-laravel` package
+
+    ```shell
+    $ composer require bugsnag/bugsnag-laravel:1.*
+    ```
+
+1. Update app/config/app.php` to activate Bugsnag
+
+    ```php
+    # Add `BugsnagLaravelServiceProvider` to the `providers` array
+    'providers' => array(
+        ...
+        'Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider',
+    )
+
+    # Add the `BugsnagFacade` to the `aliases` array
+    'aliases' => array(
+        ...
+        'Bugsnag' => 'Bugsnag\BugsnagLaravel\BugsnagFacade',
+    )
+    ```
 
 1.  Generate a template Bugsnag config file
 
@@ -97,7 +117,7 @@ How to Install
     $ php artisan config:publish bugsnag/bugsnag-laravel
     ```
 
-2.  Update `app/config/packages/bugsnag/bugsnag-laravel/config.php` with your
+1.  Update `app/config/packages/bugsnag/bugsnag-laravel/config.php` with your
     Bugsnag API key:
 
     ```php
@@ -106,7 +126,7 @@ How to Install
     );
     ```
 
-3.  Optionally, you can add the `notify_release_stages` key to the same file
+1.  Optionally, you can add the `notify_release_stages` key to the same file
     above to define which Laravel environments will send Exceptions to Bugsnag.
 
     ```php
@@ -116,23 +136,23 @@ How to Install
     );
     ```
 
-    
+
 ### Lumen
 
 1. In `bootstrap/app.php` add the line
-    
+
     ```php
     $app->register('Bugsnag\BugsnagLaravel\BugsnagLumenServiceProvider');
     ```
-    
-    just before the line 
-    
+
+    just before the line
+
     ```php
     require __DIR__ . '/../app/Http/routes.php';
     ```
-    
+
 2. Change the function `report` in `app/Exceptions/Handler.php` to look like this:
-    
+
     ```php
     public function report(Exception $e) {
         app('bugsnag')->notifyException($e, []);
@@ -149,18 +169,18 @@ How to Install
         'api_key' => 'YOUR-API-KEY-HERE'
     );
     ```
-    
+
 
 
 
 Sending Custom Data With Exceptions
 -----------------------------------
 
-It is often useful to send additional meta-data about your app, such as 
+It is often useful to send additional meta-data about your app, such as
 information about the currently logged in user, along with any
-error or exceptions, to help debug problems. 
+error or exceptions, to help debug problems.
 
-To send custom data, you should define a *before-notify* function, 
+To send custom data, you should define a *before-notify* function,
 adding an array of "tabs" of custom data to the $metaData parameter. For example:
 
 ```php
@@ -186,7 +206,7 @@ documentation on the `bugsnag-php` library for more information.
 Sending Custom Errors or Non-Fatal Exceptions
 ---------------------------------------------
 
-You can easily tell Bugsnag about non-fatal or caught exceptions by 
+You can easily tell Bugsnag about non-fatal or caught exceptions by
 calling `Bugsnag::notifyException`:
 
 ```php
@@ -263,5 +283,5 @@ Contributing
 License
 -------
 
-The Bugsnag Laravel notifier is free software released under the MIT License. 
+The Bugsnag Laravel notifier is free software released under the MIT License.
 See [LICENSE.txt](https://github.com/bugsnag/bugsnag-laravel/blob/master/LICENSE.txt) for details.
