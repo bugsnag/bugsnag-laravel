@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.6.1
+-----
+-   Fix array syntax for older php
+
 1.6.0
 -----
 -   Move to using .env for api key in laravel 5+
