@@ -39,9 +39,9 @@ class BugsnagLaravelServiceProvider extends ServiceProvider
                 $app['bugsnag']->notifyException($exception, null, "error");
             });
         } else {
-          $this->publishes([
+          $this->publishes(array(
               __DIR__.'/config.php' => config_path('bugsnag.php'),
-          ]);
+          ));
         }
     }
 
