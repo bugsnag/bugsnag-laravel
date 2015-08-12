@@ -25,19 +25,22 @@ class BugsnagLaravelServiceProvider extends ServiceProvider
 
             $this->package('bugsnag/bugsnag-laravel', 'bugsnag');
 
-            // Register for exception handling
-            $app->error(function (\Exception $exception) use ($app) {
-                if ('Symfony\Component\Debug\Exception\FatalErrorException'
-                    !== get_class($exception)
-                ) {
-                    $app['bugsnag']->notifyException($exception, null, "error");
-                }
-            });
+            if (\Config::get('bugsnag::autoNotify')) {
+                // Register for exception handling
+                $app->error(function (\Exception $exception) use ($app) {
+                    if ('Symfony\Component\Debug\Exception\FatalErrorException'
+                        !== get_class($exception)
+                    ) {
+                        $app['bugsnag']->notifyException($exception, null, "error");
+                    }
+                });
 
-            // Register for fatal error handling
-            $app->fatal(function ($exception) use ($app) {
-                $app['bugsnag']->notifyException($exception, null, "error");
-            });
+                // Register for fatal error handling
+                $app->fatal(function ($exception) use ($app) {
+                    $app['bugsnag']->notifyException($exception, null, "error");
+                });  
+            }
+            
         } else {
           $this->publishes(array(
               __DIR__.'/config.php' => config_path('bugsnag.php'),
