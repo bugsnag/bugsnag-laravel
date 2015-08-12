@@ -72,6 +72,18 @@ return array(
 	|     )
 	|
 	*/
-	'proxy' => null
+	'proxy' => null,
+
+	/*
+	|--------------------------------------------------------------------------
+	| Auto Notification
+	|--------------------------------------------------------------------------
+	|
+	| Set what server the Bugsnag notifier should automatically send errors. 
+	| By default, this is set to true, but you may wish to disable it if you
+	| are manually sending the notification from a custom error handler.
+	|
+	*/
+	'autoNotify' => true
 
 );
