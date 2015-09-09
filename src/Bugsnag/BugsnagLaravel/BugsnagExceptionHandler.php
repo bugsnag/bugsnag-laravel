@@ -14,15 +14,7 @@ class BugsnagExceptionHandler extends ExceptionHandler {
      */
     public function report(Exception $e)
     {
-        foreach ($this->dontReport as $type) {
-            if ($e instanceof $type) {
-                return parent::report($e);
-            }
-        }
-
-        $bugsnag = app('bugsnag');
-
-        if ($bugsnag) {
+        if ($this->shouldReport($e) AND $bugsnag = app('bugsnag')) {
             $bugsnag->notifyException($e, null, "error");
         }
 
