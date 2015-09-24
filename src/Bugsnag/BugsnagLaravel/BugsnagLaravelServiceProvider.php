@@ -41,7 +41,7 @@ class BugsnagLaravelServiceProvider extends ServiceProvider
         } else {
           $this->publishes(array(
               __DIR__.'/config.php' => config_path('bugsnag.php'),
-          ));
+          ), 'config');
         }
     }
 
