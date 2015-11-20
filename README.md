@@ -68,7 +68,7 @@ How to Install
 1. Create the configuration file `config/bugsnag.php`:
 
     ```shell
-    $ php artisan vendor:publish
+    $ php artisan vendor:publish --provider="Bugsnag\BugsnagLaravel\BugsnagLaravelServiceProvider"
     ```
 
 1. Configure your `api_key` in your `.env` file:
