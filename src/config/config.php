@@ -72,18 +72,8 @@ return array(
 	|     )
 	|
 	*/
-	'proxy' => null,
+	'proxy' => null
 	
-	/*
-	|--------------------------------------------------------------------------
-	| Hostname
-	|--------------------------------------------------------------------------
-	|
-	| Pass the site's URL, overriding the default machine's hostname
-	|
-	*/
-    'hostname' => null,
-    	
-	//Additionally, any other Bugsnag configurations can be set here.  See bugsnag/bugsnag-php's Configuration.php for a list.
+    //Additionally, any other Bugsnag configurations can be set here.  See bugsnag/bugsnag-php's Configuration.php for a list.
 
 );
