@@ -19,6 +19,7 @@ Contents
     - [Laravel 5.0+](#laravel-50)
     - [Laravel (Older Versions)](#laravel-older-versions)
     - [Lumen](#lumen)
+  - [Environment Variables](#environment-variables)
 - [Usage](#usage)
   - [Catching and Reporting Exceptions](#catching-and-reporting-exceptions)
   - [Sending Non-fatal Exceptions](#sending-non-fatal-exceptions)
@@ -192,6 +193,25 @@ For versions of Laravel before 5.0:
         'api_key' => 'YOUR-API-KEY-HERE'
     );
     ```
+
+### Environment Variables
+
+In addition to `BUGSNAG_API_KEY`, other configuration keys can be automatically
+populated in `config.php` from your `.env` file:
+
+- `BUGSNAG_API_KEY`: Your API key. You can find your API key on your Bugsnag
+  dashboard.
+- `BUGSNAG_NOTIFY_RELEASE_STAGES`: Set which release stages should send
+  notifications to Bugsnag.
+- `BUGSNAG_ENDPOINT`: Set what server to which the Bugsnag notifier should send
+  errors. The default is https://notify.bugsnag.com, but for Bugsnag Enterprise
+  the endpoint should be the URL of your Bugsnag instance.
+- `BUGSNAG_FILTERS`: Set which keys are filtered from metadata is sent to
+  Bugsnag.
+- `BUGSNAG_PROXY`: Set the configuration options for your server if it is behind
+  a proxy server. Additional details are available in the
+  [sample configuration](src/Bugsnag/BugsnagLaravel/config.php#L56).
+
 
 Usage
 -----
