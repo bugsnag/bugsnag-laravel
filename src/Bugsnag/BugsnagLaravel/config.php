@@ -1,6 +1,6 @@
 <?php
 
-return [
+return array(
 
 	/*
 	|--------------------------------------------------------------------------
@@ -49,7 +49,7 @@ return [
 	| contain these strings will be filtered.
 	|
 	*/
-	'filters' => env('BUGSNAG_FILTERS', ['password']),
+	'filters' => env('BUGSNAG_FILTERS', array('password')),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -74,4 +74,4 @@ return [
 	*/
 	'proxy' => env('BUGSNAG_PROXY', null)
 
-];
+);
