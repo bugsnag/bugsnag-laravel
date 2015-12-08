@@ -72,6 +72,8 @@ return array(
 	|     )
 	|
 	*/
-	'proxy' => env('BUGSNAG_PROXY', null)
+	'proxy' => env('BUGSNAG_PROXY', null),
+	
+	//Additionally, any other Bugsnag configurations can be set here.  See bugsnag/bugsnag-php's Configuration.php for a list.
 
 );

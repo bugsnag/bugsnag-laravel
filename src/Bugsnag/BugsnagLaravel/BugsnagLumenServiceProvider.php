@@ -1,6 +1,7 @@
 <?php namespace Bugsnag\BugsnagLaravel;
 
 use Illuminate\Support\ServiceProvider;
+use Bugsnag\BugsnagLaravel\BugsnagLaravelClient;
 
 class BugsnagLumenServiceProvider extends ServiceProvider
 {
@@ -34,7 +35,8 @@ class BugsnagLumenServiceProvider extends ServiceProvider
                 $config = $app['config']['bugsnag'] ?: $app['config']['bugsnag::config'];
             }
 
-            $client = new \Bugsnag_Client($config['api_key']);
+            $client = new BugsnagLaravelClient($config['api_key']);
+            $client->resetBugsnagConfig($config);
             $client->setStripPath(base_path());
             $client->setProjectRoot(base_path() . '/app');
             $client->setAutoNotify(false);

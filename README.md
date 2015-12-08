@@ -326,7 +326,7 @@ Support
 Contributing
 ------------
 
-We'd love you to file issues and send pull requests. The [contributing guidelines](https://github.com/bugsnag/bugsnag-laravel/CONTRIBUTING.md) details the process of building and testing `bugsnag-laravel`, as well as the pull request process. Feel free to comment on [existing issues](https://github.com/bugsnag/bugsnag-laravel/issues) for clarification or starting points.
+We'd love you to file issues and send pull requests. The [contributing guidelines](https://github.com/bugsnag/bugsnag-laravel/blob/master/CONTRIBUTING.md) details the process of building and testing `bugsnag-laravel`, as well as the pull request process. Feel free to comment on [existing issues](https://github.com/bugsnag/bugsnag-laravel/issues) for clarification or starting points.
 
 
 License
