@@ -62,6 +62,10 @@ class BugsnagLumenServiceProvider extends ServiceProvider
                 $client->setProxySettings($config['proxy']);
             }
 
+            if (isset($config['app_version'])) {
+                $client->setAppVersion($config['app_version']);
+            }
+
             // Check if someone is logged in.
             try {
                 if ($app['auth']->check()) {
