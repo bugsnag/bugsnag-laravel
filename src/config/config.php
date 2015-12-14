@@ -72,6 +72,15 @@ return array(
 	|     )
 	|
 	*/
-	'proxy' => null
+	'proxy' => null,
 
+	/*
+	|--------------------------------------------------------------------------
+	| Application Version
+	|--------------------------------------------------------------------------
+	|
+	| Use this setting to send your Application Version to Bugsnag
+	|
+	*/
+	'app_version' => null,
 );
