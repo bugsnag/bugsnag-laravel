@@ -249,9 +249,6 @@ $metaData =  array(
 );
 ```
 
-Additional data can be sent with exceptions as an options hash as detailed in the [Notification Options](docs/Notification Options.md) documentation, including some [options specific to non-fatal exceptions](docs/Notification Options.md#handled-notification-options).
-
-
 ### Configuration Options
 
 The [Bugsnag PHP Client](https://bugsnag.com/docs/notifiers/php)
