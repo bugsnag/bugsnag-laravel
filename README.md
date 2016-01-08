@@ -326,7 +326,6 @@ and start the server:
 Support
 -------
 
-* [Additional Documentation](https://github.com/bugsnag/bugsnag-laravel/tree/master/docs)
 * [Search open and closed issues](https://github.com/bugsnag/bugsnag-laravel/issues?utf8=✓&q=is%3Aissue) for similar problems
 * [Report a bug or request a feature](https://github.com/bugsnag/bugsnag-laravel/issues/new)
 
