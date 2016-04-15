@@ -212,14 +212,7 @@ populated in `config.php` from your `.env` file:
 
 - `BUGSNAG_API_KEY`: Your API key. You can find your API key on your Bugsnag
   dashboard.
-- `BUGSNAG_NOTIFY_RELEASE_STAGES`: Set which release stages should send
-  notifications to Bugsnag.
-- `BUGSNAG_ENDPOINT`: Set what server to which the Bugsnag notifier should send
-  errors. The default is https://notify.bugsnag.com, but for Bugsnag Enterprise
-  the endpoint should be the URL of your Bugsnag instance.
-- `BUGSNAG_FILTERS`: Set which keys are filtered from metadata is sent to
-  Bugsnag.
-- `BUGSNAG_PROXY`: Set the configuration options for your server if it is behind
+- `BUGSNAG_BUGSNAG_PROXY_HOST`, `BUGSNAG_PROXY_PORT`, `BUGSNAG_PROXY_USER` and `BUGSNAG_PROXY_PASSWORD`: Set the configuration options for your server if it is behind
   a proxy server. Additional details are available in the
   [sample configuration](src/Bugsnag/BugsnagLaravel/config.php#L56).
 
