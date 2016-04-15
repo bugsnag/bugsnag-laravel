@@ -25,7 +25,7 @@ return array(
 	| Example: array('development', 'production')
 	|
 	*/
-	'notify_release_stages' => null,
+	'notify_release_stages' => array(),
 
 	/*
 	|--------------------------------------------------------------------------
@@ -72,6 +72,11 @@ return array(
 	|     )
 	|
 	*/
-	'proxy' => null
+	'proxy' => array (
+		'host' => null,
+		'port' => null,
+		'user' => null,
+		'password' => null,
+	)
 
 );
