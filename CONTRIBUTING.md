@@ -16,11 +16,11 @@ Releasing
 =========
 
 1. Commit all outstanding changes
-1. Bump the version in `src/Bugsnag/BugsnagLaravel/BugsnagLaravelServiceProvider.php` and `src/Bugsnag/BugsnagLaravel/BugsnagLumenServiceProvider.php`
-2. Update the CHANGELOG.md, and README if appropriate.
-3. Commit, tag push
+2. Bump the version in `src/Bugsnag/BugsnagLaravel/BugsnagLaravelServiceProvider.php` and `src/Bugsnag/BugsnagLaravel/BugsnagLumenServiceProvider.php`
+3. Update the CHANGELOG.md, and README if appropriate.
+4. Commit, tag push
 
     git commit -am v1.x.x
     git tag v1.x.x
     git push origin master v1.x.x
-
+5. Update the setup guide for Laravel on docs.bugsnag.com with any new content
