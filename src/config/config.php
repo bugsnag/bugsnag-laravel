@@ -72,6 +72,8 @@ return array(
 	|     )
 	|
 	*/
-	'proxy' => null
+	'proxy' => null,
+
+	'app_version' => env('APP_VERSION')
 
 );
