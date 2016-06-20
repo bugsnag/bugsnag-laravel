@@ -3,3 +3,6 @@ disabled:
 
 enabled:
   - long_array_syntax
+
+finder:
+  excluded: example
