@@ -45,7 +45,7 @@ Getting Started
 1.  Install the `bugsnag/bugsnag-laravel` package
 
     ```shell
-    $ composer require bugsnag/bugsnag-laravel:1.*
+    $ composer require bugsnag/bugsnag-laravel
     ```
 
 1. Update `config/app.php` to activate Bugsnag
@@ -120,7 +120,7 @@ For versions of Laravel before 5.0:
 1.  Install the `bugsnag/bugsnag-laravel` package
 
     ```shell
-    $ composer require bugsnag/bugsnag-laravel:1.*
+    $ composer require bugsnag/bugsnag-laravel
     ```
 
 1. Update app/config/app.php` to activate Bugsnag
@@ -170,7 +170,7 @@ For versions of Laravel before 5.0:
 1.  Install the `bugsnag/bugsnag-laravel` package
 
     ```shell
-    $ composer require bugsnag/bugsnag-laravel:1.*
+    $ composer require bugsnag/bugsnag-laravel
     ```
 
 2. In `bootstrap/app.php` add the line
