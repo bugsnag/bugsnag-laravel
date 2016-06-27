@@ -6,6 +6,7 @@ use Bugsnag\Client;
 use Bugsnag\Configuration;
 use Bugsnag\BugsnagLaravel\Middleware\AddUserData;
 use Bugsnag\BugsnagLaravel\Request\LaravelResolver;
+use Bugsnag\Client;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\ServiceProvider;
