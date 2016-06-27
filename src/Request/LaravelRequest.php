@@ -2,6 +2,7 @@
 
 namespace Bugsnag\BugsnagLaravel\Request;
 
+use Bugsnag\Request\RequestInterface;
 use Illuminate\Http\Request;
 
 class LaravelRequest implements RequestInterface
