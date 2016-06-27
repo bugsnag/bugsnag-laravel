@@ -12,15 +12,11 @@ class ServiceProviderTest extends AbstractTestCase
 
     public function testClientIsInjectable()
     {
-        $this->app->config->set('bugsnag.api_key', 'qwertyuiop');
-
         $this->assertIsInjectable(Client::class);
     }
 
     public function testLoggerIsInjectable()
     {
-        $this->app->config->set('bugsnag.api_key', 'qwertyuiop');
-
         $this->assertIsInjectable(BugsnagLogger::class);
     }
 }
