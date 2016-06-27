@@ -68,7 +68,7 @@ class BugsnagServiceProvider extends ServiceProvider
             return $client;
         });
 
-        $this->app->alias('bugsnag', Client::class)
+        $this->app->alias('bugsnag', Client::class);
     }
 
     /**
