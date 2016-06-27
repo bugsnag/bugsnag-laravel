@@ -53,7 +53,6 @@ class BugsnagServiceProvider extends ServiceProvider
                 $client->registerDefaultMiddleware();
             }
 
-            $client = Client::make(,  : null, );
             $client->setStripPath($app->basePath());
             $client->setProjectRoot($app->path());
             $client->setReleaseStage($app->environment());
