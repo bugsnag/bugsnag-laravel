@@ -14,10 +14,10 @@
         "php": ">=5.5.9",
         "illuminate/contracts": "^5.1",
         "illuminate/support": "^5.1",
-        "bugsnag/bugsnag": "^2.5"
+        "bugsnag/bugsnag": "^3.0"
     },
     "autoload": {
-        "psr-0": {
+        "psr-4": {
             "Bugsnag\\BugsnagLaravel\\": "src/"
         }
     },

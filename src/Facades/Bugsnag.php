@@ -1,10 +1,10 @@
 <?php
 
-namespace Bugsnag\BugsnagLaravel;
+namespace Bugsnag\BugsnagLaravel\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class BugsnagFacade extends Facade
+class Bugsnag extends Facade
 {
     protected static function getFacadeAccessor()
     {

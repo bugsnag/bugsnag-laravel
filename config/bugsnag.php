@@ -13,7 +13,7 @@ return array(
     | which should receive your application's uncaught exceptions.
     |
     */
-    'api_key' => 'YOUR-API-KEY-HERE',
+    'api_key' => env('BUGSNAG_API_KEY', ''),
 
     /*
     |--------------------------------------------------------------------------
@@ -25,7 +25,7 @@ return array(
     | Example: array('development', 'production')
     |
     */
-    'notify_release_stages' => null,
+    'notify_release_stages' => env('BUGSNAG_NOTIFY_RELEASE_STAGES', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -37,7 +37,7 @@ return array(
     | this should be the URL to your Bugsnag instance.
     |
     */
-    'endpoint' => null,
+    'endpoint' => env('BUGSNAG_ENDPOINT', null),
 
     /*
     |--------------------------------------------------------------------------
@@ -49,29 +49,17 @@ return array(
     | contain these strings will be filtered.
     |
     */
-    'filters' => array('password'),
+    'filters' => env('BUGSNAG_FILTERS', array('password')),
 
     /*
     |--------------------------------------------------------------------------
-    | Proxy
+    | Users
     |--------------------------------------------------------------------------
     |
-    | If your server is behind a proxy server, you can configure this as well.
-    | Other than the host, none of these settings are mandatory.
-    |
-    | Note: Proxy configuration is only possible if the PHP cURL extension
-    | is installed.
-    |
-    | Example:
-    |
-    |     'proxy' => array(
-    |         'host'     => 'bugsnag.com',
-    |         'port'     => 42,
-    |         'user'     => 'username',
-    |         'password' => 'password123'
-    |     )
+    | Enable this if you'd like us to send through the current user logged in
+    | to your application using laravel's authentication system.
     |
     */
-    'proxy' => null,
+    'users' => env('BUGSNAG_USERS', true),
 
 );
