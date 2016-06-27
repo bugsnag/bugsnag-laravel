@@ -2,7 +2,6 @@
 
 namespace Bugsnag\BugsnagLaravel\Tests;
 
-use Bugsnag\BugsnagLaravel\BugsnagServiceProvider;
 use Bugsnag\BugsnagLaravel\BugsnagLogger;
 use Bugsnag\Client;
 use GrahamCampbell\TestBenchCore\ServiceProviderTrait;
