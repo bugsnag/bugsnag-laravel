@@ -1,6 +1,6 @@
 <?php
 
-namespace Bugsnag\Request;
+namespace Bugsnag\BugsnagLaravel\Request;
 
 use Illuminate\Http\Request;
 
