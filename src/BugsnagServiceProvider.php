@@ -6,10 +6,10 @@ use Bugsnag\BugsnagLaravel\Middleware\AddUserData;
 use Bugsnag\BugsnagLaravel\Request\LaravelResolver;
 use Bugsnag\Client;
 use Bugsnag\Configuration;
+use GuzzleHttp\Client as Guzzle;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\ServiceProvider;
-use GuzzleHttp\Client as Guzzle;
 use Laravel\Lumen\Application as LumenApplication;
 
 class BugsnagServiceProvider extends ServiceProvider
