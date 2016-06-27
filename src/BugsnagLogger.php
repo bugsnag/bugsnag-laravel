@@ -2,7 +2,7 @@
 
 namespace Bugsnag\BugsnagLaravel;
 
-use Bugsnag\Psr\Logger;
+use Bugsnag\PsrLogger\Logger;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 
