@@ -42,7 +42,7 @@ class BugsnagServiceProvider extends ServiceProvider
         $this->app->singleton('bugsnag', function (Container $app) {
             $config = $app->config->get('bugsnag');
 
-            $onfiguration = new Configuration($config['api_key']);
+            $configuration = new Configuration($config['api_key']);
             $resolver = new LaravelResolver($app);
             $guzzle = new Guzzle(['base_uri' => isset($config['endpoint']) ? $config['endpoint'] : Client::ENDPOINT]);
 
