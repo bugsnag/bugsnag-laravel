@@ -3,10 +3,13 @@
 namespace Bugsnag\BugsnagLaravel;
 
 use Bugsnag\Client;
+use Bugsnag\Configuration;
 use Bugsnag\BugsnagLaravel\Middleware\AddUserData;
+use Bugsnag\BugsnagLaravel\Request\LaravelResolver;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\ServiceProvider;
+use GuzzleHttp\Client as Guzzle;
 use Laravel\Lumen\Application as LumenApplication;
 
 class BugsnagServiceProvider extends ServiceProvider
@@ -39,7 +42,17 @@ class BugsnagServiceProvider extends ServiceProvider
         $this->app->singleton('bugsnag', function (Container $app) {
             $config = $app->config->get('bugsnag');
 
-            $client = Client::make($config['api_key'], isset($config['endpoint']) ? $config['endpoint'] : null, isset($config['middleware']) ? $config['middleware'] : true);
+            $onfiguration = new Configuration($config['api_key']);
+            $resolver = new LaravelResolver($app);
+            $guzzle = new Guzzle(['base_uri' => isset($config['endpoint']) ? $config['endpoint'] : Client::ENDPOINT]);
+
+            $client = new static($configuration, null, $resolver, $guzzle);
+
+            if (!isset($config['middleware']) || $config['middleware']) {
+                $client->registerDefaultMiddleware();
+            }
+
+            $client = Client::make(,  : null, );
             $client->setStripPath($app->basePath());
             $client->setProjectRoot($app->path());
             $client->setReleaseStage($app->environment());
