@@ -3,7 +3,6 @@
 namespace Bugsnag\BugsnagLaravel;
 
 use Bugsnag\Client;
-use Exception;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\ServiceProvider;
@@ -43,11 +42,11 @@ class BugsnagServiceProvider extends ServiceProvider
             $client->setStripPath($app->basePath());
             $client->setProjectRoot($app->path());
             $client->setReleaseStage($app->environment());
-            $client->setNotifier(array(
+            $client->setNotifier([
                 'name' => 'Bugsnag Laravel',
                 'version' => '2.0.0',
                 'url' => 'https://github.com/bugsnag/bugsnag-laravel',
-            ));
+            ]);
 
             if (isset($config['notify_release_stages']) && is_array($config['notify_release_stages'])) {
                 $client->setNotifyReleaseStages($config['notify_release_stages']);
