@@ -7,7 +7,7 @@ use Bugsnag\Error;
 class AddUserData
 {
     /**
-     * The user resolver
+     * The user resolver.
      *
      * @var callable
      */
