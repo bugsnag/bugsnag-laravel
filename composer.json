@@ -10,11 +10,18 @@
             "email": "notifiers@bugsnag.com"
         }
     ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url":  "https://github.com/bugsnag/bugsnag-psr"
+        }
+    ],
     "require": {
         "php": ">=5.5.9",
-        "illuminate/contracts": "^5.1",
-        "illuminate/support": "^5.1",
-        "bugsnag/bugsnag": "^3.0"
+        "illuminate/contracts": "^5.0",
+        "illuminate/support": "^5.0",
+        "bugsnag/bugsnag": "^3.0",
+        "bugsnag/bugsnag-psr": "^1.0"
     },
     "autoload": {
         "psr-4": {
