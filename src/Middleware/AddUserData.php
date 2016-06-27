@@ -3,6 +3,7 @@
 namespace Bugsnag\BugsnagLaravel\Middleware;
 
 use Bugsnag\Error;
+use Exception;
 
 class AddUserData
 {
@@ -37,8 +38,12 @@ class AddUserData
     {
         $resolver = $this->resolver;
 
-        if ($user = $resolver()) {
-            $error->setUser($user);
+        try {
+            if ($user = $resolver()) {
+                $error->setUser($user);
+            }
+        } catch (Exception $e) {
+            // Ignore any errors.
         }
 
         return $next($error);
