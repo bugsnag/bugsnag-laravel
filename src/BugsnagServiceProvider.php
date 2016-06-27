@@ -39,7 +39,7 @@ class BugsnagServiceProvider extends ServiceProvider
         $this->app->singleton('bugsnag', function (Container $app) {
             $config = $app->config->get('bugsnag');
 
-            $client = new Client::make($config['api_key'], isset($config['endpoint']) ? $config['endpoint'] : null);
+            $client = Client::make($config['api_key'], isset($config['endpoint']) ? $config['endpoint'] : null);
             $client->setStripPath($app->basePath());
             $client->setProjectRoot($app->path());
             $client->setReleaseStage($app->environment());
