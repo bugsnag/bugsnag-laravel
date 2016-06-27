@@ -47,7 +47,7 @@ class BugsnagServiceProvider extends ServiceProvider
             $resolver = new LaravelResolver($app);
             $guzzle = new Guzzle(['base_uri' => isset($config['endpoint']) ? $config['endpoint'] : Client::ENDPOINT]);
 
-            $client = new static($configuration, null, $resolver, $guzzle);
+            $client = new Client($configuration, null, $resolver, $guzzle);
 
             if (!isset($config['middleware']) || $config['middleware']) {
                 $client->registerDefaultMiddleware();
