@@ -2,11 +2,10 @@
 
 namespace Bugsnag\BugsnagLaravel;
 
-use Bugsnag\Client;
-use Bugsnag\Configuration;
 use Bugsnag\BugsnagLaravel\Middleware\AddUserData;
 use Bugsnag\BugsnagLaravel\Request\LaravelResolver;
 use Bugsnag\Client;
+use Bugsnag\Configuration;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Support\ServiceProvider;
@@ -47,10 +46,14 @@ class BugsnagServiceProvider extends ServiceProvider
             $resolver = new LaravelResolver($app);
             $guzzle = new Guzzle(['base_uri' => isset($config['endpoint']) ? $config['endpoint'] : Client::ENDPOINT]);
 
-            $client = new Client($configuration, null, $resolver, $guzzle);
+            $client = new Client($configuration, $resolver, $guzzle);
 
             if (!isset($config['middleware']) || $config['middleware']) {
-                $client->registerDefaultMiddleware();
+                $client->registerDefaultMiddleware()->registerMiddleware(new AddUserData(function () use ($app) {
+                    if ($user = $app->auth->user()) {
+                        return $user->toArray();
+                    }
+                }));
             }
 
             $client->setStripPath($app->basePath());
@@ -68,14 +71,6 @@ class BugsnagServiceProvider extends ServiceProvider
 
             if (isset($config['filters']) && is_array($config['filters'])) {
                 $client->setFilters($config['filters']);
-            }
-
-            if (isset($config['users']) && $config['users']) {
-                $client->getPipeline()->pipe(new AddUserData(function () use ($app) {
-                    if ($user = $app->auth->user()) {
-                        return $user->toArray();
-                    }
-                }));
             }
 
             return $client;

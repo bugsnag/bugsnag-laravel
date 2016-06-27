@@ -13,6 +13,7 @@ return [
     | which should receive your application's uncaught exceptions.
     |
     */
+
     'api_key' => env('BUGSNAG_API_KEY', ''),
 
     /*
@@ -25,6 +26,7 @@ return [
     | Example: array('development', 'production')
     |
     */
+
     'notify_release_stages' => env('BUGSNAG_NOTIFY_RELEASE_STAGES', null),
 
     /*
@@ -37,6 +39,7 @@ return [
     | this should be the URL to your Bugsnag instance.
     |
     */
+
     'endpoint' => env('BUGSNAG_ENDPOINT', null),
 
     /*
@@ -49,6 +52,7 @@ return [
     | contain these strings will be filtered.
     |
     */
+
     'filters' => env('BUGSNAG_FILTERS', ['password']),
 
     /*
@@ -65,17 +69,7 @@ return [
     | service provider.
     |
     */
-    'middleware' => env('BUGSNAG_MIDDLEWARE', true),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Users
-    |--------------------------------------------------------------------------
-    |
-    | Enable this if you'd like us to send through the current user logged in
-    | to your application using laravel's authentication system.
-    |
-    */
-    'users' => env('BUGSNAG_USERS', true),
+    'middleware' => env('BUGSNAG_MIDDLEWARE', true),
 
 ];
