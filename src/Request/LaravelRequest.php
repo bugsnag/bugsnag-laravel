@@ -93,7 +93,7 @@ class LaravelRequest implements RequestInterface
      */
     public function getContext()
     {
-        return $this->request->getMethod().' '.$this->request->url();
+        return $this->request->getMethod().' '.$this->request->getUri();
     }
 
     /**
