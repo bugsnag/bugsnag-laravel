@@ -16,5 +16,5 @@ $app->get('/', function () use ($app) {
 });
 
 $app->get('test', function () {
-    throw new Exception('Example exception!')
+    throw new Exception('Example exception!');
 });

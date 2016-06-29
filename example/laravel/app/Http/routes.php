@@ -17,5 +17,5 @@ Route::get('/', function () {
 
 
 Route::get('test', function () {
-    throw new Exception('Example exception!')
+    throw new Exception('Example exception!');
 });
