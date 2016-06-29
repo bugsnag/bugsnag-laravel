@@ -67,7 +67,7 @@ class LaravelRequest implements RequestInterface
     {
         $data = [];
 
-        $data['url'] = $this->request->getCurrentUrl();
+        $data['url'] = $this->request->fullUrl();
 
         $data['httpMethod'] = $this->request->getMethod();
 
