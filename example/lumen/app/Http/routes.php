@@ -14,3 +14,7 @@
 $app->get('/', function () use ($app) {
     return $app->version();
 });
+
+$app->get('test', function () {
+    throw new Exception('Example exception!')
+});
