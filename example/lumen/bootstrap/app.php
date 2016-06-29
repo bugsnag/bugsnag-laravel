@@ -2,7 +2,11 @@
 
 require_once __DIR__.'/../vendor/autoload.php';
 
-// Dotenv::load(__DIR__.'/../');
+try {
+    (new Dotenv\Dotenv(__DIR__.'/../'))->load();
+} catch (Dotenv\Exception\InvalidPathException $e) {
+    //
+}
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +20,7 @@ require_once __DIR__.'/../vendor/autoload.php';
 */
 
 $app = new Laravel\Lumen\Application(
-	realpath(__DIR__.'/../')
+    realpath(__DIR__.'/../')
 );
 
 // $app->withFacades();
@@ -35,13 +39,13 @@ $app = new Laravel\Lumen\Application(
 */
 
 $app->singleton(
-    'Illuminate\Contracts\Debug\ExceptionHandler',
-    'App\Exceptions\Handler'
+    Illuminate\Contracts\Debug\ExceptionHandler::class,
+    App\Exceptions\Handler::class
 );
 
 $app->singleton(
-    'Illuminate\Contracts\Console\Kernel',
-    'App\Console\Kernel'
+    Illuminate\Contracts\Console\Kernel::class,
+    App\Console\Kernel::class
 );
 
 /*
@@ -56,15 +60,11 @@ $app->singleton(
 */
 
 // $app->middleware([
-//     // 'Illuminate\Cookie\Middleware\EncryptCookies',
-//     // 'Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse',
-//     // 'Illuminate\Session\Middleware\StartSession',
-//     // 'Illuminate\View\Middleware\ShareErrorsFromSession',
-//     // 'Laravel\Lumen\Http\Middleware\VerifyCsrfToken',
+//    App\Http\Middleware\ExampleMiddleware::class
 // ]);
 
 // $app->routeMiddleware([
-
+//     'auth' => App\Http\Middleware\Authenticate::class,
 // ]);
 
 /*
@@ -78,9 +78,10 @@ $app->singleton(
 |
 */
 
-// $app->register('App\Providers\AppServiceProvider');
-
-$app->register('Bugsnag\BugsnagLaravel\BugsnagLumenServiceProvider');
+$app->register(Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class);
+$app->register(App\Providers\AppServiceProvider::class);
+$app->register(App\Providers\AuthServiceProvider::class);
+$app->register(App\Providers\EventServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -93,6 +94,8 @@ $app->register('Bugsnag\BugsnagLaravel\BugsnagLumenServiceProvider');
 |
 */
 
-require __DIR__.'/../app/Http/routes.php';
+$app->group(['namespace' => 'App\Http\Controllers'], function ($app) {
+    require __DIR__.'/../app/Http/routes.php';
+});
 
 return $app;

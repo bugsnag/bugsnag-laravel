@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use Psr\Log\LoggerInterface;
+use Illuminate\Contracts\Logging\Log;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->alias('bugsnag.logger', Log::class);
+        $this->app->alias('bugsnag.logger', LoggerInterface::class);
     }
 }
