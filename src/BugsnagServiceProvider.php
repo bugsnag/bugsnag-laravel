@@ -77,11 +77,11 @@ class BugsnagServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton('bugsnag.logger', function (Container $app) {
-            return new Logger($app['bugsnag']);
+            return new BugsnagLogger($app['bugsnag']);
         });
 
         $this->app->alias('bugsnag', Client::class);
-        $this->app->alias('bugsnag.logger', Logger::class);
+        $this->app->alias('bugsnag.logger', BugsnagLogger::class);
     }
 
     /**
