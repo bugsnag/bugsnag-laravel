@@ -1,9 +1,7 @@
 disabled:
   - align_double_arrow
-  - short_array_syntax
 
 enabled:
-  - long_array_syntax
   - unalign_double_arrow
 
 finder:
