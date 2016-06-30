@@ -10,7 +10,7 @@ exceptions in your Laravel PHP applications. We support both Laravel and Lumen.
 
 ## Documentation
 
-See our main PHP repo for all information regarding usage at https://github.com/bugsnag/bugsnag-php/tree/1.9.
+See our main PHP repo for all information regarding usage at https://github.com/bugsnag/bugsnag-php/tree/2.9.
 
 
 ## Support
