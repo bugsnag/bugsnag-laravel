@@ -20,11 +20,10 @@ See our main PHP repo for all information regarding usage at https://github.com/
 ## Contributing
 
 We'd love you to file issues and send pull requests. The [contributing
-guidelines](https://github.com/bugsnag/bugsnag-laravel/CONTRIBUTING.md) details
-the process of building and testing `bugsnag-laravel`, as well as the pull
-request process. Feel free to comment on [existing
-issues](https://github.com/bugsnag/bugsnag-laravel/issues) for clarification or
-starting points.
+guidelines](CONTRIBUTING.md) details the process of building and testing
+`bugsnag-laravel`, as well as the pull request process. Feel free to comment
+on [existing issues](https://github.com/bugsnag/bugsnag-laravel/issues) for
+clarification or starting points.
 
 
 ## License
