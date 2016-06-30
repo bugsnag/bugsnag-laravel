@@ -23,11 +23,6 @@
             "Bugsnag\\BugsnagLaravel\\": "src/"
         }
     },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.7-dev"
-        }
-    },
     "minimum-stability": "dev",
     "prefer-stable": true
 }
