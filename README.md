@@ -1,5 +1,8 @@
-Bugsnag Notifier for Laravel and Lumen
-=====================================
+# Bugsnag Notifier for Laravel and Lumen
+
+[![Build Status](https://img.shields.io/travis/bugsnag/bugsnag-laravel/master.svg?style=flat-square)](https://travis-ci.org/bugsnag/bugsnag-laravel)
+[![StyleCI Status](https://styleci.io/repos/14268472/shield?branch=master)](https://styleci.io/repos/14268472)
+
 
 The Bugsnag Notifier for Laravel gives you instant notification of errors and
 exceptions in your Laravel PHP applications. We support Laravel 5, Laravel 4,
@@ -20,11 +23,10 @@ See our main PHP repo for all information regarding usage at https://github.com/
 ## Contributing
 
 We'd love you to file issues and send pull requests. The [contributing
-guidelines](https://github.com/bugsnag/bugsnag-laravel/CONTRIBUTING.md) details
-the process of building and testing `bugsnag-laravel`, as well as the pull
-request process. Feel free to comment on [existing
-issues](https://github.com/bugsnag/bugsnag-laravel/issues) for clarification or
-starting points.
+guidelines](CONTRIBUTING.md) details the process of building and testing
+`bugsnag-laravel`, as well as the pull request process. Feel free to comment
+on [existing issues](https://github.com/bugsnag/bugsnag-laravel/issues) for
+clarification or starting points.
 
 
 ## License
