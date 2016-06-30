@@ -15,7 +15,7 @@ v1 of our Laravel package supports Laravel 4 and uses v2 of our main PHP library
 
 ## Documentation
 
-See our main PHP repo for all information regarding usage at https://github.com/bugsnag/bugsnag-php.
+See our main PHP repo for all information regarding usage at https://github.com/bugsnag/bugsnag-php/tree/2.9.
 
 
 ## Support
