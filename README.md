@@ -5,8 +5,7 @@
 
 
 The Bugsnag Notifier for Laravel gives you instant notification of errors and
-exceptions in your Laravel PHP applications. We support Laravel 5, Laravel 4,
-Laravel 3, and Lumen.
+exceptions in your Laravel PHP applications. We support both Laravel and Lumen.
 
 
 ## Documentation
