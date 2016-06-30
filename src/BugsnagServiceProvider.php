@@ -30,6 +30,19 @@ class BugsnagServiceProvider extends ServiceProvider
         }
 
         $this->mergeConfigFrom($source, 'bugsnag');
+
+        $callback = function () {
+            $this->app['bugsnag']->flush();
+        };
+
+        $this->app['queue']->after($callback);
+        $this->app['queue']->stopping($callback);
+
+        if (method_exists($this->app['queue'], 'exceptionOccurred')) {
+            $this->app['queue']->exceptionOccurred($callback);
+        } else {
+            $this->app['queue']->looping($callback);
+        }
     }
 
     /**
