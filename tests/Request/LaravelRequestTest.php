@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 use Mockery;
 use PHPUnit_Framework_TestCase as TestCase;
 
-class ServiceProviderTest extends TestCase
+class LaravelRequestTest extends TestCase
 {
     public function testCanResolveNullRequest()
     {
