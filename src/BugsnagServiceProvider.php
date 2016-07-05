@@ -94,7 +94,7 @@ class BugsnagServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton('bugsnag.logger', function (Container $app) {
-            return new LaraveLogger($app['bugsnag']);
+            return new LaravelLogger($app['bugsnag']);
         });
 
         $this->app->singleton('bugsnag.multi', function (Container $app) {
