@@ -2,8 +2,9 @@
 
 namespace Bugsnag\BugsnagLaravel\Tests;
 
-use Bugsnag\BugsnagLaravel\BugsnagLogger;
+use Bugsnag\BugsnagLaravel\LaravelLogger;
 use Bugsnag\Client;
+use Bugsnag\PsrLogger\MultiLogger;
 use GrahamCampbell\TestBenchCore\ServiceProviderTrait;
 
 class ServiceProviderTest extends AbstractTestCase
@@ -15,8 +16,13 @@ class ServiceProviderTest extends AbstractTestCase
         $this->assertIsInjectable(Client::class);
     }
 
-    public function testLoggerIsInjectable()
+    public function testBugsnagLoggerIsInjectable()
     {
-        $this->assertIsInjectable(BugsnagLogger::class);
+        $this->assertIsInjectable(LaravelLogger::class);
+    }
+
+    public function testMultiLoggerIsInjectable()
+    {
+        $this->assertIsInjectable(MultiLogger::class);
     }
 }

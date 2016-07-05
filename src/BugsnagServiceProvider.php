@@ -5,6 +5,7 @@ namespace Bugsnag\BugsnagLaravel;
 use Bugsnag\BugsnagLaravel\Request\LaravelResolver;
 use Bugsnag\Client;
 use Bugsnag\Configuration;
+use Bugsnag\PsrLogger\MultiLogger;
 use GuzzleHttp\Client as Guzzle;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Foundation\Application as LaravelApplication;
@@ -93,11 +94,16 @@ class BugsnagServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton('bugsnag.logger', function (Container $app) {
-            return new BugsnagLogger($app['bugsnag']);
+            return new LaraveLogger($app['bugsnag']);
+        });
+
+        $this->app->singleton('bugsnag.multi', function (Container $app) {
+            return new MultiLogger([$app['log'], $app['bugsnag.logger']]);
         });
 
         $this->app->alias('bugsnag', Client::class);
-        $this->app->alias('bugsnag.logger', BugsnagLogger::class);
+        $this->app->alias('bugsnag.logger', LaraveLogger::class);
+        $this->app->alias('bugsnag.multi', MultiLogger::class);
     }
 
     /**
@@ -107,6 +113,6 @@ class BugsnagServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['bugsnag', 'bugsnag.logger'];
+        return ['bugsnag', 'bugsnag.logger', 'bugsnag.multi'];
     }
 }
