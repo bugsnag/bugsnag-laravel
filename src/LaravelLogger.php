@@ -2,11 +2,11 @@
 
 namespace Bugsnag\BugsnagLaravel;
 
-use Bugsnag\PsrLogger\Logger;
+use Bugsnag\PsrLogger\BugsnagLogger;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 
-class BugsnagLogger extends Logger
+class LaravelLogger extends BugsnagLogger
 {
     /**
      * Format the parameters for the logger.
@@ -19,9 +19,13 @@ class BugsnagLogger extends Logger
     {
         if (is_array($message)) {
             return var_export($message, true);
-        } elseif ($message instanceof Jsonable) {
+        }
+
+        if ($message instanceof Jsonable) {
             return $message->toJson();
-        } elseif ($message instanceof Arrayable) {
+        }
+
+        if ($message instanceof Arrayable) {
             return var_export($message->toArray(), true);
         }
 
