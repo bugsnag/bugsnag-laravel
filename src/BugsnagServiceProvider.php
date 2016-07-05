@@ -2,7 +2,6 @@
 
 namespace Bugsnag\BugsnagLaravel;
 
-use Bugsnag\BugsnagLaravel\Middleware\AddUserData;
 use Bugsnag\BugsnagLaravel\Request\LaravelResolver;
 use Bugsnag\Client;
 use Bugsnag\Configuration;
@@ -61,12 +60,16 @@ class BugsnagServiceProvider extends ServiceProvider
 
             $client = new Client($configuration, $resolver, $guzzle);
 
-            if (!isset($config['middleware']) || $config['middleware']) {
-                $client->registerDefaultMiddleware()->registerMiddleware(new AddUserData(function () use ($app) {
+            if (!isset($config['callbacks']) || $config['callbacks']) {
+                $client->registerDefaultCallbacks();
+            }
+
+            if (!isset($config['user']) || $config['user']) {
+                $client->registerUserResolver(function () use ($app) {
                     if ($user = $app->auth->user()) {
                         return $user->toArray();
                     }
-                }));
+                });
             }
 
             $client->setStripPath($app->basePath());
