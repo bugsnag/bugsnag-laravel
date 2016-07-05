@@ -41,7 +41,7 @@ class LaravelRequest implements RequestInterface
      *
      * @return array
      */
-    public function getSessionData()
+    public function getSession()
     {
         $session = $this->request->getSession();
 
@@ -49,11 +49,11 @@ class LaravelRequest implements RequestInterface
     }
 
     /**
-     * Get the cookie data.
+     * Get the cookies.
      *
      * @return array
      */
-    public function getCookieData()
+    public function getCookies()
     {
         return $this->request->cookies->all();
     }

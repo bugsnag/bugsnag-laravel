@@ -57,19 +57,35 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Middleware
+    | Callbacks
     |--------------------------------------------------------------------------
     |
     | Enable this if you'd like us to enable our default set of notification
-    | middleware. These add things like the cookie information and session
+    | callbacks. These add things like the cookie information and session
     | details to the error to be sent to Bugsnag.
     |
-    | If you'd like to add your own middleware, you can call the
-    | Bugsnag::registerMiddleware method from the boot method of your app
+    | If you'd like to add your own callbacks, you can call the
+    | Bugsnag::registerCallback method from the boot method of your app
     | service provider.
     |
     */
 
-    'middleware' => env('BUGSNAG_MIDDLEWARE', true),
+    'callbacks' => env('BUGSNAG_CALLBACKS', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | User
+    |--------------------------------------------------------------------------
+    |
+    | Enable this if you'd like us to set the current user logged in via
+    | Laravel's authentication system.
+    |
+    | If you'd like to add your own user resolver, you can call the
+    | Bugsnag::registerUserResolver method from the boot method of your app
+    | service provider.
+    |
+    */
+
+    'user' => env('BUGSNAG_USER', true),
 
 ];
