@@ -3,6 +3,7 @@
 namespace Bugsnag\BugsnagLaravel;
 
 use Bugsnag\BugsnagLaravel\Request\LaravelResolver;
+use Bugsnag\Callbacks\CustomUser;
 use Bugsnag\Client;
 use Bugsnag\Configuration;
 use Bugsnag\PsrLogger\MultiLogger;
@@ -73,11 +74,11 @@ class BugsnagServiceProvider extends ServiceProvider
             }
 
             if (!isset($config['user']) || $config['user']) {
-                $client->registerUserResolver(function () use ($app) {
+                $client->registerCallback(new CustomUser(function () use ($app) {
                     if ($user = $app->auth->user()) {
                         return $user->toArray();
                     }
-                });
+                }));
             }
 
             $client->setStripPath($app->basePath());
