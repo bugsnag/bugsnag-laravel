@@ -15,6 +15,13 @@ use Laravel\Lumen\Application as LumenApplication;
 class BugsnagServiceProvider extends ServiceProvider
 {
     /**
+     * The package version.
+     *
+     * @var string
+     */
+    const VERSION = '2.0.0';
+
+    /**
      * Boot the service provider.
      *
      * @return void
@@ -78,7 +85,7 @@ class BugsnagServiceProvider extends ServiceProvider
             $client->setReleaseStage($app->environment());
             $client->setNotifier([
                 'name' => 'Bugsnag Laravel',
-                'version' => '2.0.0',
+                'version' => static::VERSION,
                 'url' => 'https://github.com/bugsnag/bugsnag-laravel',
             ]);
 
