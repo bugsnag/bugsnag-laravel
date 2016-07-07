@@ -43,10 +43,10 @@ class BugsnagLumenServiceProvider extends ServiceProvider
             $client->setBatchSending(false);
             $client->setReleaseStage($app->environment());
             $client->setNotifier(array(
-                                     'name' => 'Bugsnag Lumen',
-                                     'version' => '1.6.4',
-                                     'url' => 'https://github.com/bugsnag/bugsnag-laravel',
-                                 ));
+                'name' => 'Bugsnag Lumen',
+                'version' => '1.7.0',
+                'url' => 'https://github.com/bugsnag/bugsnag-laravel',
+            ));
 
             if (isset($config['notify_release_stages']) && is_array($config['notify_release_stages'])) {
                 $client->setNotifyReleaseStages($config['notify_release_stages']);
