@@ -1,17 +1,20 @@
 <?php
 
-class ExampleTest extends TestCase {
+use Laravel\Lumen\Testing\DatabaseTransactions;
 
+class ExampleTest extends TestCase
+{
     /**
      * A basic test example.
      *
      * @return void
      */
-    public function testBasicExample()
+    public function testExample()
     {
-        $response = $this->call('GET', '/');
+        $this->get('/');
 
-        $this->assertResponseOk();
+        $this->assertEquals(
+            $this->app->version(), $this->response->getContent()
+        );
     }
-
 }
