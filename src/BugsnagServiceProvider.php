@@ -64,8 +64,16 @@ class BugsnagServiceProvider extends ServiceProvider
             $config = $app->config->get('bugsnag');
 
             $configuration = new Configuration($config['api_key']);
+
             $resolver = new LaravelResolver($app);
-            $guzzle = new Guzzle(['base_uri' => isset($config['endpoint']) ? $config['endpoint'] : Client::ENDPOINT]);
+
+            $options = ['base_uri' => isset($config['endpoint']) ? $config['endpoint'] : Client::ENDPOINT];
+
+            if (isset($config['proxy']) && $config['proxy']) {
+                $options['proxy'] = $config['proxy'];
+            }
+
+            $guzzle = new Guzzle($options);
 
             $client = new Client($configuration, $resolver, $guzzle);
 
