@@ -88,4 +88,20 @@ return [
 
     'user' => env('BUGSNAG_USER', true),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Proxy
+    |--------------------------------------------------------------------------
+    |
+    | This is where you can set the proxy settings you'd like us to use when
+    | communicating with Bugsnag when reporting errors.
+    |
+    */
+
+    'proxy' => array_filter([
+        'http' => env('HTTP_PROXY'),
+        'https' => env('HTTPS_PROXY'),
+        'no' => explode(',', str_replace(' ', '', env('NO_PROXY', ''))) ?: null,
+    ]),
+
 ];
