@@ -1,7 +1,25 @@
 Changelog
 =========
 
-## 1.6.4 (9 Mar 2016)
+## 1.7.0 (2016-06-24)
+
+## Enhancements
+
+* Let Laravel decide whether to report or not
+  [Phil Bates](https://github.com/philbates35)
+  [#97](https://github.com/bugsnag/bugsnag-laravel/pull/97)
+
+## Bug Fixes
+
+* Fixed version constraint
+  [Graham Campbell](https://github.com/GrahamCampbell)
+  [#111](https://github.com/bugsnag/bugsnag-laravel/pull/111)
+
+* Ensure the api key is a string
+  [Graham Campbell](https://github.com/GrahamCampbell)
+  [57afd32](https://github.com/bugsnag/bugsnag-laravel/commit/57afd321273486d4f24a96d9eb3f0938278c9f4d)
+
+## 1.6.4 (2016-03-09)
 
 ### Bug Fixes
 
