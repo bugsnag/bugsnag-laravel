@@ -11,7 +11,7 @@
         }
     ],
     "require": {
-        "php": ">=5.5.9",
+        "php": ">=5.5",
         "illuminate/contracts": "^5.0",
         "illuminate/support": "^5.0",
         "bugsnag/bugsnag": "^3.0",
