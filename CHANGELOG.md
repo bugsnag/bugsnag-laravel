@@ -1,6 +1,14 @@
 Changelog
 =========
 
+## 2.0.1 (2016-07-08)
+
+### Bug Fixes
+
+* Lowered the minimum PHP version to 5.5.0
+  [Graham Campbell](https://github.com/GrahamCampbell)
+  [#138](https://github.com/bugsnag/bugsnag-laravel/pull/138)
+
 ## 2.0.0 (2016-07-07)
 
 Our library has gone through some major improvements. The primary change to watch out for is we're no longer overriding your exception handler.
