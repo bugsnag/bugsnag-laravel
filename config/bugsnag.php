@@ -27,7 +27,7 @@ return [
     |
     */
 
-    'notify_release_stages' => env('BUGSNAG_NOTIFY_RELEASE_STAGES', null),
+    'notify_release_stages' => (env('BUGSNAG_NOTIFY_RELEASE_STAGES') ? explode(',', env('BUGSNAG_NOTIFY_RELEASE_STAGES')) : null),
 
     /*
     |--------------------------------------------------------------------------
