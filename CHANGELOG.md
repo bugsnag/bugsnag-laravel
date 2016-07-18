@@ -1,6 +1,18 @@
 Changelog
 =========
 
+## 2.0.2 (2016-07-18)
+
+### Bug Fixes
+
+* Removed support for using `HTTP_PROXY` environment variable for non-CLI apps
+  per [CVE-2016-5385 (httpoxy)](https://httpoxy.org/).
+* Convert `BUGSNAG_NOTIFY_RELEASE_STAGES` to a comma-delimited array
+  [Jason](https://github.com/fire015)
+  [Graham Campbell](https://github.com/GrahamCampbell)
+  [#142](https://github.com/bugsnag/bugsnag-laravel/pull/142)
+  [#144](https://github.com/bugsnag/bugsnag-laravel/pull/144)
+
 ## 2.0.1 (2016-07-08)
 
 ### Bug Fixes
