@@ -99,7 +99,6 @@ return [
     */
 
     'proxy' => array_filter([
-        'http' => env('HTTP_PROXY'),
         'https' => env('HTTPS_PROXY'),
         'no' => explode(',', str_replace(' ', '', env('NO_PROXY', ''))) ?: null,
     ]),
