@@ -70,6 +70,10 @@ class BugsnagServiceProvider extends ServiceProvider
             $options = ['base_uri' => isset($config['endpoint']) ? $config['endpoint'] : Client::ENDPOINT];
 
             if (isset($config['proxy']) && $config['proxy']) {
+                if (isset($config['proxy']['http'])) {
+                    unset($config['proxy']['http']);
+                }
+
                 $options['proxy'] = $config['proxy'];
             }
 
