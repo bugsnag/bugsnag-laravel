@@ -6,7 +6,6 @@ use Bugsnag\BugsnagLaravel\Request\LaravelResolver;
 use Bugsnag\Callbacks\CustomUser;
 use Bugsnag\Client;
 use Bugsnag\Configuration;
-use Bugsnag\PsrLogger\MultiLogger;
 use GuzzleHttp\Client as Guzzle;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Foundation\Application as LaravelApplication;
