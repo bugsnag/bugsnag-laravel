@@ -122,7 +122,7 @@ class BugsnagServiceProvider extends ServiceProvider
         });
 
         $this->app->alias('bugsnag', Client::class);
-        $this->app->alias('bugsnag.logger', LaraveLogger::class);
+        $this->app->alias('bugsnag.logger', LaravelLogger::class);
         $this->app->alias('bugsnag.multi', MultiLogger::class);
     }
 
