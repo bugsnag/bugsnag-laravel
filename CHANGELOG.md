@@ -1,6 +1,20 @@
 Changelog
 =========
 
+## 2.1.0 (2016-07-25)
+
+## Enhancements
+
+* Implement Laravel's logger contract
+  [Graham Campbell](https://github.com/GrahamCampbell)
+  [#147](https://github.com/bugsnag/bugsnag-laravel/pull/147)
+
+## Bug Fixes
+
+* Fixed container aliasing of the logger
+  [Rémi Pelhate](https://github.com/remipelhate)
+  [#151](https://github.com/bugsnag/bugsnag-laravel/pull/151)
+
 ## 2.0.2 (2016-07-18)
 
 ### Bug Fixes
