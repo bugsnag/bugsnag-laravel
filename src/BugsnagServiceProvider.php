@@ -50,6 +50,9 @@ class BugsnagServiceProvider extends ServiceProvider
         } else {
             $this->app['queue']->looping($callback);
         }
+
+        $this->app['bugsnag']->setReleaseStage($this->app->environment());
+        $this->app['bugsnag']->setAppType($this->app->runningInConsole() ? 'Console' : 'Web');
     }
 
     /**
