@@ -138,7 +138,9 @@ class BugsnagServiceProvider extends ServiceProvider
     /**
      * Get the guzzle client instance.
      *
-     * @return void
+     * @param array $config
+     *
+     * @return \GuzzleHttp\ClientInterface
      */
     protected function getGuzzle(array $config)
     {
