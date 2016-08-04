@@ -40,7 +40,7 @@ class BugsnagServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function setupConfig(Container $app)
+    public function setupConfig(Container $app)
     {
         $source = realpath(__DIR__.'/../config/bugsnag.php');
 
@@ -61,7 +61,7 @@ class BugsnagServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function setupQueue(Client $bugsnag, QueueManager $queue)
+    public function setupQueue(Client $bugsnag, QueueManager $queue)
     {
         $callback = function () use ($bugsnag) {
             $bugsnag->flush();
