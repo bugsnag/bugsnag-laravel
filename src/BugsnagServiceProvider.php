@@ -56,15 +56,14 @@ class BugsnagServiceProvider extends ServiceProvider
     /**
      * Setup the queue.
      *
-     * @param \Bugsnag\Client                $bugsnag
      * @param \Illuminate\Queue\QueueManager $queue
      *
      * @return void
      */
-    public function setupQueue(Client $bugsnag, QueueManager $queue)
+    public function setupQueue(QueueManager $queue)
     {
-        $callback = function () use ($bugsnag) {
-            $bugsnag->flush();
+        $callback = function () {
+            $this->app->bugsnag->flush();
         };
 
         $queue->before($callback);
