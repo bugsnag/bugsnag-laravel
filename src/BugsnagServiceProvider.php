@@ -88,23 +88,7 @@ class BugsnagServiceProvider extends ServiceProvider
         $this->app->singleton('bugsnag', function (Container $app) {
             $config = $app->config->get('bugsnag');
 
-            $configuration = new Configuration($config['api_key']);
-
-            $resolver = new LaravelResolver($app);
-
-            $options = ['base_uri' => isset($config['endpoint']) ? $config['endpoint'] : Client::ENDPOINT];
-
-            if (isset($config['proxy']) && $config['proxy']) {
-                if (isset($config['proxy']['http']) && php_sapi_name() != 'cli') {
-                    unset($config['proxy']['http']);
-                }
-
-                $options['proxy'] = $config['proxy'];
-            }
-
-            $guzzle = new Guzzle($options);
-
-            $client = new Client($configuration, $resolver, $guzzle);
+            $client = new Client(new Configuration($config['api_key']), new LaravelResolver($app), $this->getGuzzle($config));
 
             if (!isset($config['callbacks']) || $config['callbacks']) {
                 $client->registerDefaultCallbacks();
@@ -149,6 +133,26 @@ class BugsnagServiceProvider extends ServiceProvider
         $this->app->alias('bugsnag', Client::class);
         $this->app->alias('bugsnag.logger', LaravelLogger::class);
         $this->app->alias('bugsnag.multi', MultiLogger::class);
+    }
+
+    /**
+     * Get the guzzle client instance.
+     *
+     * @return void
+     */
+    protected function getGuzzle(array $config)
+    {
+        $options = ['base_uri' => isset($config['endpoint']) ? $config['endpoint'] : Client::ENDPOINT];
+
+        if (isset($config['proxy']) && $config['proxy']) {
+            if (isset($config['proxy']['http']) && php_sapi_name() != 'cli') {
+                unset($config['proxy']['http']);
+            }
+
+            $options['proxy'] = $config['proxy'];
+        }
+
+        return new Guzzle($options);
     }
 
     /**
