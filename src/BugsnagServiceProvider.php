@@ -66,7 +66,13 @@ class BugsnagServiceProvider extends ServiceProvider
 
             $resolver = new LaravelResolver($app);
 
-            $options = ['base_uri' => isset($config['endpoint']) ? $config['endpoint'] : Client::ENDPOINT];
+            $baseUri = isset($config['endpoint']) ? $config['endpoint'] : Client::ENDPOINT;
+
+            if(version_compare(Guzzle::VERSION,'6') == 1){
+                $options = ['base_uri' => $baseUri];
+            }else{
+                $options = ['base_url' => $baseUri];
+            }
 
             if (isset($config['proxy']) && $config['proxy']) {
                 if (isset($config['proxy']['http']) && php_sapi_name() != 'cli') {
