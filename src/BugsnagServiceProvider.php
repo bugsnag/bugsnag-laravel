@@ -2,12 +2,15 @@
 
 namespace Bugsnag\BugsnagLaravel;
 
+use Bugsnag\Breadcrumbs\Breadcrumb;
 use Bugsnag\BugsnagLaravel\Request\LaravelResolver;
 use Bugsnag\Callbacks\CustomUser;
 use Bugsnag\Client;
 use Bugsnag\Configuration;
+use Exception;
 use GuzzleHttp\Client as Guzzle;
 use Illuminate\Contracts\Container\Container;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Queue\QueueManager;
 use Illuminate\Support\ServiceProvider;
@@ -30,6 +33,7 @@ class BugsnagServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->app->call([$this, 'setupConfig']);
+        $this->app->call([$this, 'setupEvents']);
         $this->app->call([$this, 'setupQueue']);
     }
 
@@ -54,6 +58,24 @@ class BugsnagServiceProvider extends ServiceProvider
     }
 
     /**
+     * Setup the events.
+     *
+     * @param \Illuminate\Contracts\Events\Dispatcher $events
+     *
+     * @return void
+     */
+    public function setupEvents(Dispatcher $events)
+    {
+        $events->listen('*', function () use ($events) {
+            try {
+                $this->app->bugsnag->leaveBreadcrumb($events->firing(), Breadcrumb::STATE_TYPE, func_get_args());
+            } catch (Exception $e) {
+                //
+            }
+        });
+    }
+
+    /**
      * Setup the queue.
      *
      * @param \Illuminate\Queue\QueueManager $queue
@@ -75,6 +97,10 @@ class BugsnagServiceProvider extends ServiceProvider
         } else {
             $queue->looping($callback);
         }
+
+        $queue->before(function () {
+            $this->app->bugsnag->clearBreadcrumbs();
+        });
     }
 
     /**
