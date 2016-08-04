@@ -9,6 +9,7 @@ use Bugsnag\Configuration;
 use GuzzleHttp\Client as Guzzle;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Foundation\Application as LaravelApplication;
+use Illuminate\Queue\QueueManager;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Lumen\Application as LumenApplication;
 
@@ -28,27 +29,52 @@ class BugsnagServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->app->call([$this, 'setupConfig']);
+        $this->app->call([$this, 'setupQueue']);
+    }
+
+    /**
+     * Setup the config.
+     *
+     * @param \Illuminate\Contracts\Container\Container $app
+     *
+     * @return void
+     */
+    protected function setupConfig(Container $app)
+    {
         $source = realpath(__DIR__.'/../config/bugsnag.php');
 
-        if ($this->app instanceof LaravelApplication && $this->app->runningInConsole()) {
+        if ($app instanceof LaravelApplication && $app->runningInConsole()) {
             $this->publishes([$source => config_path('bugsnag.php')]);
-        } elseif ($this->app instanceof LumenApplication) {
-            $this->app->configure('bugsnag');
+        } elseif ($app instanceof LumenApplication) {
+            $app->configure('bugsnag');
         }
 
         $this->mergeConfigFrom($source, 'bugsnag');
+    }
 
-        $callback = function () {
-            $this->app['bugsnag']->flush();
+    /**
+     * Setup the queue.
+     *
+     * @param \Bugsnag\Client                $bugsnag
+     * @param \Illuminate\Queue\QueueManager $queue
+     *
+     * @return void
+     */
+    protected function setupQueue(Client $bugsnag, QueueManager $queue)
+    {
+        $callback = function () use ($bugsnag) {
+            $bugsnag->flush();
         };
 
-        $this->app['queue']->after($callback);
-        $this->app['queue']->stopping($callback);
+        $queue->before($callback);
+        $queue->after($callback);
+        $queue->stopping($callback);
 
-        if (method_exists($this->app['queue'], 'exceptionOccurred')) {
-            $this->app['queue']->exceptionOccurred($callback);
+        if (method_exists($queue, 'exceptionOccurred')) {
+            $queue->exceptionOccurred($callback);
         } else {
-            $this->app['queue']->looping($callback);
+            $queue->looping($callback);
         }
     }
 
