@@ -85,32 +85,10 @@ class BugsnagServiceProvider extends ServiceProvider
      */
     protected function setupQueue(QueueManager $queue)
     {
-        $callback = function () {
+        $queue->looping(function () {
             $this->app->bugsnag->flush();
-        };
-
-        if (method_exists($queue, 'before')) {
-            $queue->before($callback);
-        }
-
-        $queue->after($callback);
-        $queue->stopping($callback);
-
-        if (method_exists($queue, 'exceptionOccurred')) {
-            $queue->exceptionOccurred($callback);
-        } else {
-            $queue->looping($callback);
-        }
-
-        if (method_exists($queue, 'before')) {
-            $queue->before(function () {
-                $this->app->bugsnag->clearBreadcrumbs();
-            });
-        } else {
-            $queue->looping(function () {
-                $this->app->bugsnag->clearBreadcrumbs();
-            });
-        }
+            $this->app->bugsnag->clearBreadcrumbs();
+        });
     }
 
     /**
