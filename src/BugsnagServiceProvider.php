@@ -102,7 +102,9 @@ class BugsnagServiceProvider extends ServiceProvider
         }
 
         if (method_exists($queue, 'before')) {
-            $queue->before($callback);
+            $queue->before(function () {
+                $this->app->bugsnag->clearBreadcrumbs();
+            });
         } else {
             $queue->looping(function () {
                 $this->app->bugsnag->clearBreadcrumbs();
