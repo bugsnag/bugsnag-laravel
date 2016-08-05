@@ -33,9 +33,9 @@ class BugsnagServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->app->call([$this, 'setupConfig']);
-        $this->app->call([$this, 'setupEvents']);
-        $this->app->call([$this, 'setupQueue']);
+        $this->setupConfig($this->app);
+        $this->setupEvents($this->events);
+        $this->setupQueue($this->queue);
     }
 
     /**
@@ -45,7 +45,7 @@ class BugsnagServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function setupConfig(Container $app)
+    protected function setupConfig(Container $app)
     {
         $source = realpath(__DIR__.'/../config/bugsnag.php');
 
@@ -65,7 +65,7 @@ class BugsnagServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function setupEvents(Dispatcher $events)
+    protected function setupEvents(Dispatcher $events)
     {
         $events->listen('*', function () use ($events) {
             try {
@@ -83,7 +83,7 @@ class BugsnagServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function setupQueue(QueueManager $queue)
+    protected function setupQueue(QueueManager $queue)
     {
         $callback = function () {
             $this->app->bugsnag->flush();
