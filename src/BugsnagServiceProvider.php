@@ -68,7 +68,7 @@ class BugsnagServiceProvider extends ServiceProvider
     {
         $events->listen('*', function () use ($events) {
             try {
-                $this->app->bugsnag->leaveBreadcrumb($events->firing(), Breadcrumb::STATE_TYPE, func_get_args());
+                $this->app->bugsnag->leaveBreadcrumb($events->firing(), Breadcrumb::STATE_TYPE);
             } catch (Exception $e) {
                 //
             }
