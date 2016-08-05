@@ -34,8 +34,8 @@ class BugsnagServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->setupConfig($this->app);
-        $this->setupEvents($this->events);
-        $this->setupQueue($this->queue);
+        $this->setupEvents($this->app->events);
+        $this->setupQueue($this->app->queue);
     }
 
     /**
