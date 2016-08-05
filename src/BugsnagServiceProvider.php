@@ -140,7 +140,7 @@ class BugsnagServiceProvider extends ServiceProvider
             $client->setStripPath($app->basePath());
             $client->setProjectRoot($app->path());
             $client->setReleaseStage($app->environment());
-            $client->setAppType($app->runningInConsole() ? 'Console' : 'Web');
+            $client->setAppType($app->runningInConsole() ? 'Console' : 'HTTP');
 
             $client->setNotifier([
                 'name' => 'Bugsnag Laravel',
