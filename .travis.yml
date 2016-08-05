@@ -5,30 +5,30 @@ sudo: false
 matrix:
   include:
     - php: 5.5.9
-      env: GUZZLE_VERSION=^5.0
+      env: GUZZLE_VERSION=^5.3
     - php: 5.5.9
       env: GUZZLE_VERSION=^6.0
     - php: 5.5
-      env: GUZZLE_VERSION=^5.0
+      env: GUZZLE_VERSION=^5.3
     - php: 5.5
       env: GUZZLE_VERSION=^6.0
     - php: 5.6
-      env: GUZZLE_VERSION=^5.0
+      env: GUZZLE_VERSION=^5.3
     - php: 5.6
       env: GUZZLE_VERSION=^6.0
     - php: 7.0
-      env: GUZZLE_VERSION=^5.0
+      env: GUZZLE_VERSION=^5.3
     - php: 7.0
       env: GUZZLE_VERSION=^6.0
     - php: 7.1
-      env: GUZZLE_VERSION=^5.0
+      env: GUZZLE_VERSION=^5.3
     - php: 7.1
       env: GUZZLE_VERSION=^6.0
     - php: hhvm-3.6
       sudo: required
       dist: trusty
       group: edge
-      env: GUZZLE_VERSION=^5.0
+      env: GUZZLE_VERSION=^5.3
     - php: hhvm-3.6
       sudo: required
       dist: trusty
@@ -38,7 +38,7 @@ matrix:
       sudo: required
       dist: trusty
       group: edge
-      env: GUZZLE_VERSION=^5.0
+      env: GUZZLE_VERSION=^5.3
     - php: hhvm-3.9
       sudo: required
       dist: trusty
@@ -48,7 +48,7 @@ matrix:
       sudo: required
       dist: trusty
       group: edge
-      env: GUZZLE_VERSION=^5.0
+      env: GUZZLE_VERSION=^5.3
     - php: hhvm-3.12
       sudo: required
       dist: trusty
@@ -60,7 +60,8 @@ before_install:
   - composer require "guzzlehttp/guzzle:${GUZZLE_VERSION}" --no-update
 
 install:
-  - travis_retry composer install --no-interaction --prefer-source
+  - if [[ $TRAVIS_PHP_VERSION == 5.5.9 ]]; then travis_retry composer update --no-interaction --prefer-source --prefer-lowest ; fi
+  - if [[ $TRAVIS_PHP_VERSION != 5.5.9 ]]; then travis_retry composer update --no-interaction --prefer-source ; fi
 
 script:
   - make test
