@@ -88,7 +88,10 @@ class BugsnagServiceProvider extends ServiceProvider
             $this->app->bugsnag->flush();
         };
 
-        $queue->before($callback);
+        if (method_exists($queue, 'before')) {
+            $queue->before($callback);
+        }
+
         $queue->after($callback);
         $queue->stopping($callback);
 
@@ -98,9 +101,15 @@ class BugsnagServiceProvider extends ServiceProvider
             $queue->looping($callback);
         }
 
-        $queue->before(function () {
-            $this->app->bugsnag->clearBreadcrumbs();
-        });
+        if (method_exists($queue, 'before')) {
+            $queue->before(function () {
+                $this->app->bugsnag->clearBreadcrumbs();
+            });
+        } else {
+            $queue->looping(function () {
+                $this->app->bugsnag->clearBreadcrumbs();
+            });
+        }
     }
 
     /**
