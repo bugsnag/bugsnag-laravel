@@ -14,8 +14,8 @@
         "php": ">=5.5",
         "illuminate/contracts": "^5.0",
         "illuminate/support": "^5.0",
-        "bugsnag/bugsnag": "^3.0",
-        "bugsnag/bugsnag-psr-logger": "^1.0"
+        "bugsnag/bugsnag": "^3.2",
+        "bugsnag/bugsnag-psr-logger": "^1.1"
     },
     "require-dev": {
         "graham-campbell/testbench": "^3.1",
