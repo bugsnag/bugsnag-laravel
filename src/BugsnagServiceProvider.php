@@ -8,8 +8,6 @@ use Bugsnag\Callbacks\CustomUser;
 use Bugsnag\Client;
 use Bugsnag\Configuration;
 use Exception;
-use GuzzleHttp\Client as Guzzle;
-use GuzzleHttp\ClientInterface;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Foundation\Application as LaravelApplication;
@@ -159,9 +157,7 @@ class BugsnagServiceProvider extends ServiceProvider
      */
     protected function getGuzzle(array $config)
     {
-        $key = version_compare(ClientInterface::VERSION, '6') === 1 ? 'base_uri' : 'base_url';
-
-        $options = [$key => isset($config['endpoint']) ? $config['endpoint'] : Client::ENDPOINT];
+        $options = [];
 
         if (isset($config['proxy']) && $config['proxy']) {
             if (isset($config['proxy']['http']) && php_sapi_name() != 'cli') {
@@ -171,7 +167,7 @@ class BugsnagServiceProvider extends ServiceProvider
             $options['proxy'] = $config['proxy'];
         }
 
-        return new Guzzle($options);
+        return Client::makeGuzzle(isset($config['endpoint']) ? $config['endpoint'] : null, $options);
     }
 
     /**
