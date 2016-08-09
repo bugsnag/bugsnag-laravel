@@ -1,11 +1,11 @@
 Changelog
 =========
 
-## 2.2.0 (2016-08-05)
+## 2.2.0 (2016-08-08)
 
 ## Enhancements
 
-* Added a bugnsag:deploy console command
+* Added a `bugsnag:deploy` console command
   [Graham Campbell](https://github.com/GrahamCampbell)
   [#154](https://github.com/bugsnag/bugsnag-laravel/pull/154)
 
