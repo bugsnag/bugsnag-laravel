@@ -1,6 +1,32 @@
 Changelog
 =========
 
+## 2.2.0 (2016-08-08)
+
+## Enhancements
+
+* Added a `bugsnag:deploy` console command
+  [Graham Campbell](https://github.com/GrahamCampbell)
+  [#154](https://github.com/bugsnag/bugsnag-laravel/pull/154)
+
+* Record events as breadrumbs
+  [Graham Campbell](https://github.com/GrahamCampbell)
+  [#159](https://github.com/bugsnag/bugsnag-laravel/pull/159)
+
+* Support both guzzle 5 and 6
+  [Graham Campbell](https://github.com/GrahamCampbell)
+  [#164](https://github.com/bugsnag/bugsnag-laravel/pull/164)
+
+* Set the app type automatically
+  [Graham Campbell](https://github.com/GrahamCampbell)
+  [#167](https://github.com/bugsnag/bugsnag-laravel/pull/167)
+
+## Bug Fixes
+
+* Fixed support for older laravel versions
+  [Graham Campbell](https://github.com/GrahamCampbell)
+  [#173](https://github.com/bugsnag/bugsnag-laravel/pull/173)
+
 ## 2.1.0 (2016-07-25)
 
 ## Enhancements
