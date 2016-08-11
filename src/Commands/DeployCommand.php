@@ -42,9 +42,9 @@ class DeployCommand extends Command
     protected function getOptions()
     {
         return [
-            ['repository', null, InputOption::VALUE_OPTIONAL, 'The desired namespace.', null],
-            ['branch', null, InputOption::VALUE_OPTIONAL, 'The desired namespace.', null],
-            ['revision', null, InputOption::VALUE_OPTIONAL, 'The desired namespace.', null],
+            ['repository', null, InputOption::VALUE_OPTIONAL, 'The repository from which you are deploying the code.', null],
+            ['branch', null, InputOption::VALUE_OPTIONAL, 'The source control branch from which you are deploying.', null],
+            ['revision', null, InputOption::VALUE_OPTIONAL, 'The source control revision you are currently deploying.', null],
         ];
     }
 }
