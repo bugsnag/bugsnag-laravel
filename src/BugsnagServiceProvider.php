@@ -118,6 +118,12 @@ class BugsnagServiceProvider extends ServiceProvider
             $client->setReleaseStage($app->environment());
             $client->setAppType($app->runningInConsole() ? 'Console' : 'HTTP');
 
+            if(! $app['config']->has('app.version') && isset($config['version'])) {
+                $client->setAppVersion($app['version']);
+            } else {
+                $client->setAppVersion($app['config']['app.version']);
+            }
+
             $client->setNotifier([
                 'name' => 'Bugsnag Laravel',
                 'version' => static::VERSION,

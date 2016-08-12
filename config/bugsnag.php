@@ -4,6 +4,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | User defined application version
+    |--------------------------------------------------------------------------
+    |
+    | Sets the user provided application version which will be used by bugsnag.
+    |
+    | This can be overridden by setting the key in config/app.php instead.
+    |
+    */
+
+    'version' => '0.0.0',
+
+    /*
+    |--------------------------------------------------------------------------
     | API Key
     |--------------------------------------------------------------------------
     |
