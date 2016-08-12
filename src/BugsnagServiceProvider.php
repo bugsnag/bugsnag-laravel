@@ -118,9 +118,9 @@ class BugsnagServiceProvider extends ServiceProvider
             $client->setReleaseStage($app->environment());
             $client->setAppType($app->runningInConsole() ? 'Console' : 'HTTP');
 
-            if($app['config']->has('app.version')) {
+            if ($app['config']->has('app.version')) {
                 $client->setAppVersion($app['config']['app.version']);
-            } else if(isset($config['version'])) {
+            } elseif(isset($config['version'])) {
                 $client->setAppVersion($config['version']);
             }
 
