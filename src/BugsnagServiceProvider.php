@@ -120,7 +120,7 @@ class BugsnagServiceProvider extends ServiceProvider
 
             if ($app['config']->has('app.version')) {
                 $client->setAppVersion($app['config']['app.version']);
-            } elseif(isset($config['version'])) {
+            } elseif (isset($config['version'])) {
                 $client->setAppVersion($config['version']);
             }
 
