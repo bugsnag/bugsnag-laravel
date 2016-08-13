@@ -90,6 +90,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Events
+    |--------------------------------------------------------------------------
+    |
+    | Enable this if you'd like us to automatically record all fired events as
+    | breadcrumbs. This includes both framework and user dispatched events.
+    |
+    */
+
+    'events' => env('BUGSNAG_EVENTS', true),
+
+    /*
+    |--------------------------------------------------------------------------
     | Proxy
     |--------------------------------------------------------------------------
     |

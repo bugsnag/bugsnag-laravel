@@ -32,7 +32,9 @@ class BugsnagServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->setupConfig($this->app);
-        $this->setupEvents($this->app->events);
+
+        $this->setupEvents($this->app->events, $this->app->config->get('bugsnag'));
+
         $this->setupQueue($this->app->queue);
     }
 
@@ -60,11 +62,16 @@ class BugsnagServiceProvider extends ServiceProvider
      * Setup the events.
      *
      * @param \Illuminate\Contracts\Events\Dispatcher $events
+     * @param array                                   $config
      *
      * @return void
      */
-    protected function setupEvents(Dispatcher $events)
+    protected function setupEvents(Dispatcher $events, array $config)
     {
+        if (isset($config['events']) && !$config['events']) {
+            return;
+        }
+
         $events->listen('*', function () use ($events) {
             try {
                 $this->app->bugsnag->leaveBreadcrumb($events->firing(), Breadcrumb::STATE_TYPE);
