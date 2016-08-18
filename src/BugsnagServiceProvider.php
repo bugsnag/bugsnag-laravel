@@ -3,14 +3,17 @@
 namespace Bugsnag\BugsnagLaravel;
 
 use Bugsnag\Breadcrumbs\Breadcrumb;
+use Bugsnag\BugsnagLaravel\Queue\Tracker;
 use Bugsnag\BugsnagLaravel\Request\LaravelResolver;
 use Bugsnag\Callbacks\CustomUser;
 use Bugsnag\Client;
 use Bugsnag\Configuration;
+use Bugsnag\Report;
 use Exception;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Foundation\Application as LaravelApplication;
+use Illuminate\Queue\Events\JobProcessing;
 use Illuminate\Queue\QueueManager;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Lumen\Application as LumenApplication;
@@ -93,6 +96,28 @@ class BugsnagServiceProvider extends ServiceProvider
         $queue->looping(function () {
             $this->app->bugsnag->flush();
             $this->app->bugsnag->clearBreadcrumbs();
+            $this->app->make(Tracker::class)->clear();
+        });
+
+        if (!class_exists(JobProcessing::class)) {
+            return;
+        }
+
+        $queue->before(function (JobProcessing $event) {
+            $this->app->bugsnag->setAppType('Queue');
+
+            $job = [
+                'name' => $event->job->getName(),
+                'queue' => $event->job->getQueue(),
+                'attempts' => $event->job->attempts(),
+                'connection' => $event->connectionName,
+            ];
+
+            if (method_exists($event->job, 'resolveName')) {
+                $job['resolved'] = $event->job->resolveName();
+            }
+
+            $this->app->make(Tracker::class)->set($job);
         });
     }
 
@@ -110,6 +135,18 @@ class BugsnagServiceProvider extends ServiceProvider
 
             if (!isset($config['callbacks']) || $config['callbacks']) {
                 $client->registerDefaultCallbacks();
+
+                $client->registerCallback(function (Report $report) use ($app) {
+                    $tracker = $app->make(Tracker::class);
+
+                    if ($context = $tracker->context()) {
+                        $report->setContext($context);
+                    }
+
+                    if ($job = $tracker->get()) {
+                        $report->setMetaData(['job' => $job]);
+                    }
+                });
             }
 
             if (!isset($config['user']) || $config['user']) {
@@ -142,6 +179,10 @@ class BugsnagServiceProvider extends ServiceProvider
             return $client;
         });
 
+        $this->app->singleton('bugsnag.tracker', function () {
+            return new Tracker();
+        });
+
         $this->app->singleton('bugsnag.logger', function (Container $app) {
             return new LaravelLogger($app['bugsnag']);
         });
@@ -151,6 +192,7 @@ class BugsnagServiceProvider extends ServiceProvider
         });
 
         $this->app->alias('bugsnag', Client::class);
+        $this->app->alias('bugsnag.tracker', Tracker::class);
         $this->app->alias('bugsnag.logger', LaravelLogger::class);
         $this->app->alias('bugsnag.multi', MultiLogger::class);
     }
@@ -184,6 +226,6 @@ class BugsnagServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['bugsnag', 'bugsnag.logger', 'bugsnag.multi'];
+        return ['bugsnag', 'bugsnag.tracker', 'bugsnag.logger', 'bugsnag.multi'];
     }
 }
