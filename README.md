@@ -7,9 +7,9 @@ The Bugsnag Notifier for Laravel gives you instant notification of errors and
 exceptions in your Laravel PHP applications. We support both Laravel and Lumen.
 
 
-### Looking for 1.x?
+### Looking for Laravel 4 support?
 
-v1 of our Laravel package supports Laravel 4 and uses v2 of our main PHP library. You can find it on our [1.7 branch](https://github.com/bugsnag/bugsnag-laravel/tree/1.7).
+v1 of our Laravel package supports Laravel 4. You can find it on our [1.7 branch](https://github.com/bugsnag/bugsnag-laravel/tree/1.7).
 
 
 ## Features
