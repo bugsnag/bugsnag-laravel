@@ -74,23 +74,45 @@ class BugsnagServiceProvider extends ServiceProvider
 
         if (class_exists(QueryExecuted::class)) {
             $events->listen(QueryExecuted::class, function (QueryExecuted $query) {
-                $this->app->bugsnag->leaveBreadcrumb('Query executed', Breadcrumb::STATE_TYPE, [
-                    'sql' => $query->sql,
-                    'bindings' => json_encode($query->bindings),
-                    'time' => $query->time,
-                    'connection' => $query->connectionName,
-                ]);
+                $this->app->bugsnag->leaveBreadcrumb(
+                    'Query executed',
+                    Breadcrumb::PROCESS_TYPE,
+                    $this->formatQuery($query->sql, $query->bindings, $query->time, $query->connectionName)
+                );
             });
         } else {
-            $events->listen('illuminate.query', function ($sql, $bindings, $time, $connection) {
-                $this->app->bugsnag->leaveBreadcrumb('Query executed', Breadcrumb::STATE_TYPE, [
-                    'sql' => $sql,
-                    'bindings' => json_encode($query->bindings),
-                    'time' => $time,
-                    'connection' => $connection,
-                ]);
+            $events->listen('illuminate.query', function ($sql, array $bindings, $time, $connection) {
+                $this->app->bugsnag->leaveBreadcrumb(
+                    'Query executed',
+                    Breadcrumb::PROCESS_TYPE,
+                    $this->formatQuery($sql, $bindings, $time, $connection)
+                );
             });
         }
+    }
+
+    /**
+     * Format the query as breadcrumb metadata.
+     *
+     * @param string $sql
+     * @param array  $bindings
+     * @param float  $time
+     * @param string $connection
+     *
+     * @return array
+     */
+    protected function formatQuery($sql, array $bindings, $time, $connection)
+    {
+        $data = ['sql' => $sql];
+
+        foreach ($bindings as $index => $binding) {
+            $data["binding {$index}"] = $binding;
+        }
+
+        $data['time'] = $time;
+        $data['connection'] = $connection;
+
+        return $data;
     }
 
     /**
