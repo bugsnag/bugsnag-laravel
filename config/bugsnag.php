@@ -98,7 +98,7 @@ return [
     |
     */
 
-    'query' => env('BUGSNAG_QUERY', true),
+    'query' => env('BUGSNAG_QUERY', false),
 
     /*
     |--------------------------------------------------------------------------

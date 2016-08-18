@@ -68,7 +68,7 @@ class BugsnagServiceProvider extends ServiceProvider
      */
     protected function setupEvents(Dispatcher $events, array $config)
     {
-        if (isset($config['query']) && !$config['query']) {
+        if (! isset($config['query']) || !$config['query']) {
             return;
         }
 
