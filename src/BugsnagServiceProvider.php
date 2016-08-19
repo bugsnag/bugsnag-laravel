@@ -75,7 +75,7 @@ class BugsnagServiceProvider extends ServiceProvider
             return;
         }
 
-        $show = isset($config['bindings']) && $config['bindings']);
+        $show = isset($config['bindings']) && $config['bindings'];
 
         if (class_exists(QueryExecuted::class)) {
             $events->listen(QueryExecuted::class, function (QueryExecuted $query) use ($show) {
