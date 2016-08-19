@@ -1,6 +1,24 @@
 Changelog
 =========
 
+## 2.3.0 (2016-08-19)
+
+## Enhancements
+
+* Record the queue context and job information
+  [Graham Campbell](https://github.com/GrahamCampbell)
+  [#183](https://github.com/bugsnag/bugsnag-laravel/pull/183)
+
+* Replaced event logging with query recording
+  [Graham Campbell](https://github.com/GrahamCampbell)
+  [#186](https://github.com/bugsnag/bugsnag-laravel/pull/186)
+
+## Bug Fixes
+
+* Fixed the deploy command option descriptions
+  [Andrew Brown](https://github.com/browner12)
+  [#178](https://github.com/bugsnag/bugsnag-laravel/pull/178)
+
 ## 2.2.0 (2016-08-08)
 
 ## Enhancements
