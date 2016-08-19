@@ -90,15 +90,27 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Events
+    | Query
     |--------------------------------------------------------------------------
     |
-    | Enable this if you'd like us to automatically record all fired events as
-    | breadcrumbs. This includes both framework and user dispatched events.
+    | Enable this if you'd like us to automatically record all queries executed
+    | as breadcrumbs.
     |
     */
 
-    'events' => env('BUGSNAG_EVENTS', true),
+    'query' => env('BUGSNAG_QUERY', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Bindings
+    |--------------------------------------------------------------------------
+    |
+    | Enable this if you'd like us to include the query bindings in our query
+    | breadcrumbs.
+    |
+    */
+
+    'bindings' => env('BUGSNAG_QUERY_BINDINGS', false),
 
     /*
     |--------------------------------------------------------------------------

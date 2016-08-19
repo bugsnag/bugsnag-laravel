@@ -9,9 +9,9 @@ use Bugsnag\Callbacks\CustomUser;
 use Bugsnag\Client;
 use Bugsnag\Configuration;
 use Bugsnag\Report;
-use Exception;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Queue\Events\JobProcessing;
 use Illuminate\Queue\QueueManager;
@@ -71,17 +71,53 @@ class BugsnagServiceProvider extends ServiceProvider
      */
     protected function setupEvents(Dispatcher $events, array $config)
     {
-        if (isset($config['events']) && !$config['events']) {
+        if (isset($config['query']) && !$config['query']) {
             return;
         }
 
-        $events->listen('*', function () use ($events) {
-            try {
-                $this->app->bugsnag->leaveBreadcrumb($events->firing(), Breadcrumb::STATE_TYPE);
-            } catch (Exception $e) {
-                //
-            }
-        });
+        $show = isset($config['bindings']) && $config['bindings'];
+
+        if (class_exists(QueryExecuted::class)) {
+            $events->listen(QueryExecuted::class, function (QueryExecuted $query) use ($show) {
+                $this->app->bugsnag->leaveBreadcrumb(
+                    'Query executed',
+                    Breadcrumb::PROCESS_TYPE,
+                    $this->formatQuery($query->sql, $show ? $query->bindings : [], $query->time, $query->connectionName)
+                );
+            });
+        } else {
+            $events->listen('illuminate.query', function ($sql, array $bindings, $time, $connection) use ($show) {
+                $this->app->bugsnag->leaveBreadcrumb(
+                    'Query executed',
+                    Breadcrumb::PROCESS_TYPE,
+                    $this->formatQuery($sql, $show ? $bindings : [], $time, $connection)
+                );
+            });
+        }
+    }
+
+    /**
+     * Format the query as breadcrumb metadata.
+     *
+     * @param string $sql
+     * @param array  $bindings
+     * @param float  $time
+     * @param string $connection
+     *
+     * @return array
+     */
+    protected function formatQuery($sql, array $bindings, $time, $connection)
+    {
+        $data = ['sql' => $sql];
+
+        foreach ($bindings as $index => $binding) {
+            $data["binding {$index}"] = $binding;
+        }
+
+        $data['time'] = "{$time}ms";
+        $data['connection'] = $connection;
+
+        return $data;
     }
 
     /**
