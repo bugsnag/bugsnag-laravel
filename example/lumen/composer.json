@@ -7,7 +7,7 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/lumen-framework": "5.2.*",
-        "bugsnag/bugsnag-laravel": "^2.0",
+        "bugsnag/bugsnag-laravel": "^2.3",
         "vlucas/phpdotenv": "^2.3"
     },
     "require-dev": {
