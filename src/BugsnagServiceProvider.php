@@ -114,7 +114,7 @@ class BugsnagServiceProvider extends ServiceProvider
             $data["binding {$index}"] = $binding;
         }
 
-        $data['time'] = "{$time} ms";
+        $data['time'] = "{$time}ms";
         $data['connection'] = $connection;
 
         return $data;
