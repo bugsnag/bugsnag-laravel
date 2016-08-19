@@ -21,6 +21,10 @@ Changelog
   [Graham Campbell](https://github.com/GrahamCampbell)
   [#167](https://github.com/bugsnag/bugsnag-laravel/pull/167)
 
+* Fixed certificate verification on some systems
+  [Graham Campbell](https://github.com/GrahamCampbell)
+  [#176](https://github.com/bugsnag/bugsnag-laravel/pull/176)
+
 ## Bug Fixes
 
 * Fixed support for older laravel versions
