@@ -98,7 +98,19 @@ return [
     |
     */
 
-    'query' => env('BUGSNAG_QUERY', false),
+    'query' => env('BUGSNAG_QUERY', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Bindings
+    |--------------------------------------------------------------------------
+    |
+    | Enable this if you'd like us to include the query bindings in our query
+    | breadcrumbs.
+    |
+    */
+
+    'bindings' => env('BUGSNAG_BINDINGS', false),
 
     /*
     |--------------------------------------------------------------------------

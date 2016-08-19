@@ -71,24 +71,26 @@ class BugsnagServiceProvider extends ServiceProvider
      */
     protected function setupEvents(Dispatcher $events, array $config)
     {
-        if (!isset($config['query']) || !$config['query']) {
+        if (isset($config['query']) && !$config['query']) {
             return;
         }
 
+        $show = isset($config['bindings']) && $config['bindings']);
+
         if (class_exists(QueryExecuted::class)) {
-            $events->listen(QueryExecuted::class, function (QueryExecuted $query) {
+            $events->listen(QueryExecuted::class, function (QueryExecuted $query) use ($show) {
                 $this->app->bugsnag->leaveBreadcrumb(
                     'Query executed',
                     Breadcrumb::PROCESS_TYPE,
-                    $this->formatQuery($query->sql, $query->bindings, $query->time, $query->connectionName)
+                    $this->formatQuery($query->sql, $show ? $query->bindings : [], $query->time, $query->connectionName)
                 );
             });
         } else {
-            $events->listen('illuminate.query', function ($sql, array $bindings, $time, $connection) {
+            $events->listen('illuminate.query', function ($sql, array $bindings, $time, $connection) use ($show) {
                 $this->app->bugsnag->leaveBreadcrumb(
                     'Query executed',
                     Breadcrumb::PROCESS_TYPE,
-                    $this->formatQuery($sql, $bindings, $time, $connection)
+                    $this->formatQuery($sql, $show ? $bindings : [], $time, $connection)
                 );
             });
         }
