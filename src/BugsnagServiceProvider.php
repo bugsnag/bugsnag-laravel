@@ -140,7 +140,7 @@ class BugsnagServiceProvider extends ServiceProvider
         }
 
         $queue->before(function (JobProcessing $event) {
-            $this->app->bugsnag->setAppType('Queue');
+            $this->app->bugsnag->setFallbackType('Queue');
 
             $job = [
                 'name' => $event->job->getName(),
@@ -196,7 +196,7 @@ class BugsnagServiceProvider extends ServiceProvider
             $client->setStripPath($app->basePath());
             $client->setProjectRoot($app->path());
             $client->setReleaseStage($app->environment());
-            $client->setAppType($app->runningInConsole() ? 'Console' : 'HTTP');
+            $client->setFallbackType($app->runningInConsole() ? 'Console' : 'HTTP');
 
             $client->setNotifier([
                 'name' => 'Bugsnag Laravel',
