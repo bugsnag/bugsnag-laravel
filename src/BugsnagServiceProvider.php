@@ -166,37 +166,19 @@ class BugsnagServiceProvider extends ServiceProvider
     {
         $this->app->singleton('bugsnag', function (Container $app) {
             $config = $app->config->get('bugsnag');
-
             $client = new Client(new Configuration($config['api_key']), new LaravelResolver($app), $this->getGuzzle($config));
 
-            if (!isset($config['callbacks']) || $config['callbacks']) {
-                $client->registerDefaultCallbacks();
+            $this->setupCallbacks($client, $app, $config);
+            $this->setupPaths($client, $app->basePath(), $app->path(), isset($config['strip_path']) ? $config['strip_path'] : null, isset($config['project_root']) ? $config['project_root'] : null);
 
-                $client->registerCallback(function (Report $report) use ($app) {
-                    $tracker = $app->make(Tracker::class);
+            $client->setReleaseStage($app->environment()) ?: 'production');
+            $client->setHostname(isset($config['hostname']) ? $config['hostname'] : null);
 
-                    if ($context = $tracker->context()) {
-                        $report->setContext($context);
-                    }
-
-                    if ($job = $tracker->get()) {
-                        $report->setMetaData(['job' => $job]);
-                    }
-                });
-            }
-
-            if (!isset($config['user']) || $config['user']) {
-                $client->registerCallback(new CustomUser(function () use ($app) {
-                    if ($user = $app->auth->user()) {
-                        return $user->toArray();
-                    }
-                }));
-            }
-
-            $client->setStripPath($app->basePath());
-            $client->setProjectRoot($app->path());
-            $client->setReleaseStage($app->environment());
             $client->setFallbackType($app->runningInConsole() ? 'Console' : 'HTTP');
+            $client->setAppType(isset($config['app_type']) ? $config['app_type'] : null);
+            $client->setAppVersion(isset($config['app_version']) ? $config['app_version'] : null);
+            $client->setBatchSending(isset($config['batch_sending']) ? $config['batch_sending'] : true);
+            $client->setSendCode(isset($config['send_code']) ? $config['send_code'] : true);
 
             $client->setNotifier([
                 'name' => 'Bugsnag Laravel',
@@ -253,6 +235,79 @@ class BugsnagServiceProvider extends ServiceProvider
         }
 
         return Client::makeGuzzle(isset($config['endpoint']) ? $config['endpoint'] : null, $options);
+    }
+
+    /**
+     * Setup the callbacks.
+     *
+     * @param \Bugsnag\Client                           $client
+     * @param \Illuminate\Contracts\Container\Container $app
+     * @param array                                     $config
+     *
+     * @return void
+     */
+    protected function setupCallbacks(Client $client, Container $app, array $config)
+    {
+        if (!isset($config['callbacks']) || $config['callbacks']) {
+            $client->registerDefaultCallbacks();
+
+            $client->registerCallback(function (Report $report) use ($app) {
+                $tracker = $app->make(Tracker::class);
+
+                if ($context = $tracker->context()) {
+                    $report->setContext($context);
+                }
+
+                if ($job = $tracker->get()) {
+                    $report->setMetaData(['job' => $job]);
+                }
+            });
+        }
+
+        if (!isset($config['user']) || $config['user']) {
+            $client->registerCallback(new CustomUser(function () use ($app) {
+                if ($user = $app->auth->user()) {
+                    return $user->toArray();
+                }
+            }));
+        }
+    }
+
+    /**
+     * Setup the client paths.
+     *
+     * @param \Bugsnag\Client $client
+     * @param string          $base
+     * @param string          $path
+     * @param string|null     $strip
+     * @param string|null     $project
+     *
+     * @return void
+     */
+    protected function setupPaths(Client $client, $base, $path, $strip, $project)
+    {
+        if ($strip) {
+            $client->setStripPath($strip);
+
+            if (!$project) {
+                $client->setProjectRoot("{$strip}/app");
+            }
+
+            return;
+        }
+
+        if ($project) {
+            if ($base && substr($project, 0, strlen($base)) === $base) {
+                $client->setStripPath($base);
+            }
+
+            $client->setProjectRoot($project);
+
+            return;
+        }
+
+        $client->setStripPath($base);
+        $client->setProjectRoot($path);
     }
 
     /**
