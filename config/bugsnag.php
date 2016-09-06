@@ -181,7 +181,7 @@ return [
     |
     */
 
-    'send_code' => env('BUGSNAG_CODE', true),
+    'send_code' => env('BUGSNAG_SEND_CODE', true),
 
     /*
     |--------------------------------------------------------------------------
