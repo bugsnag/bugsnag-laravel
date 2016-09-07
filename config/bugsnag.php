@@ -18,16 +18,40 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Notify Release Stages
+    | App version
     |--------------------------------------------------------------------------
     |
-    | Set which release stages should send notifications to Bugsnag.
-    |
-    | Example: array('development', 'production')
+    | Set the type of application executing the current code.
     |
     */
 
-    'notify_release_stages' => empty(env('BUGSNAG_NOTIFY_RELEASE_STAGES')) ? null : explode(',', str_replace(' ', '', env('BUGSNAG_NOTIFY_RELEASE_STAGES'))),
+    'app_type' => env('BUGSNAG_APP_TYPE'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | App Version
+    |--------------------------------------------------------------------------
+    |
+    | Set the version of application executing the current code.
+    |
+    */
+
+    'app_version' => env('BUGSNAG_APP_VERSION'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Batch Sending
+    |--------------------------------------------------------------------------
+    |
+    | Set to true to send the errors through to Bugsnag when the PHP process
+    | shuts down, in order to prevent your app waiting on HTTP requests.
+    |
+    | Setting this to false will mean the we send an HTTP request straight away
+    | for each error.
+    |
+    */
+
+    'batch_sending' => env('BUGSNAG_BATCH_SENDING'),
 
     /*
     |--------------------------------------------------------------------------
@@ -40,7 +64,7 @@ return [
     |
     */
 
-    'endpoint' => env('BUGSNAG_ENDPOINT', null),
+    'endpoint' => env('BUGSNAG_ENDPOINT'),
 
     /*
     |--------------------------------------------------------------------------
@@ -54,6 +78,110 @@ return [
     */
 
     'filters' => empty(env('BUGSNAG_FILTERS')) ? ['password'] : explode(',', str_replace(' ', '', env('BUGSNAG_FILTERS'))),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Hostname
+    |--------------------------------------------------------------------------
+    |
+    | You can set the hostame of your server to something specific for you to
+    | identify it by if needed.
+    |
+    */
+
+    'hostname' => env('BUGSNAG_HOSTNAME'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Proxy
+    |--------------------------------------------------------------------------
+    |
+    | This is where you can set the proxy settings you'd like us to use when
+    | communicating with Bugsnag when reporting errors.
+    |
+    */
+
+    'proxy' => array_filter([
+        'http' => env('HTTP_PROXY'),
+        'https' => env('HTTPS_PROXY'),
+        'no' => empty(env('NO_PROXY')) ? null : explode(',', str_replace(' ', '', env('NO_PROXY'))),
+    ]),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Protect Root
+    |--------------------------------------------------------------------------
+    |
+    | Bugsnag marks stacktrace lines as in-project if they come from files
+    | inside your “project root”. You can set this here.
+    |
+    | If this is not set, we will automatically try to detect it.
+    |
+    */
+
+    'project_root' => env('BUGSNAG_PROJECT_ROOT'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Strip Path
+    |--------------------------------------------------------------------------
+    |
+    | You can set a strip path to have it also trimed from the start of any
+    | filepath in your stacktraces.
+    |
+    | If this is not set, we will automatically try to detect it.
+    |
+    */
+
+    'strip_path' => env('BUGSNAG_STRIP_PATH'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Query
+    |--------------------------------------------------------------------------
+    |
+    | Enable this if you'd like us to automatically record all queries executed
+    | as breadcrumbs.
+    |
+    */
+
+    'query' => env('BUGSNAG_QUERY', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Bindings
+    |--------------------------------------------------------------------------
+    |
+    | Enable this if you'd like us to include the query bindings in our query
+    | breadcrumbs.
+    |
+    */
+
+    'bindings' => env('BUGSNAG_QUERY_BINDINGS', false),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Notify Release Stages
+    |--------------------------------------------------------------------------
+    |
+    | Set which release stages should send notifications to Bugsnag.
+    |
+    */
+
+    'notify_release_stages' => empty(env('BUGSNAG_NOTIFY_RELEASE_STAGES')) ? null : explode(',', str_replace(' ', '', env('BUGSNAG_NOTIFY_RELEASE_STAGES'))),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Send Code
+    |--------------------------------------------------------------------------
+    |
+    | Bugsnag automatically sends a small snippet of the code that crashed to
+    | help you diagnose even faster from within your dashboard. If you don’t
+    | want to send this snippet, then set this to false.
+    |
+    */
+
+    'send_code' => env('BUGSNAG_SEND_CODE', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -87,45 +215,5 @@ return [
     */
 
     'user' => env('BUGSNAG_USER', true),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Query
-    |--------------------------------------------------------------------------
-    |
-    | Enable this if you'd like us to automatically record all queries executed
-    | as breadcrumbs.
-    |
-    */
-
-    'query' => env('BUGSNAG_QUERY', true),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Bindings
-    |--------------------------------------------------------------------------
-    |
-    | Enable this if you'd like us to include the query bindings in our query
-    | breadcrumbs.
-    |
-    */
-
-    'bindings' => env('BUGSNAG_QUERY_BINDINGS', false),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Proxy
-    |--------------------------------------------------------------------------
-    |
-    | This is where you can set the proxy settings you'd like us to use when
-    | communicating with Bugsnag when reporting errors.
-    |
-    */
-
-    'proxy' => array_filter([
-        'http' => env('HTTP_PROXY'),
-        'https' => env('HTTPS_PROXY'),
-        'no' => empty(env('NO_PROXY')) ? null : explode(',', str_replace(' ', '', env('NO_PROXY'))),
-    ]),
 
 ];
