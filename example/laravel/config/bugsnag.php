@@ -18,7 +18,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | App version
+    | App Type
     |--------------------------------------------------------------------------
     |
     | Set the type of application executing the current code.
@@ -109,7 +109,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Protect Root
+    | Project Root
     |--------------------------------------------------------------------------
     |
     | Bugsnag marks stacktrace lines as in-project if they come from files
