@@ -1,9 +1,23 @@
 Changelog
 =========
 
+## 2.4.0 (2016-09-08)
+
+### Enhancements
+
+* Added more configuration options
+  [Graham Campbell](https://github.com/GrahamCampbell)
+  [#199](https://github.com/bugsnag/bugsnag-laravel/pull/199)
+
+### Bug Fixes
+
+* Fixed the app type getting overwritten
+  [Graham Campbell](https://github.com/GrahamCampbell)
+  [#196](https://github.com/bugsnag/bugsnag-laravel/pull/196)
+
 ## 2.3.0 (2016-08-19)
 
-## Enhancements
+### Enhancements
 
 * Record the queue context and job information
   [Graham Campbell](https://github.com/GrahamCampbell)
@@ -13,7 +27,7 @@ Changelog
   [Graham Campbell](https://github.com/GrahamCampbell)
   [#186](https://github.com/bugsnag/bugsnag-laravel/pull/186)
 
-## Bug Fixes
+### Bug Fixes
 
 * Fixed the deploy command option descriptions
   [Andrew Brown](https://github.com/browner12)
@@ -21,7 +35,7 @@ Changelog
 
 ## 2.2.0 (2016-08-08)
 
-## Enhancements
+### Enhancements
 
 * Added a `bugsnag:deploy` console command
   [Graham Campbell](https://github.com/GrahamCampbell)
@@ -43,7 +57,7 @@ Changelog
   [Graham Campbell](https://github.com/GrahamCampbell)
   [#176](https://github.com/bugsnag/bugsnag-laravel/pull/176)
 
-## Bug Fixes
+### Bug Fixes
 
 * Fixed support for older laravel versions
   [Graham Campbell](https://github.com/GrahamCampbell)
@@ -51,13 +65,13 @@ Changelog
 
 ## 2.1.0 (2016-07-25)
 
-## Enhancements
+### Enhancements
 
 * Implement Laravel's logger contract
   [Graham Campbell](https://github.com/GrahamCampbell)
   [#147](https://github.com/bugsnag/bugsnag-laravel/pull/147)
 
-## Bug Fixes
+### Bug Fixes
 
 * Fixed container aliasing of the logger
   [Rémi Pelhate](https://github.com/remipelhate)
@@ -103,13 +117,13 @@ Our library has gone through some major improvements. The primary change to watc
 
 ## 1.7.0 (2016-06-24)
 
-## Enhancements
+### Enhancements
 
 * Let Laravel decide whether to report or not
   [Phil Bates](https://github.com/philbates35)
   [#97](https://github.com/bugsnag/bugsnag-laravel/pull/97)
 
-## Bug Fixes
+### Bug Fixes
 
 * Fixed version constraint
   [Graham Campbell](https://github.com/GrahamCampbell)
@@ -127,43 +141,63 @@ Our library has gone through some major improvements. The primary change to watc
   [Dan Smith](https://github.com/DanSmith83)
   [#73](https://github.com/bugsnag/bugsnag-laravel/pull/73)
 
-1.6.3
------
+## 1.6.3 (2016-01-08)
 
 ### Bug Fixes
 
-- Avoid initializing Bugsnag when no API key is set
-  | [Dries Vints](https://github.com/driesvints)
-  | [#72](https://github.com/bugsnag/bugsnag-laravel/pull/72)
+* Avoid initializing Bugsnag when no API key is set
+  [Dries Vints](https://github.com/driesvints)
+  [#72](https://github.com/bugsnag/bugsnag-laravel/pull/72)
 
-1.6.2
------
+## 1.6.2 (2015-12-08)
+
+### Bug Fixes
+
+* Added missing environment variables for configuration
+  [Andrew Brown](https://github.com/browner12)
+  [#71](https://github.com/bugsnag/bugsnag-laravel/pull/71)
+
+## 1.6.1 (2015-07-22)
+
+### Bug Fixes
+
+* Fixed array syntax for older php
+  [Timucin Gelici](https://github.com/timucingelici)
+  [#63](https://github.com/bugsnag/bugsnag-laravel/pull/63)
+
+## 1.6.0 (2015-07-14)
 
 ### Enhancements
 
-- Add support for configuring the notifier completely from
-[environment variables](https://github.com/bugsnag/bugsnag-laravel#environment-variables)
-  | [Andrew](https://github.com/browner12)
-  | [#71](https://github.com/bugsnag/bugsnag-laravel/pull/71)
+* Added support for setting the api key using .env in Laravel 5+
+  [Simon Maynard](https://github.com/snmaynard)
+  [#62](https://github.com/bugsnag/bugsnag-laravel/pull/62)
 
-1.6.1
------
--   Fix array syntax for older php
+* Added support for artisan vendor:publish
+  [Simon Maynard](https://github.com/snmaynard)
+  [#62](https://github.com/bugsnag/bugsnag-laravel/pull/62)
 
-1.6.0
------
--   Move to using .env for api key in laravel 5+
--   Support for artisan vendor:publish
+## 1.5.1 (2015-07-01)
 
-1.5.1
------
--   Lumen Service Provider use statement
+### Bug Fixes
 
-1.5.0
------
--   Lumen support
--   Fix bug in instructions
--   Fix bug with reading settings from service file
+* Added a missing import in the Lumen service provider
+  [Jake Toolson](https://github.com/jaketoolson)
+  [#57](https://github.com/bugsnag/bugsnag-laravel/pull/57)
+
+## 1.5.0 (2015-05-25)
+
+### Enhancements
+
+* Added Lumen support
+  [Luca Critelli](https://github.com/lucacri)
+  [#51](https://github.com/bugsnag/bugsnag-laravel/pull/51)
+
+### Bug Fixes
+
+* Fix bug with reading settings from service file
+  [Eduardo Kasper](https://github.com/ehkasper)
+  [#48](https://github.com/bugsnag/bugsnag-laravel/pull/48)
 
 1.4.2
 -----
