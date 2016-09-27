@@ -19,4 +19,5 @@ Releasing
     git tag v2.x.x
     git push origin master && git push --tags
     ```
-5. Update the setup guides for PHP (and its frameworks) with any new content.
+5. Update the release version in the installation guides on docs.bugsnag.com
+   and the quickstart guide on the website. Add any new content to docs.
