@@ -9,6 +9,7 @@ use Bugsnag\Callbacks\CustomUser;
 use Bugsnag\Client;
 use Bugsnag\Configuration;
 use Bugsnag\Report;
+use Illuminate\Auth\GenericUser;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Database\Events\QueryExecuted;
@@ -17,6 +18,7 @@ use Illuminate\Queue\Events\JobProcessing;
 use Illuminate\Queue\QueueManager;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Lumen\Application as LumenApplication;
+use ReflectionClass;
 
 class BugsnagServiceProvider extends ServiceProvider
 {
@@ -267,6 +269,14 @@ class BugsnagServiceProvider extends ServiceProvider
         if (!isset($config['user']) || $config['user']) {
             $client->registerCallback(new CustomUser(function () use ($app) {
                 if ($user = $app->auth->user()) {
+                    if ($user instanceof GenericUser) {
+                        $reflection = new ReflectionClass($user);
+                        $property = $reflection->getProperty('attributes');
+                        $property->setAccessible(true);
+
+                        return $property->getValue($user);
+                    }
+
                     return $user->toArray();
                 }
             }));
