@@ -84,7 +84,7 @@ return [
     | Hostname
     |--------------------------------------------------------------------------
     |
-    | You can set the hostame of your server to something specific for you to
+    | You can set the hostname of your server to something specific for you to
     | identify it by if needed.
     |
     */
