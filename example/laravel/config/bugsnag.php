@@ -126,7 +126,7 @@ return [
     | Strip Path
     |--------------------------------------------------------------------------
     |
-    | You can set a strip path to have it also trimed from the start of any
+    | You can set a strip path to have it also trimmed from the start of any
     | filepath in your stacktraces.
     |
     | If this is not set, we will automatically try to detect it.
