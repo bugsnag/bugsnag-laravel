@@ -208,9 +208,8 @@ return [
     | Enable this if you'd like us to set the current user logged in via
     | Laravel's authentication system.
     |
-    | If you'd like to add your own user resolver, you can call the
-    | Bugsnag::registerUserResolver method from the boot method of your app
-    | service provider.
+    | If you'd like to add your own user resolver, you can do this by using
+    | callbacks via Bugsnag::registerCallback.
     |
     */
 
