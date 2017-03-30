@@ -73,7 +73,7 @@ class LaravelRequest implements RequestInterface
 
         $data['params'] = $this->request->input();
 
-        $data['clientIp'] = $this->request->getClientIp();
+        $data['clientIp'] = $this->getRequestIp();
 
         if ($agent = $this->request->header('User-Agent')) {
             $data['userAgent'] = $agent;
@@ -103,6 +103,20 @@ class LaravelRequest implements RequestInterface
      */
     public function getUserId()
     {
+        return $this->request->getClientIp();
+    }
+
+    /**
+     * Get the request ip.
+     *
+     * @return string|null
+     */
+    protected function getRequestIp()
+    {
+        if ($ip = $this->request->header('X-Forwarded-For')) {
+            return $ip;
+        }
+        
         return $this->request->getClientIp();
     }
 }
