@@ -116,7 +116,7 @@ class LaravelRequest implements RequestInterface
         if ($ip = $this->request->header('X-Forwarded-For')) {
             return $ip;
         }
-        
+
         return $this->request->getClientIp();
     }
 }
