@@ -1,6 +1,18 @@
 Changelog
 =========
 
+## 2.5.0 (2017-04-06)
+
+### Enhancements
+
+* Include more deeply nested exception causes in reports
+
+### Bug Fixes
+
+* Improve phar support by falling back to relative paths when needed
+  [Graham Campbell](https://github.com/GrahamCampbell)
+  [#223](https://github.com/bugsnag/bugsnag-laravel/pull/223)
+
 ## 2.4.0 (2016-09-08)
 
 ### Enhancements
