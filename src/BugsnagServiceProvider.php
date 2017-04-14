@@ -180,6 +180,12 @@ class BugsnagServiceProvider extends ServiceProvider
             $client->setBatchSending(isset($config['batch_sending']) ? $config['batch_sending'] : true);
             $client->setSendCode(isset($config['send_code']) ? $config['send_code'] : true);
 
+            if ($app['config']->has('app.version')) {
+                $client->setAppVersion($app['config']['app.version']);
+            } elseif (isset($config['version'])) {
+                $client->setAppVersion($config['version']);
+            }
+
             $client->setNotifier([
                 'name' => 'Bugsnag Laravel',
                 'version' => static::VERSION,
