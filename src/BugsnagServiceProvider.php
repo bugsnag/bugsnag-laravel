@@ -269,6 +269,10 @@ class BugsnagServiceProvider extends ServiceProvider
         if (!isset($config['user']) || $config['user']) {
             $client->registerCallback(new CustomUser(function () use ($app) {
                 if ($user = $app->auth->user()) {
+                    if (is_callable([$user, 'toArray'])) {
+                        return $user->toArray();
+                    }
+
                     if ($user instanceof GenericUser) {
                         $reflection = new ReflectionClass($user);
                         $property = $reflection->getProperty('attributes');
@@ -276,8 +280,6 @@ class BugsnagServiceProvider extends ServiceProvider
 
                         return $property->getValue($user);
                     }
-
-                    return $user->toArray();
                 }
             }));
         }
