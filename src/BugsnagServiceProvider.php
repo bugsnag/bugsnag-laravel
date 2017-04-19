@@ -94,6 +94,9 @@ class BugsnagServiceProvider extends ServiceProvider
                 );
             });
         }
+
+        $this->app['bugsnag']->setReleaseStage($this->app->environment());
+        $this->app['bugsnag']->setAppType($this->app->runningInConsole() ? 'Console' : 'Web');
     }
 
     /**
