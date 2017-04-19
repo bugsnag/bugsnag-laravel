@@ -171,12 +171,7 @@ class BugsnagServiceProvider extends ServiceProvider
             $this->setupCallbacks($client, $app, $config);
             $this->setupPaths($client, $app->basePath(), $app->path(), isset($config['strip_path']) ? $config['strip_path'] : null, isset($config['project_root']) ? $config['project_root'] : null);
 
-            if (isset($config['release_stage'])) {
-                $client->setReleaseStage($config['release_stage'] ?: 'production');
-            } else {
-                $client->setReleaseStage($app->environment() ?: 'production');
-            }
-
+            $client->setReleaseStage(isset($config['release_stage']) ? $config['release_stage'] : $app->environment());
             $client->setHostname(isset($config['hostname']) ? $config['hostname'] : null);
 
             $client->setFallbackType($app->runningInConsole() ? 'Console' : 'HTTP');
