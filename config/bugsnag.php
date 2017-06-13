@@ -161,6 +161,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Release Stage
+    |--------------------------------------------------------------------------
+    |
+    | Set the release stage to use when sending notifications to Bugsnag.
+    |
+    | Leaving this unset will default to using the application environment.
+    |
+    */
+
+    'release_stage' => env('BUGSNAG_RELEASE_STAGE'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Notify Release Stages
     |--------------------------------------------------------------------------
     |
