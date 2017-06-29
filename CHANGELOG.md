@@ -1,6 +1,18 @@
 Changelog
 =========
 
+## 2.6.0 (2017-06-29)
+
+### Enhancements
+
+* Support capturing user information from generic user objects
+  [Simon Bennett](https://github.com/mrsimonbennett)
+  [#207](https://github.com/bugsnag/bugsnag-laravel/pull/207)
+
+* Support setting release stage within configuration file
+  [Graham Campbell](https://github.com/GrahamCampbell)
+  [#228](https://github.com/bugsnag/bugsnag-laravel/pull/228)
+
 ## 2.5.0 (2017-04-06)
 
 ### Enhancements
