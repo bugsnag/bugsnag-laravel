@@ -66,7 +66,7 @@ trait EventTrait
      */
     public function log($level, $message, array $context = [])
     {
-        parent::log($level, $message, array $context = []);
+        parent::log($level, $message, $context);
 
         $this->fireLogEvent($level, $message, $context);
     }
