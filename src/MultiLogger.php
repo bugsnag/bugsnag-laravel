@@ -7,6 +7,8 @@ use Illuminate\Contracts\Logging\Log;
 
 class MultiLogger extends BaseLogger implements Log
 {
+    use EventTrait;
+
     /**
      * Register a file log handler.
      *
@@ -38,6 +40,26 @@ class MultiLogger extends BaseLogger implements Log
         foreach ($this->loggers as $logger) {
             if ($logger instanceof Log) {
                 $logger->useDailyFiles($path, $days, $level);
+            }
+        }
+    }
+
+    /**
+     * Get the underlying Monolog instance.
+     *
+     * @return \Monolog\Logger
+     */
+    public function getMonolog()
+    {
+        foreach ($this->loggers as $logger) {
+            if (is_callable([$logger, 'getMonolog'])) {
+                $monolog = $logger->getMonolog();
+
+                if ($monolog === null) {
+                    continue;
+                }
+
+                return $monolog;
             }
         }
     }
