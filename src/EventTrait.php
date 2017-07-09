@@ -42,9 +42,9 @@ trait EventTrait
      *
      * @param \Closure $callback
      *
-     * @return void
-     *
      * @throws \RuntimeException
+     *
+     * @return void
      */
     public function listen(Closure $callback)
     {
