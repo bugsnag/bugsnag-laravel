@@ -2,7 +2,9 @@
 
 namespace Bugsnag\BugsnagLaravel;
 
+use Bugsnag\Client;
 use Bugsnag\PsrLogger\BugsnagLogger;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Logging\Log;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
@@ -10,6 +12,21 @@ use Illuminate\Contracts\Support\Jsonable;
 class LaravelLogger extends BugsnagLogger implements Log
 {
     use EventTrait;
+
+    /**
+     * Create a new laravel logger instance.
+     *
+     * @param \Bugsnag\Client                              $client
+     * @param \Illuminate\Contracts\Events\Dispatcher|null $dispatcher
+     *
+     * @return void
+     */
+    public function __construct(Client $client, Dispatcher $dispatcher = null)
+    {
+        parent::__construct($client);
+
+        $this->dispatcher = $dispatcher;
+    }
 
     /**
      * Register a file log handler.

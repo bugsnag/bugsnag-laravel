@@ -3,11 +3,27 @@
 namespace Bugsnag\BugsnagLaravel;
 
 use Bugsnag\PsrLogger\MultiLogger as BaseLogger;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Logging\Log;
 
 class MultiLogger extends BaseLogger implements Log
 {
     use EventTrait;
+
+    /**
+     * Create a new multi logger instance.
+     *
+     * @param \Psr\Log\LoggerInterface[]                   $loggers
+     * @param \Illuminate\Contracts\Events\Dispatcher|null $dispatcher
+     *
+     * @return void
+     */
+    public function __construct(array $loggers, Dispatcher $dispatcher = null)
+    {
+        parent::__construct($loggers);
+
+        $this->dispatcher = $dispatcher;
+    }
 
     /**
      * Register a file log handler.
