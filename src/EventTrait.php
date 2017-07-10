@@ -2,6 +2,7 @@
 
 namespace Bugsnag\BugsnagLaravel;
 
+use Closure;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Log\Events\MessageLogged;
 use RuntimeException;
