@@ -27,7 +27,7 @@ class DeployCommand extends Command
      *
      * @return void
      */
-    public function fire()
+    public function handle()
     {
         Bugsnag::deploy($this->option('repository'), $this->option('branch'), $this->option('revision'));
 
