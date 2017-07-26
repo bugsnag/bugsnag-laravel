@@ -35,6 +35,16 @@ class DeployCommand extends Command
     }
 
     /**
+     * Execute the console command.
+     *
+     * @return void
+     */
+    public function fire()
+    {
+        $this->handle();
+    }
+
+    /**
      * Get the console command options.
      *
      * @return array

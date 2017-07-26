@@ -12,8 +12,8 @@
     ],
     "require": {
         "php": ">=5.5",
-        "illuminate/contracts": "^5.0.30",
-        "illuminate/support": "^5.0.30",
+        "illuminate/contracts": "^5.0",
+        "illuminate/support": "^5.0",
         "bugsnag/bugsnag": "^3.5",
         "bugsnag/bugsnag-psr-logger": "^1.1"
     },
