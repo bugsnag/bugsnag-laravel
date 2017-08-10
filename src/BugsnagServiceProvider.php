@@ -269,8 +269,8 @@ class BugsnagServiceProvider extends ServiceProvider
         if (!isset($config['user']) || $config['user']) {
             $client->registerCallback(new CustomUser(function () use ($app) {
                 if ($user = $app->auth->user()) {
-                    if (is_callable([$user, 'toArray'])) {
-                        return $user->toArray();
+                    if (method_exists($user, 'attributesToArray') && is_callable([$user, 'attributesToArray'])) {
+                        return $user->attributesToArray();
                     }
 
                     if ($user instanceof GenericUser) {
