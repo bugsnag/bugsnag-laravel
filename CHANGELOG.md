@@ -1,6 +1,18 @@
 Changelog
 =========
 
+## 2.7.0 (2017-08-10)
+
+### Enhancements
+
+* Fully implement Laravel Log facade
+  [Graham Campbell](https://github.com/GrahamCampbell)
+  [#239](https://github.com/bugsnag/bugsnag-laravel/pull/239)
+
+* Use the `handle` method in the deploy command (Laravel 5.5+ compatibility)
+  [Manuel Strebel](https://github.com/strebl)
+  [#242](https://github.com/bugsnag/bugsnag-laravel/pull/242)
+
 ## 2.6.0 (2017-06-29)
 
 ### Enhancements
