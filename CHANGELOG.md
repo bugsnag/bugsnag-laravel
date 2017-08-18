@@ -1,6 +1,13 @@
 Changelog
 =========
 
+## 2.7.1 (2017-08-18)
+
+### Bug Fixes
+
+* Avoid fetching relationship models on user when populating user information
+  [#244](https://github.com/bugsnag/bugsnag-laravel/pull/244)
+
 ## 2.7.0 (2017-08-10)
 
 ### Enhancements
