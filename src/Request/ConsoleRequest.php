@@ -5,12 +5,12 @@ namespace Bugsnag\BugsnagLaravel\Request;
 use Bugsnag\Request\RequestInterface;
 
 class ConsoleRequest implements RequestInterface
-{   
+{
     /**
-    * The unformated console command.
-    *
-    * @var array
-    */
+     * The unformated console command.
+     *
+     * @var array
+     */
     protected $command;
 
     /**
@@ -18,46 +18,46 @@ class ConsoleRequest implements RequestInterface
      *
      * @return void
      */
-     public function __construct()
-     {
-         $this->command = $_SERVER['argv'];
-     }
+    public function __construct()
+    {
+        $this->command = $_SERVER['argv'];
+    }
 
     /**
-    * Are we currently processing a request?
-    *
-    * @return bool
-    */
+     * Are we currently processing a request?
+     *
+     * @return bool
+     */
     public function isRequest()
     {
         return true;
     }
 
     /**
-    * Get the session data.
-    *
-    * @return array
-    */
+     * Get the session data.
+     *
+     * @return array
+     */
     public function getSession()
     {
         return [];
     }
 
     /**
-    * Get the cookies.
-    *
-    * @return array
-    */
+     * Get the cookies.
+     *
+     * @return array
+     */
     public function getCookies()
     {
         return [];
     }
 
     /**
-    * Get the request formatted as meta data.
-    *
-    * @return array
-    */
+     * Get the request formatted as meta data.
+     *
+     * @return array
+     */
     public function getMetaData()
     {
         if (is_array($this->command)) {
@@ -65,12 +65,14 @@ class ConsoleRequest implements RequestInterface
             $primaryCommand = $this->command[0];
             $arguments = [];
             $options = [];
-            foreach (array_slice($this->command, 1) as $arg) $arg[0] == '-' ? $options[] = $arg : $arguments[] = $arg;
+            foreach (array_slice($this->command, 1) as $arg) {
+                $arg[0] == '-' ? $options[] = $arg : $arguments[] = $arg;
+            }
             $data = [
                 'Input' => $commandString,
                 'Command' => $primaryCommand,
                 'Arguments' => $arguments,
-                'Options' => $options
+                'Options' => $options,
             ];
         } else {
             $data = $this->command;
@@ -80,22 +82,20 @@ class ConsoleRequest implements RequestInterface
     }
 
     /**
-    * Get the request context.
-    *
-    * @return string|null
-    */
+     * Get the request context.
+     *
+     * @return string|null
+     */
     public function getContext()
     {
-        return null;
     }
 
     /**
-    * Get the request user id.
-    *
-    * @return string|null
-    */
+     * Get the request user id.
+     *
+     * @return string|null
+     */
     public function getUserId()
     {
-        return null;
     }
 }

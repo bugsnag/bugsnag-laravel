@@ -2,7 +2,6 @@
 
 namespace Bugsnag\BugsnagLaravel\Request;
 
-use Bugsnag\Request\NullRequest;
 use Bugsnag\Request\ResolverInterface;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Http\Request;
