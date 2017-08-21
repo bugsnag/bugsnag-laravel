@@ -36,7 +36,7 @@ class LaravelResolver implements ResolverInterface
     public function resolve()
     {
         if ($this->app->runningInConsole()) {
-            return new NullRequest();
+            return new ConsoleRequest();
         }
 
         $request = $this->app->make(Request::class);
