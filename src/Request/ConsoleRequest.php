@@ -20,7 +20,7 @@ class ConsoleRequest implements RequestInterface
      */
      public function __construct()
      {
-         $this->command = \Request::server('argv', null);
+         $this->command = $_SERVER['argv'];
      }
 
     /**
