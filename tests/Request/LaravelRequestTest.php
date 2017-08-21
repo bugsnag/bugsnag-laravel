@@ -3,6 +3,7 @@
 namespace Bugsnag\BugsnagLaravel\Tests\Request;
 
 use Bugsnag\BugsnagLaravel\Request\LaravelRequest;
+use Bugsnag\BugsnagLaravel\Request\ConsoleRequest;
 use Bugsnag\BugsnagLaravel\Request\LaravelResolver;
 use Bugsnag\Request\NullRequest;
 use Bugsnag\Request\RequestInterface;
@@ -16,16 +17,15 @@ class LaravelRequestTest extends TestCase
 {
     use MockeryTrait;
 
-    public function testCanResolveNullRequest()
+    public function testCanResolveConsoleRequest()
     {
         $resolver = new LaravelResolver($app = Mockery::mock(Application::class));
 
         $app->shouldReceive('runningInConsole')->once()->andReturn(true);
-
         $request = $resolver->resolve();
 
         $this->assertInstanceOf(RequestInterface::class, $request);
-        $this->assertInstanceOf(NullRequest::class, $request);
+        $this->assertInstanceOf(ConsoleRequest::class, $request);
     }
 
     public function testCanResolveLaravelRequest()
