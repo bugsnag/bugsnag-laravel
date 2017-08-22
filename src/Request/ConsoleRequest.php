@@ -3,6 +3,7 @@
 namespace Bugsnag\BugsnagLaravel\Request;
 
 use Bugsnag\Request\RequestInterface;
+use Symfony\Component\Console\Application;
 
 class ConsoleRequest implements RequestInterface
 {
@@ -20,7 +21,7 @@ class ConsoleRequest implements RequestInterface
      */
     public function __construct()
     {
-        $this->command = $_SERVER['argv'];
+        $this->command = \Request::server('argv', []);
     }
 
     /**
