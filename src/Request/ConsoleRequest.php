@@ -19,9 +19,9 @@ class ConsoleRequest implements RequestInterface
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($request)
     {
-        $this->command = \Request::server('argv', []);
+        $this->command = $request->server('argv', []);
     }
 
     /**
