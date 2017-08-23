@@ -3,7 +3,6 @@
 namespace Bugsnag\BugsnagLaravel\Request;
 
 use Bugsnag\Request\RequestInterface;
-use Symfony\Component\Console\Application;
 
 class ConsoleRequest implements RequestInterface
 {
