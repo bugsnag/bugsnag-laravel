@@ -2,10 +2,10 @@
 
 namespace Bugsnag\BugsnagLaravel\Request;
 
+use Bugsnag\Request\ConsoleRequest;
 use Bugsnag\Request\ResolverInterface;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Http\Request;
-use Bugsnag\Request\ConsoleRequest;
 
 class LaravelResolver implements ResolverInterface
 {
