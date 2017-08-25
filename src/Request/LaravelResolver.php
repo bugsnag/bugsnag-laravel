@@ -5,6 +5,7 @@ namespace Bugsnag\BugsnagLaravel\Request;
 use Bugsnag\Request\ResolverInterface;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Http\Request;
+use Bugsnag\Request\ConsoleRequest;
 
 class LaravelResolver implements ResolverInterface
 {
@@ -37,7 +38,7 @@ class LaravelResolver implements ResolverInterface
         $request = $this->app->make(Request::class);
 
         if ($this->app->runningInConsole()) {
-            return new ConsoleRequest($request);
+            return new ConsoleRequest($request->server('argv'));
         }
 
         return new LaravelRequest($request);
