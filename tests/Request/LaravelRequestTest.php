@@ -2,7 +2,7 @@
 
 namespace Bugsnag\BugsnagLaravel\Tests\Request;
 
-use Bugsnag\BugsnagLaravel\Request\ConsoleRequest;
+use Bugsnag\Request\ConsoleRequest;
 use Bugsnag\BugsnagLaravel\Request\LaravelRequest;
 use Bugsnag\BugsnagLaravel\Request\LaravelResolver;
 use Bugsnag\Request\RequestInterface;
