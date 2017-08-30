@@ -1,7 +1,14 @@
 {
     "name": "bugsnag/bugsnag-laravel",
     "description": "Official Bugsnag notifier for Laravel applications.",
-    "keywords": ["bugsnag", "exceptions", "errors", "logging", "tracking", "laravel"],
+    "keywords": [
+        "bugsnag",
+        "exceptions",
+        "errors",
+        "logging",
+        "tracking",
+        "laravel"
+    ],
     "homepage": "https://github.com/bugsnag/bugsnag-laravel",
     "license": "MIT",
     "authors": [
@@ -28,13 +35,21 @@
         }
     },
     "autoload-dev": {
-        "psr-4" : {
-            "Bugsnag\\BugsnagLaravel\\Tests\\" : "tests/"
+        "psr-4": {
+            "Bugsnag\\BugsnagLaravel\\Tests\\": "tests/"
         }
     },
     "extra": {
         "branch-alias": {
             "dev-master": "2.7-dev"
+        },
+        "laravel": {
+            "providers": [
+                "Bugsnag\\BugsnagLaravel\\BugsnagServiceProvider"
+            ],
+            "aliases": {
+                "Bugsnag": "Bugsnag\\BugsnagLaravel\\Facades\\Bugsnag"
+            }
         }
     },
     "minimum-stability": "dev",
