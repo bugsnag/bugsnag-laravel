@@ -1,6 +1,13 @@
 Changelog
 =========
 
+## 2.7.2 (2017-09-22)
+
+### Bug Fixes
+
+* Fix regression in stacktrace resolution when using Laravel 5.5
+  [#246](https://github.com/bugsnag/bugsnag-laravel/issues/246)
+
 ## 2.7.1 (2017-08-18)
 
 ### Bug Fixes
