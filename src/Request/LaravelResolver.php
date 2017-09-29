@@ -42,6 +42,7 @@ class LaravelResolver implements ResolverInterface
             if (!is_array($command)) {
                 $command = explode(' ', $command);
             }
+
             return new ConsoleRequest($command);
         }
 

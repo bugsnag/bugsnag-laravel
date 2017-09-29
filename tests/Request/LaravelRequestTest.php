@@ -23,8 +23,8 @@ class LaravelRequestTest extends TestCase
 
         $app->shouldReceive('runningInConsole')->once()->andReturn(true);
         $app->shouldReceive('make')->once()->with(Request::class)->andReturn($request);
-        $request->shouldReceive('server')->once()->with("argv", [])->andReturn('test mock console command');
-        
+        $request->shouldReceive('server')->once()->with('argv', [])->andReturn('test mock console command');
+
         $resolver = new LaravelResolver($app);
         $result = $resolver->resolve();
 
