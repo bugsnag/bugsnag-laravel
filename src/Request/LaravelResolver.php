@@ -38,7 +38,11 @@ class LaravelResolver implements ResolverInterface
         $request = $this->app->make(Request::class);
 
         if ($this->app->runningInConsole()) {
-            return new ConsoleRequest($request->server('argv'));
+            $command = $request->server('argv', []);
+            if (!is_array($command)) {
+                $command = explode(' ', $command);
+            }
+            return new ConsoleRequest($command);
         }
 
         return new LaravelRequest($request);

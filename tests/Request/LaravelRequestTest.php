@@ -18,15 +18,18 @@ class LaravelRequestTest extends TestCase
 
     public function testCanResolveConsoleRequest()
     {
-        $resolver = new LaravelResolver($app = Mockery::mock(Application::class));
+        $request = Mockery::mock(Request::class);
+        $app = Mockery::mock(Application::class);
 
         $app->shouldReceive('runningInConsole')->once()->andReturn(true);
-        $app->shouldReceive('make')->once()->with(Request::class)->andReturn($request = Mockery::mock(Request::class));
-        $request->shouldReceive('server')->once()->with('argv', [])->andReturn('test mock console command');
-        $request = $resolver->resolve();
+        $app->shouldReceive('make')->once()->with(Request::class)->andReturn($request);
+        $request->shouldReceive('server')->once()->with("argv", [])->andReturn('test mock console command');
+        
+        $resolver = new LaravelResolver($app);
+        $result = $resolver->resolve();
 
-        $this->assertInstanceOf(RequestInterface::class, $request);
-        $this->assertInstanceOf(ConsoleRequest::class, $request);
+        $this->assertInstanceOf(RequestInterface::class, $result);
+        $this->assertInstanceOf(ConsoleRequest::class, $result);
     }
 
     public function testCanResolveLaravelRequest()
