@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## 2.8.0 (2017-10-02)
+
+### Enhancements
+
+* Bumping dependencies to add data for handled/unhandled
+
 ## 2.7.2 (2017-09-22)
 
 ### Bug Fixes
