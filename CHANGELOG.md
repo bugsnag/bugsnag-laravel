@@ -1,6 +1,13 @@
 Changelog
 =========
 
+## 2.9.0 (2017-10-03)
+
+### Enhancments
+
+* Adds console command metadata
+  [#248](https://github.com/bugsnag/bugsnag-laravel/pull/248)
+
 ## 2.8.0 (2017-10-02)
 
 ### Enhancements
