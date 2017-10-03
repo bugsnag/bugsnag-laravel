@@ -4,7 +4,7 @@ namespace Bugsnag\BugsnagLaravel\Tests\Request;
 
 use Bugsnag\BugsnagLaravel\Request\LaravelRequest;
 use Bugsnag\BugsnagLaravel\Request\LaravelResolver;
-use Bugsnag\Request\NullRequest;
+use Bugsnag\Request\ConsoleRequest;
 use Bugsnag\Request\RequestInterface;
 use GrahamCampbell\TestBenchCore\MockeryTrait;
 use Illuminate\Foundation\Application;
@@ -16,16 +16,20 @@ class LaravelRequestTest extends TestCase
 {
     use MockeryTrait;
 
-    public function testCanResolveNullRequest()
+    public function testCanResolveConsoleRequest()
     {
-        $resolver = new LaravelResolver($app = Mockery::mock(Application::class));
+        $request = Mockery::mock(Request::class);
+        $app = Mockery::mock(Application::class);
 
         $app->shouldReceive('runningInConsole')->once()->andReturn(true);
+        $app->shouldReceive('make')->once()->with(Request::class)->andReturn($request);
+        $request->shouldReceive('server')->once()->with('argv', [])->andReturn('test mock console command');
 
-        $request = $resolver->resolve();
+        $resolver = new LaravelResolver($app);
+        $result = $resolver->resolve();
 
-        $this->assertInstanceOf(RequestInterface::class, $request);
-        $this->assertInstanceOf(NullRequest::class, $request);
+        $this->assertInstanceOf(RequestInterface::class, $result);
+        $this->assertInstanceOf(ConsoleRequest::class, $result);
     }
 
     public function testCanResolveLaravelRequest()
