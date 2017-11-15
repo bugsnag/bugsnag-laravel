@@ -228,4 +228,18 @@ return [
 
     'user' => env('BUGSNAG_USER', true),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Logger Notify Level
+    |--------------------------------------------------------------------------
+    |
+    | This sets the level at which a logged message will trigger a notification
+    | to Bugsnag.  By default this level will be 'notice'.
+    |
+    | Must be one of the Psr\Log\LogLevel levels from the Psr specification.
+    |
+    */
+
+    'logger_notify_level' => env('BUGSNAG_LOGGER_LEVEL'),
+
 ];
