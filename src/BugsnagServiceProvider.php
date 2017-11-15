@@ -209,6 +209,7 @@ class BugsnagServiceProvider extends ServiceProvider
             if (isset($config['logger_notify_level'])) {
                 $logger->setNotifyLevel($config['logger_notify_level']);
             }
+
             return $logger;
         });
 
