@@ -1,6 +1,13 @@
 Changelog
 =========
 
+## 2.10.0 (2017-12-14)
+
+### Enhancements
+
+* Added Logger notification level to configuration
+  [#265](https://github.com/bugsnag/bugsnag-laravel/pull/265)
+
 ## 2.9.0 (2017-10-03)
 
 ### Enhancments
