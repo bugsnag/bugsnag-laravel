@@ -242,4 +242,25 @@ return [
 
     'logger_notify_level' => env('BUGSNAG_LOGGER_LEVEL'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Track Sessions
+    |--------------------------------------------------------------------------
+    |
+    | Enable this to start tracking sessions and deliver them to Bugsnag.
+    |
+    */
+
+    'track_sessions' => env('BUGSNAG_TRACK_SESSIONS', false),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Sessions Endpoint
+    |--------------------------------------------------------------------------
+    |
+    | Sets a url to send tracked sessions to.
+    |
+    */
+
+    'session_endpoint' => env('BUGSNAG_SESSION_ENDPOINT'),
 ];
