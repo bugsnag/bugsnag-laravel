@@ -2,7 +2,6 @@
 
 namespace Bugsnag\BugsnagLaravel;
 
-use Cache;
 use Bugsnag\Breadcrumbs\Breadcrumb;
 use Bugsnag\BugsnagLaravel\Queue\Tracker;
 use Bugsnag\BugsnagLaravel\Request\LaravelResolver;
@@ -10,8 +9,8 @@ use Bugsnag\Callbacks\CustomUser;
 use Bugsnag\Client;
 use Bugsnag\Configuration;
 use Bugsnag\Report;
+use Cache;
 use Illuminate\Auth\GenericUser;
-use Illuminate\Console\Scheduling\Mutex;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Database\Events\QueryExecuted;
@@ -336,11 +335,11 @@ class BugsnagServiceProvider extends ServiceProvider
     }
 
     /**
-     * Setup session tracking
-     * 
+     * Setup session tracking.
+     *
      * @param \Bugsnag\Client $client
      * @param string          $endpoint
-     * 
+     *
      * @return void
      */
     protected function setupSessionTracking(Client $client, $endpoint)
@@ -348,24 +347,25 @@ class BugsnagServiceProvider extends ServiceProvider
         $client->setSessionTracking(true, $endpoint);
         $sessionTracker = $client->getSessionTracker();
 
-        $store = function($session) {
+        $store = function ($session) {
             session(['bugsnag-session' => $session]);
         };
-        $retrieve = function() {
+        $retrieve = function () {
             return session('bugsnag-session');
         };
         $sessionTracker->setSessionStorageFunctions($store, $retrieve);
 
-        $storeSessions = function($sessionCounts) {
-            error_log("Called store");
+        $storeSessions = function ($sessionCounts) {
+            error_log('Called store');
             print_r(' store ');
             print_r($sessionCounts);
             Cache::put('bugsnag-session-counts', $sessionCounts);
         };
-        $retrieveSessions = function() {
-            error_log("Called ret");
+        $retrieveSessions = function () {
+            error_log('Called ret');
             print_r(' ret ');
             print_r(Cache::get('bugsnag-session-counts', []));
+
             return Cache::get('bugsnag-session-counts', []);
         };
         $sessionTracker->setCountStorageFunctions($storeSessions, $retrieveSessions);
