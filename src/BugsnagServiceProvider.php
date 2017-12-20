@@ -347,28 +347,25 @@ class BugsnagServiceProvider extends ServiceProvider
         $client->setSessionTracking(true, $endpoint);
         $sessionTracker = $client->getSessionTracker();
 
-        $store = function ($session) {
-            session(['bugsnag-session' => $session]);
+        $sessionStorage = function ($session=null) {
+            if (is_null($session)) {
+                return session('bugsnag-session', []);
+            } else {
+                session(['bugsnag-session' => $session]);
+            }
         };
-        $retrieve = function () {
-            return session('bugsnag-session');
-        };
-        $sessionTracker->setSessionStorageFunctions($store, $retrieve);
 
-        $storeSessions = function ($sessionCounts) {
-            error_log('Called store');
-            print_r(' store ');
-            print_r($sessionCounts);
-            Cache::put('bugsnag-session-counts', $sessionCounts);
-        };
-        $retrieveSessions = function () {
-            error_log('Called ret');
-            print_r(' ret ');
-            print_r(Cache::get('bugsnag-session-counts', []));
+        $sessionTracker->setSessionFunction($sessionStorage);
 
-            return Cache::get('bugsnag-session-counts', []);
+        $genericStorage = function ($key, $value=null) {
+            if (is_null($value)) {
+                return Cache::get($key, []);
+            } else {
+                Cache::put($key, $value, 60);
+            }
         };
-        $sessionTracker->setCountStorageFunctions($storeSessions, $retrieveSessions);
+
+        $sessionTracker->setStorageFunction($genericStorage);
     }
 
     /**
