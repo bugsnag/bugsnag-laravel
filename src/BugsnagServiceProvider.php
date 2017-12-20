@@ -347,7 +347,7 @@ class BugsnagServiceProvider extends ServiceProvider
         $client->setSessionTracking(true, $endpoint);
         $sessionTracker = $client->getSessionTracker();
 
-        $sessionStorage = function ($session=null) {
+        $sessionStorage = function ($session = null) {
             if (is_null($session)) {
                 return session('bugsnag-session', []);
             } else {
@@ -357,7 +357,7 @@ class BugsnagServiceProvider extends ServiceProvider
 
         $sessionTracker->setSessionFunction($sessionStorage);
 
-        $genericStorage = function ($key, $value=null) {
+        $genericStorage = function ($key, $value = null) {
             if (is_null($value)) {
                 return Cache::get($key, []);
             } else {
