@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## 2.11.1 (2017-12-21)
+
+### Fixes
+
+* Bumped version of Bugsnag-Psr-Logger v1.4.0 due to released fix
+
 ## 2.11.0 (2017-12-21)
 
 ### Enhancements
