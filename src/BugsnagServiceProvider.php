@@ -359,7 +359,7 @@ class BugsnagServiceProvider extends ServiceProvider
 
         $genericStorage = function ($key, $value = null) {
             if (is_null($value)) {
-                return Cache::get($key, []);
+                return Cache::get($key, null);
             } else {
                 Cache::put($key, $value, 60);
             }
