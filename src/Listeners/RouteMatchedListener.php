@@ -4,7 +4,7 @@ namespace Bugsnag\BugsnagLaravel\Listeners;
 
 use Illuminate\Routing\Events;
 
-class RouterMatchedListener
+class RouteMatchedListener
 {
     public function onRouteMatched($event)
     {
@@ -15,7 +15,7 @@ class RouterMatchedListener
     {
         $events->listen(
             Events\RouteMatched::class,
-            'Bugsnag\BugsnagLaravel\Listeners\RouterMatchedListener@onRouteMatched'
+            'Bugsnag\BugsnagLaravel\Listeners\RouteMatchedListener@onRouteMatched'
         );
     }
 }
