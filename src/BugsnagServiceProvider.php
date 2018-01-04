@@ -9,7 +9,7 @@ use Bugsnag\Callbacks\CustomUser;
 use Bugsnag\Client;
 use Bugsnag\Configuration;
 use Bugsnag\Report;
-use Cache;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Auth\GenericUser;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Events\Dispatcher;
