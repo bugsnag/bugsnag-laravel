@@ -16,7 +16,6 @@ use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Queue\Events\JobProcessing;
 use Illuminate\Queue\QueueManager;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Lumen\Application as LumenApplication;
 use ReflectionClass;
