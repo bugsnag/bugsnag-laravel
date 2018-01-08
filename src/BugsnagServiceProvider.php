@@ -197,7 +197,7 @@ class BugsnagServiceProvider extends ServiceProvider
                 $client->setFilters($config['filters']);
             }
 
-            if (isset($config['track_sessions']) && $config['track_sessions']) {
+            if (isset($config['auto_capture_sessions']) && $config['auto_capture_sessions']) {
                 $endpoint = isset($config['session_endpoint']) ? $config['session_endpoint'] : null;
                 $this->setupSessionTracking($client, $endpoint);
             }

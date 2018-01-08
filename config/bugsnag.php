@@ -244,14 +244,14 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Track Sessions
+    | Auto Capture Sessions
     |--------------------------------------------------------------------------
     |
     | Enable this to start tracking sessions and deliver them to Bugsnag.
     |
     */
 
-    'track_sessions' => env('BUGSNAG_TRACK_SESSIONS', false),
+    'auto_capture_sessions' => env('BUGSNAG_CAPTURE_SESSIONS', false),
 
     /*
     |--------------------------------------------------------------------------
