@@ -357,11 +357,13 @@ class BugsnagServiceProvider extends ServiceProvider
 
         $sessionTracker->setSessionFunction($sessionStorage);
 
-        $genericStorage = function ($key, $value = null) {
+        $cache = $this->app->cache;
+
+        $genericStorage = function ($key, $value = null) use ($cache) {
             if (is_null($value)) {
-                return Cache::get($key, null);
+                return $cache->get($key, null);
             } else {
-                Cache::put($key, $value, 60);
+                $cache->put($key, $value, 60);
             }
         };
 
