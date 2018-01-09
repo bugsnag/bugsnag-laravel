@@ -18,10 +18,6 @@ class EventServiceProvider extends ServiceProvider
         ],
     ];
 
-    protected $subscribe = [
-        'Bugsnag\BugsnagLaravel\Listeners\RouteMatchedListener'
-    ];
-
     /**
      * Register any other events for your application.
      *

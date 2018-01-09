@@ -199,7 +199,7 @@ class BugsnagServiceProvider extends ServiceProvider
 
             if (isset($config['auto_capture_sessions']) && $config['auto_capture_sessions']) {
                 $endpoint = isset($config['session_endpoint']) ? $config['session_endpoint'] : null;
-                $this->setupSessionTracking($client, $endpoint);
+                $this->setupSessionTracking($client, $endpoint, $this->app->events);
             }
 
             return $client;
@@ -342,7 +342,7 @@ class BugsnagServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function setupSessionTracking(Client $client, $endpoint)
+    protected function setupSessionTracking(Client $client, $endpoint, $events)
     {
         $client->setSessionTracking(true, $endpoint);
         $sessionTracker = $client->getSessionTracker();
@@ -368,6 +368,10 @@ class BugsnagServiceProvider extends ServiceProvider
         };
 
         $sessionTracker->setStorageFunction($genericStorage);
+
+        $events->listen(Events\RouteMatched::class, function($event) use ($client) {
+            $client->getSessionTracker()->createSession();
+        });
     }
 
     /**
