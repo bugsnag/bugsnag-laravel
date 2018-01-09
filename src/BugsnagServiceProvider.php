@@ -16,6 +16,7 @@ use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Queue\Events\JobProcessing;
 use Illuminate\Queue\QueueManager;
+use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Lumen\Application as LumenApplication;
 use ReflectionClass;
@@ -73,6 +74,16 @@ class BugsnagServiceProvider extends ServiceProvider
      */
     protected function setupEvents(Dispatcher $events, array $config)
     {
+        if (isset($config['auto_capture_sessions']) && $config['auto_capture_sessions']) {
+            try {
+                $events->listen(RouteMatched::class, function($event) {
+                    $this->app->bugsnag->getSessionTracker()->createSession();
+                });
+            } catch (Exception  $e) {
+                print_r($e);
+            }
+        }
+
         if (isset($config['query']) && !$config['query']) {
             return;
         }
@@ -367,10 +378,6 @@ class BugsnagServiceProvider extends ServiceProvider
         };
 
         $sessionTracker->setStorageFunction($genericStorage);
-
-        $events->listen(Events\RouteMatched::class, function($event) use ($client) {
-            $client->getSessionTracker()->createSession();
-        });
     }
 
     /**
