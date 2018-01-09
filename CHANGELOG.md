@@ -1,6 +1,14 @@
 Changelog
 =========
 
+## 2.12.0 (2018-01-09)
+
+### Enhancements
+
+* Add support for tracking sessions and overall crash rate by setting
+  `auto_capture_sessions` in configuration options. In addition, sessions can be
+  indicated manually using `Bugsnag::startSession()`
+
 ## 2.11.1 (2017-12-21)
 
 ### Fixes
