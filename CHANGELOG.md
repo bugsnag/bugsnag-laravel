@@ -1,6 +1,18 @@
 Changelog
 =========
 
+## 2.11.1 (2017-12-21)
+
+### Fixes
+
+* Bumped version of Bugsnag-Psr-Logger v1.4.0 due to released fix
+
+## 2.11.0 (2017-12-21)
+
+### Enhancements
+
+* Bumped version to Bugsnag-PHP 3.10.0 to add support for `addMetaData`
+
 ## 2.10.0 (2017-12-14)
 
 ### Enhancements
