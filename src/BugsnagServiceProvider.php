@@ -16,6 +16,7 @@ use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Foundation\Application as LaravelApplication;
 use Illuminate\Queue\Events\JobProcessing;
 use Illuminate\Queue\QueueManager;
+use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Lumen\Application as LumenApplication;
 use ReflectionClass;
@@ -73,6 +74,12 @@ class BugsnagServiceProvider extends ServiceProvider
      */
     protected function setupEvents(Dispatcher $events, array $config)
     {
+        if (isset($config['auto_capture_sessions']) && $config['auto_capture_sessions']) {
+            $events->listen(RouteMatched::class, function ($event) {
+                $this->app->bugsnag->getSessionTracker()->startSession();
+            });
+        }
+
         if (isset($config['query']) && !$config['query']) {
             return;
         }
@@ -194,6 +201,11 @@ class BugsnagServiceProvider extends ServiceProvider
 
             if (isset($config['filters']) && is_array($config['filters'])) {
                 $client->setFilters($config['filters']);
+            }
+
+            if (isset($config['auto_capture_sessions']) && $config['auto_capture_sessions']) {
+                $endpoint = isset($config['session_endpoint']) ? $config['session_endpoint'] : null;
+                $this->setupSessionTracking($client, $endpoint, $this->app->events);
             }
 
             return $client;
@@ -326,6 +338,45 @@ class BugsnagServiceProvider extends ServiceProvider
 
         $client->setStripPath($base);
         $client->setProjectRoot($path);
+    }
+
+    /**
+     * Setup session tracking.
+     *
+     * @param \Bugsnag\Client $client
+     * @param string          $endpoint
+     *
+     * @return void
+     */
+    protected function setupSessionTracking(Client $client, $endpoint, $events)
+    {
+        $client->setAutoCaptureSessions(true);
+        if (!is_null($endpoint)) {
+            $client->setSessionEndpoint($endpoint);
+        }
+        $sessionTracker = $client->getSessionTracker();
+
+        $sessionStorage = function ($session = null) {
+            if (is_null($session)) {
+                return session('bugsnag-session', []);
+            } else {
+                session(['bugsnag-session' => $session]);
+            }
+        };
+
+        $sessionTracker->setSessionFunction($sessionStorage);
+
+        $cache = $this->app->cache;
+
+        $genericStorage = function ($key, $value = null) use ($cache) {
+            if (is_null($value)) {
+                return $cache->get($key, null);
+            } else {
+                $cache->put($key, $value, 60);
+            }
+        };
+
+        $sessionTracker->setStorageFunction($genericStorage);
     }
 
     /**
