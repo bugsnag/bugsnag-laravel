@@ -76,7 +76,7 @@ class BugsnagServiceProvider extends ServiceProvider
     {
         if (isset($config['auto_capture_sessions']) && $config['auto_capture_sessions']) {
             try {
-                $events->listen(RouteMatched::class, function($event) {
+                $events->listen(RouteMatched::class, function ($event) {
                     $this->app->bugsnag->getSessionTracker()->createSession();
                 });
             } catch (Exception  $e) {
