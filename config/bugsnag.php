@@ -263,4 +263,17 @@ return [
     */
 
     'session_endpoint' => env('BUGSNAG_SESSION_ENDPOINT'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Builds Endpoint
+    |--------------------------------------------------------------------------
+    |
+    | Sets a url to send build reports to.
+    |
+    */
+
+    'build_endpoint' => env('BUGSNAG_BUILD_ENDPOINT'),
+
+
 ];
