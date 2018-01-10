@@ -25,7 +25,7 @@ class DeployCommand extends Command
 
     /**
      * The build-tool name.
-     * 
+     *
      * @var string
      */
     protected $buildTool = 'bugsnag-laravel';
