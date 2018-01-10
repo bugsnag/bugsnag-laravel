@@ -36,7 +36,7 @@ class DeployCommand extends Command
             $process->run();
             if ($process->isSuccessful()) {
                 $builderName = trim($process->getOutput());
-            };
+            }
         }
         Bugsnag::build($this->option('repository'), $this->option('revision'), $this->option('provider'), $builderName);
 
@@ -65,7 +65,7 @@ class DeployCommand extends Command
             ['branch', null, InputOption::VALUE_OPTIONAL, 'The source control branch from which you are deploying.  Deprecated.', null],
             ['revision', null, InputOption::VALUE_OPTIONAL, 'The source control revision you are currently deploying.', null],
             ['provider', null, InputOption::VALUE_OPTIONAL, 'The provider of your source control repository.', null],
-            ['builder', null, InputOption::VALUE_OPTIONAL, 'The machine or person who has executed the build', null]
+            ['builder', null, InputOption::VALUE_OPTIONAL, 'The machine or person who has executed the build', null],
         ];
     }
 }

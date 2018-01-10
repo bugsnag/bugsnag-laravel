@@ -275,5 +275,4 @@ return [
 
     'build_endpoint' => env('BUGSNAG_BUILD_ENDPOINT'),
 
-
 ];
