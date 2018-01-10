@@ -24,6 +24,13 @@ class DeployCommand extends Command
     protected $description = 'Notifies Bugsnag of a build';
 
     /**
+     * The build-tool name.
+     * 
+     * @var string
+     */
+    protected $buildTool = 'bugsnag-laravel';
+
+    /**
      * Execute the console command.
      *
      * @return void
@@ -38,7 +45,7 @@ class DeployCommand extends Command
                 $builderName = trim($process->getOutput());
             };
         }
-        Bugsnag::build($this->option('repository'), $this->option('revision'), $this->option('provider'), $builderName);
+        Bugsnag::build($this->option('repository'), $this->option('revision'), $this->option('provider'), $builderName, $this->buildTool);
 
         $this->info('Notified Bugsnag of the build!');
     }
