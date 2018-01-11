@@ -32,7 +32,7 @@ class DeployCommand extends Command
     {
         $builderName = $this->option('builder');
         if (is_null($builderName)) {
-            if (class_exists('\Symfony\Component\Process\Process')) {
+            if (class_exists(\Symfony\Component\Process\Process::class)) {
                 $process = new \Symfony\Component\Process\Process('whoami');
                 $process->run();
                 if ($process->isSuccessful()) {
