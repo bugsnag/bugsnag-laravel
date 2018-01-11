@@ -2,8 +2,8 @@
 
 namespace Bugsnag\BugsnagLaravel\Commands;
 
-use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Bugsnag\Bugsnag\Utils;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 
