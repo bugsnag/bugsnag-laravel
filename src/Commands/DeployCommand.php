@@ -3,9 +3,9 @@
 namespace Bugsnag\BugsnagLaravel\Commands;
 
 use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
+use Bugsnag\Bugsnag\Utils;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Process\Process;
 
 class DeployCommand extends Command
 {
@@ -32,10 +32,14 @@ class DeployCommand extends Command
     {
         $builderName = $this->option('builder');
         if (is_null($builderName)) {
-            $process = new Process('whoami');
-            $process->run();
-            if ($process->isSuccessful()) {
-                $builderName = trim($process->getOutput());
+            if (class_exists('\Symfony\Component\Process\Process')) {
+                $process = new \Symfony\Component\Process\Process('whoami');
+                $process->run();
+                if ($process->isSuccessful()) {
+                    $builderName = trim($process->getOutput());
+                }
+            } else {
+                $builderName = Utils::getBuilderName();
             }
         }
         Bugsnag::build($this->option('repository'), $this->option('revision'), $this->option('provider'), $builderName);
