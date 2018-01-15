@@ -6,6 +6,7 @@ use Bugsnag\Bugsnag\Utils;
 use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Process\Process;
 
 class DeployCommand extends Command
 {
@@ -32,8 +33,8 @@ class DeployCommand extends Command
     {
         $builderName = $this->option('builder');
         if (is_null($builderName)) {
-            if (class_exists(\Symfony\Component\Process\Process::class)) {
-                $process = new \Symfony\Component\Process\Process('whoami');
+            if (class_exists(Process::class)) {
+                $process = new Process('whoami');
                 $process->run();
                 if ($process->isSuccessful()) {
                     $builderName = trim($process->getOutput());
