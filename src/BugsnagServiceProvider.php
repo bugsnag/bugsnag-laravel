@@ -208,6 +208,10 @@ class BugsnagServiceProvider extends ServiceProvider
                 $this->setupSessionTracking($client, $endpoint, $this->app->events);
             }
 
+            if (isset($config['build_endpoint'])) {
+                $client->setBuildEndpoint($config['build_endpoint']);
+            }
+
             return $client;
         });
 
