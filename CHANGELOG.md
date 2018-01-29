@@ -1,6 +1,13 @@
 Changelog
 =========
 
+## 2.13.0 (2018-01-29)
+
+### Enhancements
+
+* Updates deploy command to new build API, avoiding compatibility issues
+  [#279](https://github.com/bugsnag/bugsnag-laravel/pull/279)
+
 ## 2.12.0 (2018-01-09)
 
 ### Enhancements
