@@ -3,9 +3,18 @@ Changelog
 
 ## 2.13.0 (2018-01-29)
 
+This release adds support for the new [Bugsnag Build API](https://docs.bugsnag.com/api/build/) to the `deploy` command.
+
+The following options have been introduced:
+- `builder`: The name of the person/machine that started the build
+- `provider`: The name of the provider of the git repository, only necessary for on-premise installations, one of: `github-enterprise`, `bitbucket-server`, `gitlab-onpremise`
+
+The following options have been deprecated:
+- `branch`
+
 ### Enhancements
 
-* Updates deploy command to new build API, avoiding compatibility issues
+* Updates deploy command to new build API.
   [#279](https://github.com/bugsnag/bugsnag-laravel/pull/279)
 
 ## 2.12.0 (2018-01-09)
