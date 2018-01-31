@@ -46,8 +46,8 @@ return [
     | Set to true to send the errors through to Bugsnag when the PHP process
     | shuts down, in order to prevent your app waiting on HTTP requests.
     |
-    | Setting this to false will mean the we send an HTTP request straight away
-    | for each error.
+    | Setting this to false will send an HTTP request straight away for each
+    | error.
     |
     */
 
