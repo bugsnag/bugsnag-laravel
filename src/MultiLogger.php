@@ -4,7 +4,7 @@ namespace Bugsnag\BugsnagLaravel;
 
 use Bugsnag\PsrLogger\MultiLogger as BaseLogger;
 use Illuminate\Contracts\Events\Dispatcher;
-use Illuminate\Contracts\Logging\Log;
+use Psr\Log\LoggerInterface as Log;
 
 class MultiLogger extends BaseLogger implements Log
 {
