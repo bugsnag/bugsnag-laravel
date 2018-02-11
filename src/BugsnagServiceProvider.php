@@ -17,7 +17,7 @@ use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Logging\Log;
 use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Foundation\Application as LaravelApplication;
-use Illuminate\Logging\LogManager;
+use Illuminate\Log\LogManager;
 use Illuminate\Queue\Events\JobProcessing;
 use Illuminate\Queue\QueueManager;
 use Illuminate\Routing\Events\RouteMatched;
