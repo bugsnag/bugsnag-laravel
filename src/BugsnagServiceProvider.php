@@ -8,17 +8,23 @@ use Bugsnag\BugsnagLaravel\Request\LaravelResolver;
 use Bugsnag\Callbacks\CustomUser;
 use Bugsnag\Client;
 use Bugsnag\Configuration;
+use Bugsnag\PsrLogger\BugsnagLogger;
+use Bugsnag\PsrLogger\MultiLogger as BaseMultiLogger;
 use Bugsnag\Report;
 use Illuminate\Auth\GenericUser;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\Logging\Log;
 use Illuminate\Database\Events\QueryExecuted;
 use Illuminate\Foundation\Application as LaravelApplication;
+use Illuminate\Logging\LogManager;
 use Illuminate\Queue\Events\JobProcessing;
 use Illuminate\Queue\QueueManager;
 use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Lumen\Application as LumenApplication;
+use Monolog\Handler\PsrHandler;
+use Monolog\Logger;
 use ReflectionClass;
 
 class BugsnagServiceProvider extends ServiceProvider
@@ -221,7 +227,7 @@ class BugsnagServiceProvider extends ServiceProvider
 
         $this->app->singleton('bugsnag.logger', function (Container $app) {
             $config = $app->config->get('bugsnag');
-            $logger = new LaravelLogger($app['bugsnag'], $app['events']);
+            $logger = class_exists(Log::class) ? new LaravelLogger($app['bugsnag'], $app['events']) : new BugsnagLogger($app['bugsnag']);
             if (isset($config['logger_notify_level'])) {
                 $logger->setNotifyLevel($config['logger_notify_level']);
             }
@@ -230,13 +236,21 @@ class BugsnagServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton('bugsnag.multi', function (Container $app) {
-            return new MultiLogger([$app['log'], $app['bugsnag.logger']], $app['events']);
+            return class_exists(Log::class) ? new MultiLogger([$app['log'], $app['bugsnag.logger']], $app['events']) : new BaseMultiLogger([$app['log'], $app['bugsnag.logger']]);
         });
+
+        if ($this->app['log'] instanceof LogManager) {
+            $this->app['log']->extend('bugsnag', function (Container $app, array $config) {
+                $handler = new PsrHandler($app['bugsnag.logger']);
+
+                return new Logger('bugsnag', [$handler]);
+            });
+        }
 
         $this->app->alias('bugsnag', Client::class);
         $this->app->alias('bugsnag.tracker', Tracker::class);
-        $this->app->alias('bugsnag.logger', LaravelLogger::class);
-        $this->app->alias('bugsnag.multi', MultiLogger::class);
+        $this->app->alias('bugsnag.logger', class_exists(Log::class) ? LaravelLogger::class : BugsnagLogger::class);
+        $this->app->alias('bugsnag.multi', class_exists(Log::class) ? MultiLogger::class : BaseMultiLogger::class);
     }
 
     /**
