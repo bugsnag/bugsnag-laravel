@@ -5,11 +5,11 @@ namespace Bugsnag\BugsnagLaravel;
 use Bugsnag\Client;
 use Bugsnag\PsrLogger\BugsnagLogger;
 use Illuminate\Contracts\Events\Dispatcher;
-use Illuminate\Contracts\Logging\Log;
+use Psr\Log\LoggerInterface;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\Jsonable;
 
-class LaravelLogger extends BugsnagLogger implements Log
+class LaravelLogger extends BugsnagLogger implements LoggerInterface
 {
     use EventTrait;
 

@@ -4,9 +4,9 @@ namespace Bugsnag\BugsnagLaravel;
 
 use Bugsnag\PsrLogger\MultiLogger as BaseLogger;
 use Illuminate\Contracts\Events\Dispatcher;
-use Illuminate\Contracts\Logging\Log;
+use Psr\Log\LoggerInterface;
 
-class MultiLogger extends BaseLogger implements Log
+class MultiLogger extends BaseLogger implements LoggerInterface
 {
     use EventTrait;
 
@@ -36,7 +36,7 @@ class MultiLogger extends BaseLogger implements Log
     public function useFiles($path, $level = 'debug')
     {
         foreach ($this->loggers as $logger) {
-            if ($logger instanceof Log) {
+            if ($logger instanceof LoggerInterface) {
                 $logger->useFiles($path, $level);
             }
         }
@@ -54,7 +54,7 @@ class MultiLogger extends BaseLogger implements Log
     public function useDailyFiles($path, $days = 0, $level = 'debug')
     {
         foreach ($this->loggers as $logger) {
-            if ($logger instanceof Log) {
+            if ($logger instanceof LoggerInterface) {
                 $logger->useDailyFiles($path, $days, $level);
             }
         }
