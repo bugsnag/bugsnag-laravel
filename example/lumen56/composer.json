@@ -4,15 +4,9 @@
     "keywords": ["framework", "laravel", "lumen"],
     "license": "MIT",
     "type": "project",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url":  "https://github.com/GrahamCampbell/bugsnag-laravel"
-        }
-    ],
     "require": {
         "php": ">=7.1.3",
-        "bugsnag/bugsnag-laravel": "dev-laravel56",
+        "bugsnag/bugsnag-laravel": "^2.14",
         "laravel/lumen-framework": "5.6.*",
         "vlucas/phpdotenv": "~2.2"
     },
