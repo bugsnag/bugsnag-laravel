@@ -6,8 +6,8 @@
     "type": "project",
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.2.*",
-        "bugsnag/bugsnag-laravel": "^2.4"
+        "bugsnag/bugsnag-laravel": "^2.14",
+        "laravel/framework": "5.2.*"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.6",

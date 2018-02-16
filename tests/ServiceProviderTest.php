@@ -6,7 +6,10 @@ use Bugsnag\BugsnagLaravel\LaravelLogger;
 use Bugsnag\BugsnagLaravel\MultiLogger;
 use Bugsnag\BugsnagLaravel\Queue\Tracker;
 use Bugsnag\Client;
+use Bugsnag\PsrLogger\BugsnagLogger;
+use Bugsnag\PsrLogger\MultiLogger as BaseMultiLogger;
 use GrahamCampbell\TestBenchCore\ServiceProviderTrait;
+use Illuminate\Contracts\Logging\Log;
 
 class ServiceProviderTest extends AbstractTestCase
 {
@@ -24,11 +27,11 @@ class ServiceProviderTest extends AbstractTestCase
 
     public function testMultiLoggerIsInjectable()
     {
-        $this->assertIsInjectable(MultiLogger::class);
+        $this->assertIsInjectable(class_exists(Log::class) ? MultiLogger::class : BaseMultiLogger::class);
     }
 
     public function testBugsnagLoggerIsInjectable()
     {
-        $this->assertIsInjectable(LaravelLogger::class);
+        $this->assertIsInjectable(class_exists(Log::class) ? LaravelLogger::class : BugsnagLogger::class);
     }
 }
