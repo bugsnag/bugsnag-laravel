@@ -1,6 +1,14 @@
 Changelog
 =========
 
+## 2.14.0 (2018-02-16)
+
+### Enhancements
+
+* Add support for Laravel 5.6
+  [#288](https://github.com/bugsnag/bugsnag-laravel/pull/288)
+  [Graham Campbell](https://github.com/GrahamCampbell)
+
 ## 2.13.0 (2018-01-29)
 
 This release adds support for the new [Bugsnag Build API](https://docs.bugsnag.com/api/build/) to the `deploy` command.
