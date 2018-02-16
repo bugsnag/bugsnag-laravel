@@ -10,6 +10,8 @@ Contributing
 Releasing
 =========
 
+0. Create PRs updating the release version in the installation instructions on
+   app.bugsnag.com and docs.bugsnag.com
 1. Commit all outstanding changes
 2. Bump the version in `src/BugsnagServiceProvider.php`
 3. Update the CHANGELOG.md, and README if appropriate.
@@ -19,5 +21,5 @@ Releasing
     git tag v2.x.x
     git push origin master && git push --tags
     ```
-5. Update the release version in the installation guides on docs.bugsnag.com
-   and the quickstart guide on the website. Add any new content to docs.
+5. Bump the branch alias to the next minor version
+
