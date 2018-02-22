@@ -3,7 +3,7 @@
 [![StyleCI Status](https://styleci.io/repos/14268472/shield?branch=master)](https://styleci.io/repos/14268472)
 [![Documentation](https://img.shields.io/badge/documentation-latest-blue.svg?style=flat-square)](https://docs.bugsnag.com/platforms/php/)
 
-The Bugsnag Notifier for Laravel gives you instant notification of errors and exceptions in your Laravel PHP applications. We support both Laravel and Lumen.
+The Bugsnag Notifier for Laravel gives you instant notification of errors and exceptions in your Laravel PHP applications. We support both Laravel and Lumen. Learn more about [Laravel error reporting](https://www.bugsnag.com/platforms/php/laravel/) from Bugsnag.
 
 
 ### Looking for Laravel 4 support?
@@ -20,7 +20,7 @@ v1 of our Laravel package supports Laravel 4. You can find it on our [1.7 branch
 
 ## Getting started
 
-1. [Create a Bugsnag account](https://bugsnag.com)
+1. [Create a Bugsnag account](https://www.bugsnag.com)
 2. Complete the instructions in the integration guide for [Laravel](https://docs.bugsnag.com/platforms/php/laravel/) or [Lumen](https://docs.bugsnag.com/platforms/php/lumen/)
 3. Report handled exceptions using [`Bugsnag::notify()`](https://docs.bugsnag.com/platforms/php/laravel/#reporting-handled-exceptions)
 4. Customize your integration using the [configuration options](https://docs.bugsnag.com/platforms/php/laravel/configuration-options/)
