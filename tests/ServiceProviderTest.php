@@ -8,10 +8,9 @@ use Bugsnag\BugsnagLaravel\Queue\Tracker;
 use Bugsnag\Client;
 use Bugsnag\PsrLogger\BugsnagLogger;
 use Bugsnag\PsrLogger\MultiLogger as BaseMultiLogger;
-use GrahamCampbell\TestBenchCore\MockeryTrait;
 use GrahamCampbell\TestBenchCore\ServiceProviderTrait;
-use Illuminate\Foundation\Application;
 use Illuminate\Contracts\Logging\Log;
+use Illuminate\Foundation\Application;
 use Mockery;
 
 class ServiceProviderTest extends AbstractTestCase
@@ -57,21 +56,23 @@ class ServiceProviderTest extends AbstractTestCase
 
         $app->shouldReceive('singleton')
             ->with('bugsnag.logger', \Mockery::on(
-                function($closure) use ($loggerClass) {
+                function ($closure) use ($loggerClass) {
                     if (is_callable($closure)) {
                         $internalApp = Mockery::mock(Application::class);
                         $config = Mockery::mock();
                         $internalApp->shouldReceive('offsetGet')->with('config')->andReturn($internalApp);
                         $internalApp->shouldReceive('get')->with('bugsnag')->andReturn([
-                            'logger_notify_level' => 'error'
+                            'logger_notify_level' => 'error',
                         ]);
                         $bugsnag = Mockery::mock(Client::class);
                         $internalApp->shouldReceive('offsetGet')->with('bugsnag')->andReturn($bugsnag);
                         $internalApp->shouldReceive('offsetGet')->with('events')->zeroOrMoreTimes();
                         $logger = call_user_func($closure, $internalApp);
                         $this->assertSame(get_class($logger), $loggerClass);
+
                         return true;
                     }
+
                     return false;
                 }
             ))
@@ -79,14 +80,16 @@ class ServiceProviderTest extends AbstractTestCase
 
         $app->shouldReceive('singleton')
             ->with('bugsnag.multi', \Mockery::on(
-                function($closure) use ($multiLoggerClass) {
+                function ($closure) use ($multiLoggerClass) {
                     if (is_callable($closure)) {
                         $internalApp = Mockery::mock(Application::class);
                         $internalApp->shouldReceive('offsetGet')->with(\Mockery::type('string'));
                         $multiLogger = call_user_func($closure, $internalApp);
                         $this->assertSame(get_class($multiLogger), $multiLoggerClass);
+
                         return true;
                     }
+
                     return false;
                 }
             ))
