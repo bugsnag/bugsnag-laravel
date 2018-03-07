@@ -48,6 +48,8 @@ class BugsnagServiceProvider extends ServiceProvider
         $this->setupEvents($this->app->events, $this->app->config->get('bugsnag'));
 
         $this->setupQueue($this->app->queue);
+        
+        $this->setupCommands();
     }
 
     /**
@@ -170,6 +172,18 @@ class BugsnagServiceProvider extends ServiceProvider
 
             $this->app->make(Tracker::class)->set($job);
         });
+    }
+    
+    /**
+     * Setup the commands.
+     *
+     * @return void
+     */
+    public function setupCommands()
+    {
+        $this->commands([
+            Commands\DeployCommand::class,
+        ]);
     }
 
     /**
