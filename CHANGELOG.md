@@ -1,6 +1,13 @@
 Changelog
 =========
 
+## 2.14.1 (2018-03-07)
+
+### Fixes
+
+* Fixed issue with incorrect Logger being returned by ServiceProvider
+  [#295](https://github.com/bugsnag/bugsnag-laravel/pull/295)
+
 ## 2.14.0 (2018-02-16)
 
 ### Enhancements
