@@ -39,6 +39,14 @@
     "extra": {
         "branch-alias": {
             "dev-master": "2.15-dev"
+        },
+        "laravel": {
+            "providers": [
+                "Bugsnag\\BugsnagLaravel\\BugsnagServiceProvider"
+            ],
+            "aliases": [
+                "Bugsnag": "Bugsnag\\BugsnagLaravel\\Facades\\Bugsnag"
+            ]
         }
     },
     "minimum-stability": "dev",
