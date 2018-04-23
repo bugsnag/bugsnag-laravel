@@ -44,9 +44,9 @@
             "providers": [
                 "Bugsnag\\BugsnagLaravel\\BugsnagServiceProvider"
             ],
-            "aliases": [
+            "aliases": {
                 "Bugsnag": "Bugsnag\\BugsnagLaravel\\Facades\\Bugsnag"
-            ]
+            }
         }
     },
     "minimum-stability": "dev",
