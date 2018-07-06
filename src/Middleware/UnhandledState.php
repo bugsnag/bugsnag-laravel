@@ -6,10 +6,10 @@ use Bugsnag\Report;
 
 class UnhandledState
 {
-    const HANDLER_CLASS = 'Illuminate\\Foundation\\Exceptions\\Handler';
+    const HANDLER_CLASS = 'Illuminate\\\\Foundation\\\\Exceptions\\\\Handler';
     const HANDLER_METHOD = 'report';
     const ILLUMINATE_NAMESPACE = 'Illuminate';
-    const APP_EXCEPTION_HANDLER = 'App\\Exception\\Handler';
+    const APP_EXCEPTION_HANDLER = 'App\\\\Exception\\\\Handler';
 
     /**
      * Execute the unhandled state middleware.
