@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Bugsnag\BugsnagLaravel\Bugsnag;
 
 class AppServiceProvider extends ServiceProvider
 {
