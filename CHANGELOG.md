@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## 2.14.2 (2018-08-21)
+
+### Enhancements
+
+* Add Laravel(5.5+) Package Auto-Discovery support
+
 ## 2.14.1 (2018-03-07)
 
 ### Fixes
