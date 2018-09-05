@@ -34,16 +34,23 @@ For more information, see [our Laravel documentation](https://docs.bugsnag.com/p
 
 ## Running in Docker
 
-To start the example in docker, follow the steps as above.  Then, instead of starting the site using `php artisan serve`, run the docker command:
+1. As above, clone the repo and `cd` into this directory:
+    ```shell
+    git clone https://github.com/bugsnag/bugsnag-laravel.git
+    cd bugsnag-laravel/example/laravel56
+    ```
 
-```shell
-docker build .
-```
+1. Then ensure that your Bugsnag Api Key is set in the `.env` file within the application.  If you do not have a `.env` file present, move the    `.env.example` file to `.env`, and add the `BUGSNAG_API_KEY` environment variable, setting it to your Api Key.
 
-Then start your newly built container, with a port forwarding from your local machine to port `8000` in the container, for example:
+1. Build the container:
+    ```shell
+    docker build -t bugsnag-example-app .
+    ```
 
-```shell
-docker run -d -p 8000:8000 <YOUR CONTAINER NUMBER>
-```
+1. Then start your newly built container, with a port forwarding from your local machine to port `8000` in the container, for example:
 
-Then you can head to http://localhost:8000 to see the example page.
+    ```shell
+    docker run -d -p 8000:8000 bugsnag-example-app
+    ```
+
+1. View the example page which will, by default, be served at: http://localhost:8000
