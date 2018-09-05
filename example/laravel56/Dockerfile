@@ -1,16 +1,18 @@
 FROM php:latest
 
 RUN apt-get update && \
-  apt-get install -y --no-install-recommends git zip unzip wget
+  apt-get install -y --no-install-recommends \
+  git \
+  unzip \
+  wget \
+  zip
 
-RUN mkdir /app
 WORKDIR /app
 
-COPY . /app/
+COPY . .
 
-RUN /app/install_composer.sh
+RUN ./install_composer.sh
 
-RUN cd /app/ && \
-  php composer.phar install
+RUN php composer.phar install
 
 CMD php artisan serve --port=8000 --host=0.0.0.0
