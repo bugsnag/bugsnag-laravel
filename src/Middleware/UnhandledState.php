@@ -19,7 +19,7 @@ class UnhandledState
      *
      * @return void
      */
-    public function __invoke(Report $report)
+    public function __invoke(Report $report, callable $next)
     {
         $stackFrames = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
         $reportFrame = false;
@@ -61,6 +61,7 @@ class UnhandledState
                 ],
             ]);
         }
+        $next($report);
     }
 
     protected function stringStartsWith($haystack, $needle)
