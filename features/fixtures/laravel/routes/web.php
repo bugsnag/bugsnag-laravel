@@ -15,6 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('test', function () {
-    throw new Exception('Example exception!');
+Route::get('unhandled', function () {
+    throw new Exception('Crashing exception!');
 });
