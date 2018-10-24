@@ -13,7 +13,9 @@ COPY . .
 
 RUN ./install_composer.sh
 
-RUN php composer.phar install
+RUN cd bugsnag-lib && php /app/composer.phar install 
+
+RUN php composer.phar install --prefer-source
 
 RUN php artisan key:generate
 

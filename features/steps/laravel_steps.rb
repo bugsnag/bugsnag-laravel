@@ -1,3 +1,3 @@
-When(/^I install the current bugsnag-laravel branch to "(.+)"$/) do |fixture|
-  install_current_branch(fixture)
+When(/^I setup my package in the "(.*)" fixture$/) do |fixture|
+  create_git_package("features/fixtures/#{fixture}/bugsnag-lib")
 end
