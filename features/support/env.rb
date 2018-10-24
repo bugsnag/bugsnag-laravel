@@ -1,36 +1,17 @@
 require 'os'
 require 'pp'
 
-$created_files = []
+# Copy bugsnag-laravel into fixture directory
+VENDORED_LIB = 'features/fixtures/laravel/bugsnag-laravel.zip'
+`composer archive -f zip --dir=#{File.dirname(VENDORED_LIB)} --file=#{File.basename(VENDORED_LIB, '.zip')}`
+
+# Remove any locally installed composer deps
+FileUtils.rm_rf('features/fixtures/laravel/vendor')
 
 Before do
   find_default_docker_compose
 end
 
-def create_git_package(target_dir)
-  pp target_dir
-  excludes = ['.', '..', 'features', 'maze_output', 'example', 'vendor', 'composer.lock', 'Gemfile', 'Gemfile.lock']
-  Dir.entries('.').each do |filename|
-    next if excludes.include? filename
-    $created_files << target_dir + '/' + filename
-    if File.directory?(filename)
-      FileUtils.copy_entry(filename, target_dir + '/' + filename, remove_destination: true)
-    else
-      FileUtils.cp(filename, target_dir)
-    end
-  end
-end
-
-def remove_created_packages
-  $created_files.each do |file|
-    if File.directory?(file)
-      `rm -rf #{file}`
-    else
-      `rm -f #{file}`
-    end
-  end
-end
-
-After do
-  remove_created_packages
+at_exit do
+  FileUtils.rm_rf(VENDORED_LIB)
 end
