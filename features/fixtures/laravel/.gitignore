@@ -11,6 +11,5 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
-/vendor
-/features/fixtures/laravel/bugsnag-laravel.zip
-/features/fixtures/laravel/composer.lock
+composer.lock
+bugsnag-laravel.zip
