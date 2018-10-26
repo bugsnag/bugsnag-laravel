@@ -1,0 +1,13 @@
+version: '3.4'
+services:
+  laravel:
+    build:
+      context: laravel
+    environment:
+      - BUGSNAG_API_KEY
+      - BUGSNAG_ENDPOINT
+    restart: "no"
+    ports:
+      - target: 8000
+        published: 61280
+    restart: "no"
