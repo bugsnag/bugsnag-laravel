@@ -19,6 +19,6 @@ Route::get('unhandled', function () {
     throw new Exception('Crashing exception!');
 });
 
-Route::get('handled', function() {
+Route::get('handled', function () {
     Bugsnag::notifyException(new Exception('Handled exception!'));
 });
