@@ -117,7 +117,7 @@ matrix:
       sudo: required
       sevices:
       - docker
-      rmv: 2.4.1
+      rvm: 2.4.1
       before_install: ruby --version
       install: bundle install
       script: bundle exec bugsnag-maze-runner -c
