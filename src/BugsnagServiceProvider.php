@@ -195,7 +195,7 @@ class BugsnagServiceProvider extends ServiceProvider
             $client->setAppVersion(isset($config['app_version']) ? $config['app_version'] : null);
             $client->setBatchSending(isset($config['batch_sending']) ? $config['batch_sending'] : true);
             $client->setSendCode(isset($config['send_code']) ? $config['send_code'] : true);
-            $client->registerMiddleware(new UnhandledState());
+            $client->getPipeline()->insertBefore(new UnhandledState(), 'Bugsnag\Middleware\SessionData');
 
             $client->setNotifier([
                 'name' => 'Bugsnag Laravel',
