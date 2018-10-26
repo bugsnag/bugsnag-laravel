@@ -3,3 +3,5 @@
 /composer.lock
 /composer.phar
 /.idea
+Gemfile.lock
+maze_output
