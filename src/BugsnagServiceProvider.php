@@ -184,7 +184,7 @@ class BugsnagServiceProvider extends ServiceProvider
             $client = new Client(new Configuration($config['api_key']), new LaravelResolver($app), $this->getGuzzle($config));
 
             $this->setupCallbacks($client, $app, $config);
-            $this->setupPaths($client, $app->basePath(), $app->path(), isset($config['strip_path']) ? $config['strip_path'] : null, isset($config['project_root']) ? $config['project_root'] : null);
+            $this->setupPaths($client, $app->basePath(), $app->path(), isset($config['strip_path']) ? $config['strip_path'] : null, isset($config['project_root']) ? $config['project_root'] : null, isset($config['strip_path_regex']) ? $config['strip_path_regex'] : null, isset($config['project_root_regex']) ? $config['project_root_regex'] : null);
 
             $client->setReleaseStage(isset($config['release_stage']) ? $config['release_stage'] : $app->environment());
             $client->setHostname(isset($config['hostname']) ? $config['hostname'] : null);
@@ -332,7 +332,7 @@ class BugsnagServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function setupPaths(Client $client, $base, $path, $strip, $project)
+    protected function setupPaths(Client $client, $base, $path, $strip, $project, $stripRegex, $projectRegex)
     {
         if ($strip) {
             $client->setStripPath($strip);
@@ -354,8 +354,17 @@ class BugsnagServiceProvider extends ServiceProvider
             return;
         }
 
-        $client->setStripPath($base);
-        $client->setProjectRoot($path);
+        if(isset($stripRegex)) {
+            $client->setStripPathRegex($stripRegex);
+        } else {
+            $client->setStripPath($base);
+        }
+
+        if(isset($projectRegex)) {
+            $client->setProjectRootRegex($projectRegex);
+        } else {
+            $client->setProjectRoot($path);
+        }
     }
 
     /**
