@@ -7,7 +7,7 @@ use Bugsnag\Report;
 class UnhandledState
 {
     /**
-     * Unhandled state middleware implementation details
+     * Unhandled state middleware implementation details.
      *
      * This middleware functions on the basis of three things:
      * 1. All unhandled exceptions must pass through the `HANDLER_CLASS` report
