@@ -6,6 +6,21 @@ use Bugsnag\Report;
 
 class UnhandledState
 {
+    /**
+     * Unhandled state middleware implementation details
+     *
+     * This middleware functions on the basis of three things:
+     * 1. All unhandled exceptions must pass through the `HANDLER_CLASS` report
+     *    method
+     * 2. Unhandled exceptions will have had a caller from inside the Illuminate
+     *    namespace or App exception handler
+     * 3. The above exception handler must have originally been called from
+     *    within the Illuminate namespace
+     *
+     * This middleware calls the inbuilt PHP backtrace, and traverses each frame
+     * to determine if the above conditions are met.  If they are, the report is
+     * marked as unhandled.
+     */
     const HANDLER_CLASS = 'Illuminate\\Foundation\\Exceptions\\Handler';
     const HANDLER_METHOD = 'report';
     const ILLUMINATE_NAMESPACE = 'Illuminate';
