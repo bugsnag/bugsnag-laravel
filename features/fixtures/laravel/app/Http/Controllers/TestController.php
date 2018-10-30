@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
 use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
-
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Bus\DispatchesJobs;
-use Illuminate\Foundation\Validation\ValidatesRequests;
+use Exception;
 use Illuminate\Routing\Controller as BaseController;
 
 class TestController extends BaseController
@@ -25,12 +21,14 @@ class TestController extends BaseController
     public function handledException()
     {
         Bugsnag::notifyException(new Exception('Handled exception'));
-        return "done";
+
+        return 'done';
     }
 
     public function handledError()
     {
         Bugsnag::notifyError('Handled error', 'This is a handled error');
-        return "done";
+
+        return 'done';
     }
 }

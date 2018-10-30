@@ -2,14 +2,14 @@
 
 namespace App\Http\Middleware;
 
-use Exception;
 use Closure;
+use Exception;
 
 class UnhandledMiddlewareEx
 {
     public function handle($request, Closure $next)
     {
-        throw new Exception("Unhandled middleware exception");
+        throw new Exception('Unhandled middleware exception');
         $next($request);
     }
 }
