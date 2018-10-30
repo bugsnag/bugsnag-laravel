@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use Exception;
 use Closure;
 
 class UnhandledMiddlewareErr
