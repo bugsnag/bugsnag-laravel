@@ -4,6 +4,7 @@ Scenario: Unhandled exceptions are delivered from views
   Given I set environment variable "BUGSNAG_API_KEY" to "a35a2a72bd230ac0aa0f52715bbdc6aa"
   And I configure the bugsnag endpoint
   And I start the service "laravel"
+  And I wait for 3 seconds
   And I wait for the app to respond on port "61280"
   When I navigate to the route "/unhandled_view_exception" on port "61280"
   And I wait for 1 second
@@ -25,6 +26,7 @@ Scenario: Unhandled errors are delivered from views
   Given I set environment variable "BUGSNAG_API_KEY" to "a35a2a72bd230ac0aa0f52715bbdc6aa"
   And I configure the bugsnag endpoint
   And I start the service "laravel"
+  And I wait for 3 seconds
   And I wait for the app to respond on port "61280"
   When I navigate to the route "/unhandled_view_error" on port "61280"
   And I wait for 1 second
@@ -47,6 +49,7 @@ Scenario: Sessions are correct in unhandled exceptions from views
   And I configure the bugsnag endpoint
   And I enable session tracking
   And I start the service "laravel"
+  And I wait for 3 seconds
   And I wait for the app to respond on port "61280"
   When I navigate to the route "/unhandled_view_exception" on port "61280"
   And I wait for 1 second
