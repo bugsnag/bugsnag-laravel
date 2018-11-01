@@ -47,5 +47,5 @@ Route::get('/handled_middleware_error', function () {
 
 Route::view('/unhandled_view_exception', 'unhandledexception');
 Route::view('/unhandled_view_error', 'unhandlederror');
-Route::view('/unhandled_view_exception', 'handledexception');
-Route::view('/unhandled_view_error', 'handlederror');
+Route::view('/handled_view_exception', 'handledexception');
+Route::view('/handled_view_error', 'handlederror');
