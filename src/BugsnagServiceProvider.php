@@ -3,6 +3,7 @@
 namespace Bugsnag\BugsnagLaravel;
 
 use Bugsnag\Breadcrumbs\Breadcrumb;
+use Bugsnag\BugsnagLaravel\Middleware\UnhandledState;
 use Bugsnag\BugsnagLaravel\Queue\Tracker;
 use Bugsnag\BugsnagLaravel\Request\LaravelResolver;
 use Bugsnag\Callbacks\CustomUser;
@@ -34,7 +35,7 @@ class BugsnagServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    const VERSION = '2.14.1';
+    const VERSION = '2.15.0-alpha-1';
 
     /**
      * Boot the service provider.
@@ -194,6 +195,7 @@ class BugsnagServiceProvider extends ServiceProvider
             $client->setAppVersion(isset($config['app_version']) ? $config['app_version'] : null);
             $client->setBatchSending(isset($config['batch_sending']) ? $config['batch_sending'] : true);
             $client->setSendCode(isset($config['send_code']) ? $config['send_code'] : true);
+            $client->getPipeline()->insertBefore(new UnhandledState(), 'Bugsnag\\Middleware\\SessionData');
 
             $client->setNotifier([
                 'name' => 'Bugsnag Laravel',
