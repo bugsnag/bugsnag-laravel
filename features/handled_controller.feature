@@ -4,6 +4,7 @@ Scenario: Handled exceptions are delivered from controllers
   Given I set environment variable "BUGSNAG_API_KEY" to "a35a2a72bd230ac0aa0f52715bbdc6aa"
   And I configure the bugsnag endpoint
   And I start the service "laravel"
+  And I wait for 3 seconds
   And I wait for the app to respond on port "61280"
   When I navigate to the route "/handled_controller_exception" on port "61280"
   And I wait for 1 second
@@ -24,6 +25,7 @@ Scenario: Handled errors are delivered from controllers
   Given I set environment variable "BUGSNAG_API_KEY" to "a35a2a72bd230ac0aa0f52715bbdc6aa"
   And I configure the bugsnag endpoint
   And I start the service "laravel"
+  And I wait for 3 seconds
   And I wait for the app to respond on port "61280"
   When I navigate to the route "/handled_controller_error" on port "61280"
   And I wait for 1 second
@@ -45,6 +47,7 @@ Scenario: Sessions are correct in handled exceptions from controllers
   And I configure the bugsnag endpoint
   And I enable session tracking
   And I start the service "laravel"
+  And I wait for 3 seconds
   And I wait for the app to respond on port "61280"
   When I navigate to the route "/handled_controller_exception" on port "61280"
   And I wait for 1 second
