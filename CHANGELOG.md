@@ -1,7 +1,7 @@
 Changelog
 =========
 
-## 2.15.0 (Alpha 1)
+## 2.15.0 (2018-11-01)
 
 ### Enhancements
 
