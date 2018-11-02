@@ -6,6 +6,8 @@ services:
     environment:
       - BUGSNAG_API_KEY
       - BUGSNAG_ENDPOINT
+      - BUGSNAG_SESSION_ENDPOINT
+      - BUGSNAG_CAPTURE_SESSIONS
     restart: "no"
     ports:
       - target: 8000
