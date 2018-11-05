@@ -1,6 +1,13 @@
 Changelog
 =========
 
+## TBD
+
+### Fixes
+
+* Fixed issues where test fixtures polluted the App namespace
+  [#332](https://github.com/bugsnag/bugsnag-laravel/pull/332)
+
 ## 2.15.0 (2018-11-02)
 
 ### Enhancements
