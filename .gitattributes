@@ -14,3 +14,4 @@
 /circle.yml export-ignore
 /Makefile export-ignore
 /phpunit.xml.dist export-ignore
+/.github export-ignore
