@@ -238,7 +238,7 @@ class BugsnagServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton('bugsnag.multi', function (Container $app) {
-            return interface_exists(Log::class) ? new MultiLogger([$app['log'], $app['bugsnag.logger']], $app['events']) : new BaseMultiLogger([$app['log'], $app['bugsnag.logger']]);
+            return interface_exists(Log::class) ? new MultiLogger([$app['log'], $app['bugsnag.logger']]) : new BaseMultiLogger([$app['log'], $app['bugsnag.logger']]);
         });
 
         if ($this->app['log'] instanceof LogManager) {
