@@ -1,6 +1,13 @@
 Changelog
 =========
 
+## TBA
+
+### Fixes
+
+* Removed duplicate event dispatching when using MultiLogger configuration
+  [#337](https://github.com/bugsnag/bugsnag-laravel/pull/337)
+
 ## 2.15.1 (2018-11-05)
 
 ### Fixes
