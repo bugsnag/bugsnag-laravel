@@ -55,8 +55,24 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Notify Endpoint
+    |--------------------------------------------------------------------------
+    |
+    | Set what server the Bugsnag notifier should send errors to. By default
+    | this is set to 'https://notify.bugsnag.com', but for Bugsnag Enterprise
+    | this should be the URL to your Bugsnag instance.
+    |
+    */
+
+    'notify_endpoint' => env('BUGSNAG_NOTIFY_ENDPOINT'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Endpoint
     |--------------------------------------------------------------------------
+    |
+    | Deprecated: Use the 'notify_endpoint' or BUGSNAG_NOTIFY_ENDPOINT
+    | environment variable instead
     |
     | Set what server the Bugsnag notifier should send errors to. By default
     | this is set to 'https://notify.bugsnag.com', but for Bugsnag Enterprise
@@ -251,11 +267,11 @@ return [
     |
     */
 
-    'auto_capture_sessions' => env('BUGSNAG_CAPTURE_SESSIONS', false),
+    'auto_capture_sessions' => env('BUGSNAG_CAPTURE_SESSIONS', true),
 
     /*
     |--------------------------------------------------------------------------
-    | Sessions Endpoint
+    | Session Endpoint
     |--------------------------------------------------------------------------
     |
     | Sets a url to send tracked sessions to.
