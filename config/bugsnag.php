@@ -263,7 +263,7 @@ return [
     | Auto Capture Sessions
     |--------------------------------------------------------------------------
     |
-    | Enable this to start tracking sessions and deliver them to Bugsnag.
+    | Disable this to stop automatically tracking sessions.
     |
     */
 
