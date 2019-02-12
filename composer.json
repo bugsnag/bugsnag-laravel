@@ -10,22 +10,12 @@
             "email": "notifiers@bugsnag.com"
         }
     ],
-    "repositories": [
-        {
-            "type": "git",
-            "url": "https://github.com/bugsnag/bugsnag-php"
-        },
-        {
-            "type": "git",
-            "url": "https://github.com/bugsnag/bugsnag-psr-logger"
-        }
-    ],
     "require": {
         "php": ">=5.5",
         "illuminate/contracts": "^5.0",
         "illuminate/support": "^5.0",
-        "bugsnag/bugsnag": "dev-aost/base-changes",
-        "bugsnag/bugsnag-psr-logger": "dev-cawllec/aost-base",
+        "bugsnag/bugsnag": "^4.0.0",
+        "bugsnag/bugsnag-psr-logger": "^2.0",
         "monolog/monolog": "^1.12"
     },
     "require-dev": {

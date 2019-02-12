@@ -12,11 +12,9 @@ FileUtils.rm_rf('features/fixtures/laravel/vendor')
 File.open('composer.json', 'r') do |source|
   parsed_composer = JSON.parse source.read
   requirements = parsed_composer["require"]
-  repositories = parsed_composer["repositories"]
   File.open('features/fixtures/laravel/composer.json.template', 'r') do |template|
     parsed_template = JSON.parse template.read
     parsed_template["repositories"][0]["package"]["require"] = requirements
-    parsed_template["repositories"].concat(repositories)
     File.open('features/fixtures/laravel/composer.json', 'w') do |target|
       target.write(JSON.pretty_generate(parsed_template))
     end
