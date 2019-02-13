@@ -4,7 +4,7 @@ Changelog
 
 ### Enhancements
 
-* Changed caching TTL to use DateInterval instead. 
+* Changed caching TTL to use DateTime instead. 
   [#344](https://github.com/bugsnag/bugsnag-laravel/pull/344)
   [Mozammil Khodabacchas](https://github.com/mozammil)
 
