@@ -27,7 +27,7 @@ use Laravel\Lumen\Application as LumenApplication;
 use Monolog\Handler\PsrHandler;
 use Monolog\Logger;
 use ReflectionClass;
-use DateInterval;
+use DateTime;
 
 class BugsnagServiceProvider extends ServiceProvider
 {
@@ -393,7 +393,7 @@ class BugsnagServiceProvider extends ServiceProvider
             if (is_null($value)) {
                 return $cache->get($key, null);
             } else {
-                $cache->put($key, $value, DateInterval::createFromDateString('1 hour'));
+                $cache->put($key, $value, new DateTime('+ 1 hour'));
             }
         };
 
