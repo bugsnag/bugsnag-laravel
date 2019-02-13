@@ -12,7 +12,6 @@ use Bugsnag\Configuration;
 use Bugsnag\PsrLogger\BugsnagLogger;
 use Bugsnag\PsrLogger\MultiLogger as BaseMultiLogger;
 use Bugsnag\Report;
-use Bugsnag\Utils;
 use Illuminate\Auth\GenericUser;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -183,13 +182,7 @@ class BugsnagServiceProvider extends ServiceProvider
     {
         $this->app->singleton('bugsnag', function (Container $app) {
             $config = $app->config->get('bugsnag');
-            $client = new Client(new Configuration($config['api_key']), new LaravelResolver($app));
-            $client->setGuzzleClient($this->getGuzzle($config));
-
-            if (($config['endpoint'] || $config['notify_endpoint'])) {
-                $notifyEndpoint = $config['notify_endpoint'] ?: $config['endpoint'];
-                $client->setEndpoints($notifyEndpoint, $config['session_endpoint']);
-            }
+            $client = new Client(new Configuration($config['api_key']), new LaravelResolver($app), $this->getGuzzle($config));
 
             $this->setupCallbacks($client, $app, $config);
             $this->setupPaths($client, $app->basePath(), $app->path(), isset($config['strip_path']) ? $config['strip_path'] : null, isset($config['project_root']) ? $config['project_root'] : null);
@@ -219,7 +212,8 @@ class BugsnagServiceProvider extends ServiceProvider
             }
 
             if (isset($config['auto_capture_sessions']) && $config['auto_capture_sessions']) {
-                $this->setupSessionTracking($client, $this->app->events);
+                $endpoint = isset($config['session_endpoint']) ? $config['session_endpoint'] : null;
+                $this->setupSessionTracking($client, $endpoint, $this->app->events);
             }
 
             if (isset($config['build_endpoint'])) {
@@ -266,19 +260,21 @@ class BugsnagServiceProvider extends ServiceProvider
      *
      * @param array $config
      *
-     * @return \GuzzleHttp\ClientInterface|null
+     * @return \GuzzleHttp\ClientInterface
      */
     protected function getGuzzle(array $config)
     {
+        $options = [];
+
         if (isset($config['proxy']) && $config['proxy']) {
             if (isset($config['proxy']['http']) && php_sapi_name() != 'cli') {
                 unset($config['proxy']['http']);
             }
 
-            return Utils::makeGuzzle(['proxy' => $config['proxy']]);
+            $options['proxy'] = $config['proxy'];
         }
 
-        return null;
+        return Client::makeGuzzle(isset($config['endpoint']) ? $config['endpoint'] : null, $options);
     }
 
     /**
@@ -368,13 +364,16 @@ class BugsnagServiceProvider extends ServiceProvider
      * Setup session tracking.
      *
      * @param \Bugsnag\Client $client
-     * @param array           $events
+     * @param string          $endpoint
      *
      * @return void
      */
-    protected function setupSessionTracking(Client $client, $events)
+    protected function setupSessionTracking(Client $client, $endpoint, $events)
     {
         $client->setAutoCaptureSessions(true);
+        if (!is_null($endpoint)) {
+            $client->setSessionEndpoint($endpoint);
+        }
         $sessionTracker = $client->getSessionTracker();
 
         $sessionStorage = function ($session = null) {
