@@ -1,5 +1,12 @@
 Changelog
 =========
+## 2.15.3 (2019-02-13)
+
+### Enhancements
+
+* Changed caching TTL to use DateInterval instead. 
+  [#344](https://github.com/bugsnag/bugsnag-laravel/pull/344)
+  [Mozammil Khodabacchas](https://github.com/mozammil)
 
 ## 2.15.2 (2019-01-23)
 
