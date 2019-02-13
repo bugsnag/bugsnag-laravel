@@ -393,7 +393,7 @@ class BugsnagServiceProvider extends ServiceProvider
             if (is_null($value)) {
                 return $cache->get($key, null);
             } else {
-                $cache->put($key, $value, DateInterval::createFromDateString('60 minutes'));
+                $cache->put($key, $value, DateInterval::createFromDateString('1 hour'));
             }
         };
 
