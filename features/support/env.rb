@@ -1,6 +1,5 @@
 require 'os'
 require 'json'
-require 'pp'
 
 # Copy bugsnag-laravel into fixture directories
 FIXTURE_DIR = 'features/fixtures'
@@ -19,7 +18,6 @@ File.open('composer.json', 'r') do |source|
   parsed_composer = JSON.parse source.read
   requirements = parsed_composer["require"]
   Dir.glob(FIXTURE_DIR + '/laravel*').each do |directory|
-    puts directory
     File.open(directory + '/composer.json.template', 'r') do |template|
       parsed_template = JSON.parse template.read
       parsed_template["repositories"][0]["package"]["require"] = requirements
