@@ -3,6 +3,7 @@
 namespace Bugsnag\BugsnagLaravel;
 
 use Bugsnag\Breadcrumbs\Breadcrumb;
+use Bugsnag\BugsnagLaravel\Middleware\UnhandledState;
 use Bugsnag\BugsnagLaravel\Queue\Tracker;
 use Bugsnag\BugsnagLaravel\Request\LaravelResolver;
 use Bugsnag\Callbacks\CustomUser;
@@ -34,7 +35,7 @@ class BugsnagServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    const VERSION = '2.14.1';
+    const VERSION = '2.15.2';
 
     /**
      * Boot the service provider.
@@ -194,6 +195,7 @@ class BugsnagServiceProvider extends ServiceProvider
             $client->setAppVersion(isset($config['app_version']) ? $config['app_version'] : null);
             $client->setBatchSending(isset($config['batch_sending']) ? $config['batch_sending'] : true);
             $client->setSendCode(isset($config['send_code']) ? $config['send_code'] : true);
+            $client->getPipeline()->insertBefore(new UnhandledState(), 'Bugsnag\\Middleware\\SessionData');
 
             $client->setNotifier([
                 'name' => 'Bugsnag Laravel',
@@ -236,7 +238,7 @@ class BugsnagServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton('bugsnag.multi', function (Container $app) {
-            return interface_exists(Log::class) ? new MultiLogger([$app['log'], $app['bugsnag.logger']], $app['events']) : new BaseMultiLogger([$app['log'], $app['bugsnag.logger']]);
+            return interface_exists(Log::class) ? new MultiLogger([$app['log'], $app['bugsnag.logger']]) : new BaseMultiLogger([$app['log'], $app['bugsnag.logger']]);
         });
 
         if ($this->app['log'] instanceof LogManager) {

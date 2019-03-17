@@ -1,6 +1,27 @@
 Changelog
 =========
 
+## 2.15.2 (2019-01-23)
+
+### Fixes
+
+* Removed duplicate event dispatching when using MultiLogger configuration
+  [#337](https://github.com/bugsnag/bugsnag-laravel/pull/337)
+
+## 2.15.1 (2018-11-05)
+
+### Fixes
+
+* Fixed issues where test fixtures polluted the App namespace
+  [#332](https://github.com/bugsnag/bugsnag-laravel/pull/332)
+
+## 2.15.0 (2018-11-02)
+
+### Enhancements
+
+* Added middleware for correct handled/unhandled state in notifications
+  [#325](https://github.com/bugsnag/bugsnag-laravel/pull/325)
+
 ## 2.14.1 (2018-03-07)
 
 ### Fixes

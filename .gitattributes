@@ -1,6 +1,7 @@
 * text=auto
 
 /example export-ignore
+/features export-ignore
 /tests export-ignore
 /.editorconfig export-ignore
 /.gitattributes export-ignore
@@ -13,3 +14,4 @@
 /circle.yml export-ignore
 /Makefile export-ignore
 /phpunit.xml.dist export-ignore
+/.github export-ignore

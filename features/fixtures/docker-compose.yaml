@@ -1,13 +1,28 @@
 version: '3.4'
 services:
-  laravel:
+  laravel56:
     build:
-      context: laravel
+      context: laravel56
     environment:
       - BUGSNAG_API_KEY
       - BUGSNAG_ENDPOINT
+      - BUGSNAG_SESSION_ENDPOINT
+      - BUGSNAG_CAPTURE_SESSIONS
     restart: "no"
     ports:
       - target: 8000
-        published: 61280
+        published: 61256
+    restart: "no"
+  laravel58:
+    build:
+      context: laravel58
+    environment:
+      - BUGSNAG_API_KEY
+      - BUGSNAG_ENDPOINT
+      - BUGSNAG_SESSION_ENDPOINT
+      - BUGSNAG_CAPTURE_SESSIONS
+    restart: "no"
+    ports:
+      - target: 8000
+        published: 61258
     restart: "no"
