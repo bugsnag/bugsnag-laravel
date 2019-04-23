@@ -43,7 +43,7 @@ class DeployCommand extends Command
                 $builderName = Utils::getBuilderName();
             }
         }
-        Bugsnag::build($this->option('repository'), $this->option('revision'), $this->option('provider'), $builderName);
+        Bugsnag::build($this->option('repository'), $this->option('revision'), $this->option('provider'), $builderName, $this->option('appVersion'));
 
         $this->info('Notified Bugsnag of the build!');
     }
@@ -71,6 +71,7 @@ class DeployCommand extends Command
             ['revision', null, InputOption::VALUE_OPTIONAL, 'The source control revision you are currently deploying.', null],
             ['provider', null, InputOption::VALUE_OPTIONAL, 'The provider of your source control repository.', null],
             ['builder', null, InputOption::VALUE_OPTIONAL, 'The machine or person who has executed the build', null],
+            ['appVersion', null, InputOption::VALUE_OPTIONAL, 'The version for the build', null]
         ];
     }
 }
