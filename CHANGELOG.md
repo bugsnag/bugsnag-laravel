@@ -1,6 +1,11 @@
 Changelog
 =========
 
+## TBD
+
+* Add Laravel/Lumen version string to report and session payloads (device.runtimeVersions)
+  [#352](https://github.com/bugsnag/bugsnag-laravel/pull/352)
+
 ## 2.15.2 (2019-01-23)
 
 ### Fixes
