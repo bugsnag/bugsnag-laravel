@@ -3,9 +3,9 @@ Feature: Unhandled exceptions for middleware support
 Scenario: Unhandled exceptions are delivered from middleware
   Given I set environment variable "BUGSNAG_API_KEY" to "a35a2a72bd230ac0aa0f52715bbdc6aa"
   And I configure the bugsnag endpoint
-  And I start the service "laravel"
-  And I wait for the app to respond on port "61280"
-  When I navigate to the route "/unhandled_middleware_exception" on port "61280"
+  And I start the laravel fixture
+  And I wait for the app to respond on the appropriate port
+  When I navigate to the route "/unhandled_middleware_exception"
   And I wait for 1 second
   Then I should receive a request
   And the request is a valid for the error reporting API
@@ -24,9 +24,9 @@ Scenario: Unhandled exceptions are delivered from middleware
 Scenario: Unhandled errors are delivered from middleware
   Given I set environment variable "BUGSNAG_API_KEY" to "a35a2a72bd230ac0aa0f52715bbdc6aa"
   And I configure the bugsnag endpoint
-  And I start the service "laravel"
-  And I wait for the app to respond on port "61280"
-  When I navigate to the route "/unhandled_middleware_error" on port "61280"
+  And I start the laravel fixture
+  And I wait for the app to respond on the appropriate port
+  When I navigate to the route "/unhandled_middleware_error"
   And I wait for 1 second
   Then I should receive a request
   And the request is a valid for the error reporting API
@@ -47,9 +47,9 @@ Scenario: Sessions are correct in unhandled exceptions from middleware
   Given I set environment variable "BUGSNAG_API_KEY" to "a35a2a72bd230ac0aa0f52715bbdc6aa"
   And I configure the bugsnag endpoint
   And I enable session tracking
-  And I start the service "laravel"
-  And I wait for the app to respond on port "61280"
-  When I navigate to the route "/unhandled_middleware_exception" on port "61280"
+  And I start the laravel fixture
+  And I wait for the app to respond on the appropriate port
+  When I navigate to the route "/unhandled_middleware_exception"
   And I wait for 1 second
   Then I should receive 2 requests
   And the request 0 is valid for the session tracking API
