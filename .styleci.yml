@@ -5,4 +5,6 @@ enabled:
   - unalign_double_arrow
 
 finder:
-  exclude: example
+  exclude:
+    - example
+    - features
