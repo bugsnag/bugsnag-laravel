@@ -404,13 +404,14 @@ class BugsnagServiceProvider extends ServiceProvider
     /**
      * Returns the framework name and version to add to the device data.
      *
-     * Attempts to parse a semantic framework version from $app or else return the full version string.
-     * e.g. Lumin: "Lumen (x.x.x) (Laravel Components y.y.*)" => "x.x.x"
+     * Attempt to parse a semantic framework version from $app or else return
+     * the full version string.
+     * e.g. Lumen: "Lumen (x.x.x) (Laravel Components y.y.*)" => "x.x.x"
      *
      * @return array
      */
-    protected function getRuntimeVersion() {
-
+    protected function getRuntimeVersion()
+    {
         $version = $this->app->version();
         if (preg_match('/(\d+\.\d+\.\d+)/', $version, $versionMatches)) {
             $version = $versionMatches[0];
