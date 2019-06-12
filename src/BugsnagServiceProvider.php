@@ -27,6 +27,7 @@ use Laravel\Lumen\Application as LumenApplication;
 use Monolog\Handler\PsrHandler;
 use Monolog\Logger;
 use ReflectionClass;
+use DateTime;
 
 class BugsnagServiceProvider extends ServiceProvider
 {
@@ -35,7 +36,7 @@ class BugsnagServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    const VERSION = '2.15.2';
+    const VERSION = '2.15.3';
 
     /**
      * Boot the service provider.
@@ -393,7 +394,7 @@ class BugsnagServiceProvider extends ServiceProvider
             if (is_null($value)) {
                 return $cache->get($key, null);
             } else {
-                $cache->put($key, $value, 60);
+                $cache->put($key, $value, new DateTime('+ 1 hour'));
             }
         };
 
