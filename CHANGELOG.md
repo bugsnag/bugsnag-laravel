@@ -1,17 +1,23 @@
 Changelog
 =========
-## 2.15.3 (2019-02-13)
+
+## 2.16.0 (2019-06-17)
 
 ### Enhancements
+
+* Add Laravel/Lumen version string to report and session payloads (device.runtimeVersions)
+  [#352](https://github.com/bugsnag/bugsnag-laravel/pull/352)
+
+## Fixes
 
 * Changed caching TTL to use DateTime instead. 
   [#344](https://github.com/bugsnag/bugsnag-laravel/pull/344)
   [Mozammil Khodabacchas](https://github.com/mozammil)
-
-## TBD
-
-* Add Laravel/Lumen version string to report and session payloads (device.runtimeVersions)
-  [#352](https://github.com/bugsnag/bugsnag-laravel/pull/352)
+* Update axiom dependency in laravel56 example to remove security vulnerability warning
+  [#354](https://github.com/bugsnag/bugsnag-laravel/pull/354)
+* Exclude the features directory on StyleCI
+  [GrahamCampbell](https://github.com/GrahamCampbell)
+  [#355](https://github.com/bugsnag/bugsnag-laravel/pull/355)
 
 ## 2.15.2 (2019-01-23)
 
