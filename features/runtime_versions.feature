@@ -4,7 +4,7 @@ Background:
   Given I set environment variable "BUGSNAG_API_KEY" to "a35a2a72bd230ac0aa0f52715bbdc6aa"
   And I configure the bugsnag endpoint
 
-Scenario: report for unhandled event contains runtime version information
+Scenario: report for handled event contains runtime version information
   Given I set environment variable "BUGSNAG_API_KEY" to "a35a2a72bd230ac0aa0f52715bbdc6aa"
   And I configure the bugsnag endpoint
   And I start the laravel fixture
@@ -17,7 +17,7 @@ Scenario: report for unhandled event contains runtime version information
   And the event "device.runtimeVersions.php" matches "(\d+\.){2}\d+"
   And the event "device.runtimeVersions.laravel" matches "(\d+\.){2}\d+"
 
-Scenario: report for handled event contains runtime version information
+Scenario: report for unhandled event contains runtime version information
   Given I set environment variable "BUGSNAG_API_KEY" to "a35a2a72bd230ac0aa0f52715bbdc6aa"
   And I configure the bugsnag endpoint
   And I start the laravel fixture
@@ -30,7 +30,7 @@ Scenario: report for handled event contains runtime version information
   And the event "device.runtimeVersions.php" matches "(\d+\.){2}\d+"
   And the event "device.runtimeVersions.laravel" matches "(\d+\.){2}\d+"
 
-Scenario: Sessions are correct in unhandled exceptions from controllers
+Scenario: session payload contains runtime version information
   Given I set environment variable "BUGSNAG_API_KEY" to "a35a2a72bd230ac0aa0f52715bbdc6aa"
   And I configure the bugsnag endpoint
   And I enable session tracking
