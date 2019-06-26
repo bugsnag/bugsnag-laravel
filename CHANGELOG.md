@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## NEW_VERSION (RELEASE_DATE)
+
+### Enhancements
+
+* Add Laravel autodiscovery for both the service provider and the alias
+
 ## 2.16.0 (2019-06-17)
 
 ### Enhancements
