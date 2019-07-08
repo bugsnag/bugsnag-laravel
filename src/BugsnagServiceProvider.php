@@ -372,6 +372,12 @@ class BugsnagServiceProvider extends ServiceProvider
      */
     protected function setupSessionTracking(Client $client, $endpoint, $events)
     {
+        // Session support removed in Lumen 5.3 - only setup automatic session
+        // tracking if the session function is avaiable
+        if (!function_exists('session')) {
+            return;
+        }
+
         $client->setAutoCaptureSessions(true);
         if (!is_null($endpoint)) {
             $client->setSessionEndpoint($endpoint);
