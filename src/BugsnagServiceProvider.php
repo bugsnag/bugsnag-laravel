@@ -27,6 +27,7 @@ use Laravel\Lumen\Application as LumenApplication;
 use Monolog\Handler\PsrHandler;
 use Monolog\Logger;
 use ReflectionClass;
+use DateTime;
 
 class BugsnagServiceProvider extends ServiceProvider
 {
@@ -35,7 +36,7 @@ class BugsnagServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    const VERSION = '2.15.2';
+    const VERSION = '2.16.0';
 
     /**
      * Boot the service provider.
@@ -189,6 +190,7 @@ class BugsnagServiceProvider extends ServiceProvider
 
             $client->setReleaseStage(isset($config['release_stage']) ? $config['release_stage'] : $app->environment());
             $client->setHostname(isset($config['hostname']) ? $config['hostname'] : null);
+            $client->getConfig()->mergeDeviceData(['runtimeVersions' => $this->getRuntimeVersion()]);
 
             $client->setFallbackType($app->runningInConsole() ? 'Console' : 'HTTP');
             $client->setAppType(isset($config['app_type']) ? $config['app_type'] : null);
@@ -401,11 +403,30 @@ class BugsnagServiceProvider extends ServiceProvider
             if (is_null($value)) {
                 return $cache->get($key, null);
             } else {
-                $cache->put($key, $value, 60);
+                $cache->put($key, $value, new DateTime('+ 1 hour'));
             }
         };
 
         $sessionTracker->setStorageFunction($genericStorage);
+    }
+
+    /**
+     * Returns the framework name and version to add to the device data.
+     *
+     * Attempt to parse a semantic framework version from $app or else return
+     * the full version string.
+     * e.g. Lumen: "Lumen (x.x.x) (Laravel Components y.y.*)" => "x.x.x"
+     *
+     * @return array
+     */
+    protected function getRuntimeVersion()
+    {
+        $version = $this->app->version();
+        if (preg_match('/(\d+\.\d+\.\d+)/', $version, $versionMatches)) {
+            $version = $versionMatches[0];
+        }
+        return [ ($this->app instanceof LumenApplication ? 'lumen' : 'laravel' ) => $version ];
+
     }
 
     /**
