@@ -426,7 +426,7 @@ class BugsnagServiceProvider extends ServiceProvider
             $version = $versionMatches[0];
         }
 
-        return [($this->app instanceof LumenApplication ? 'lumen' : 'laravel' ) => $version];
+        return [($this->app instanceof LumenApplication ? 'lumen' : 'laravel') => $version];
     }
 
     /**
