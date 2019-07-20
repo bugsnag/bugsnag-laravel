@@ -358,13 +358,13 @@ class BugsnagServiceProvider extends ServiceProvider
             return;
         }
 
-        if(isset($stripRegex)) {
+        if (isset($stripRegex)) {
             $client->setStripPathRegex($stripRegex);
         } else {
             $client->setStripPath($base);
         }
 
-        if(isset($projectRegex)) {
+        if (isset($projectRegex)) {
             $client->setProjectRootRegex($projectRegex);
         } else {
             $client->setProjectRoot($path);
