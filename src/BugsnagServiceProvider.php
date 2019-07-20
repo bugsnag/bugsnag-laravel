@@ -425,8 +425,8 @@ class BugsnagServiceProvider extends ServiceProvider
         if (preg_match('/(\d+\.\d+\.\d+)/', $version, $versionMatches)) {
             $version = $versionMatches[0];
         }
-        return [($this->app instanceof LumenApplication ? 'lumen' : 'laravel' ) => $version];
 
+        return [($this->app instanceof LumenApplication ? 'lumen' : 'laravel' ) => $version];
     }
 
     /**
