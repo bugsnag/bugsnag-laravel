@@ -12,6 +12,7 @@ use Bugsnag\Configuration;
 use Bugsnag\PsrLogger\BugsnagLogger;
 use Bugsnag\PsrLogger\MultiLogger as BaseMultiLogger;
 use Bugsnag\Report;
+use DateTime;
 use Illuminate\Auth\GenericUser;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -27,7 +28,6 @@ use Laravel\Lumen\Application as LumenApplication;
 use Monolog\Handler\PsrHandler;
 use Monolog\Logger;
 use ReflectionClass;
-use DateTime;
 
 class BugsnagServiceProvider extends ServiceProvider
 {
@@ -358,13 +358,13 @@ class BugsnagServiceProvider extends ServiceProvider
             return;
         }
 
-        if(isset($stripRegex)) {
+        if (isset($stripRegex)) {
             $client->setStripPathRegex($stripRegex);
         } else {
             $client->setStripPath($base);
         }
 
-        if(isset($projectRegex)) {
+        if (isset($projectRegex)) {
             $client->setProjectRootRegex($projectRegex);
         } else {
             $client->setProjectRoot($path);
@@ -425,7 +425,7 @@ class BugsnagServiceProvider extends ServiceProvider
         if (preg_match('/(\d+\.\d+\.\d+)/', $version, $versionMatches)) {
             $version = $versionMatches[0];
         }
-        return [ ($this->app instanceof LumenApplication ? 'lumen' : 'laravel' ) => $version ];
+        return [($this->app instanceof LumenApplication ? 'lumen' : 'laravel' ) => $version];
 
     }
 
