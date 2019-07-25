@@ -186,7 +186,7 @@ class BugsnagServiceProvider extends ServiceProvider
             $client = new Client(new Configuration($config['api_key']), new LaravelResolver($app), $this->getGuzzle($config));
 
             $this->setupCallbacks($client, $app, $config);
-            $this->setupPaths($client, $app->basePath(), $app->path(), isset($config['strip_path']) ? $config['strip_path'] : null, isset($config['project_root']) ? $config['project_root'] : null, isset($config['strip_path_regex']) ? $config['strip_path_regex'] : null, isset($config['project_root_regex']) ? $config['project_root_regex'] : null);
+            $this->setupPaths($client, $app, $config);
 
             $client->setReleaseStage(isset($config['release_stage']) ? $config['release_stage'] : $app->environment());
             $client->setHostname(isset($config['hostname']) ? $config['hostname'] : null);
@@ -328,16 +328,21 @@ class BugsnagServiceProvider extends ServiceProvider
     /**
      * Setup the client paths.
      *
-     * @param \Bugsnag\Client $client
-     * @param string          $base
-     * @param string          $path
-     * @param string|null     $strip
-     * @param string|null     $project
+     * @param \Bugsnag\Client                           $client
+     * @param \Illuminate\Contracts\Container\Container $app
+     * @param array                                     $config
      *
      * @return void
      */
-    protected function setupPaths(Client $client, $base, $path, $strip, $project, $stripRegex, $projectRegex)
+    protected function setupPaths(Client $client, Container $app, array $config)
     {
+        $stripDefault = $app->basePath();
+        $projectDefault = $app->path();
+        $strip = $config['strip_path'] ?? null;
+        $project = $config['project_root'] ?? null;
+        $stripRegex = $config['strip_path_regex'] ?? null;
+        $projectRegex = $config['project_root_regex'] ?? null;
+
         if ($strip) {
             $client->setStripPath($strip);
 
@@ -349,8 +354,8 @@ class BugsnagServiceProvider extends ServiceProvider
         }
 
         if ($project) {
-            if ($base && substr($project, 0, strlen($base)) === $base) {
-                $client->setStripPath($base);
+            if ($stripDefault && substr($project, 0, strlen($stripDefault)) === $stripDefault) {
+                $client->setStripPath($stripDefault);
             }
 
             $client->setProjectRoot($project);
@@ -361,13 +366,13 @@ class BugsnagServiceProvider extends ServiceProvider
         if (isset($stripRegex)) {
             $client->setStripPathRegex($stripRegex);
         } else {
-            $client->setStripPath($base);
+            $client->setStripPath($stripDefault);
         }
 
         if (isset($projectRegex)) {
             $client->setProjectRootRegex($projectRegex);
         } else {
-            $client->setProjectRoot($path);
+            $client->setProjectRoot($projectDefault);
         }
     }
 
