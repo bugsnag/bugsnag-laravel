@@ -354,11 +354,11 @@ class BugsnagServiceProvider extends ServiceProvider
         }
 
         if ($project) {
+            $client->setProjectRoot($project);
+
             if ($stripDefault && substr($project, 0, strlen($stripDefault)) === $stripDefault) {
                 $client->setStripPath($stripDefault);
             }
-
-            $client->setProjectRoot($project);
 
             return;
         }
