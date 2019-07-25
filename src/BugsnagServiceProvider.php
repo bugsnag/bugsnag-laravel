@@ -344,11 +344,11 @@ class BugsnagServiceProvider extends ServiceProvider
         $projectRegex = $config['project_root_regex'] ?? null;
 
         if ($strip) {
-            $client->setStripPath($strip);
-
             if (!$project) {
                 $client->setProjectRoot("{$strip}/app");
             }
+
+            $client->setStripPath($strip);
 
             return;
         }
