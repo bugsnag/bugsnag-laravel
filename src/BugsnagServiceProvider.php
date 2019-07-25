@@ -343,36 +343,23 @@ class BugsnagServiceProvider extends ServiceProvider
         $stripRegex = $config['strip_path_regex'] ?? null;
         $projectRegex = $config['project_root_regex'] ?? null;
 
-        if ($strip) {
-            if (!$project) {
-                $client->setProjectRoot("{$strip}/app");
-            }
-
-            $client->setStripPath($strip);
-
-            return;
-        }
+        $client->setProjectRoot($projectDefault);
+        $client->setStripPath($stripDefault);
 
         if ($project) {
             $client->setProjectRoot($project);
-
-            if ($stripDefault && substr($project, 0, strlen($stripDefault)) === $stripDefault) {
-                $client->setStripPath($stripDefault);
-            }
-
-            return;
         }
 
-        if (isset($stripRegex)) {
-            $client->setStripPathRegex($stripRegex);
-        } else {
-            $client->setStripPath($stripDefault);
+        if ($strip) {
+            $client->setStripPath($strip);
         }
 
-        if (isset($projectRegex)) {
+        if ($projectRegex) {
             $client->setProjectRootRegex($projectRegex);
-        } else {
-            $client->setProjectRoot($projectDefault);
+        }
+
+        if ($stripRegex) {
+            $client->setStripPathRegex($stripRegex);
         }
     }
 
