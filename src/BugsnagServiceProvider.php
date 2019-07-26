@@ -338,10 +338,10 @@ class BugsnagServiceProvider extends ServiceProvider
     {
         $stripDefault = $app->basePath();
         $projectDefault = $app->path();
-        $strip = $config['strip_path'] ?? null;
-        $project = $config['project_root'] ?? null;
-        $stripRegex = $config['strip_path_regex'] ?? null;
-        $projectRegex = $config['project_root_regex'] ?? null;
+        $strip = isset($config['strip_path']) ? $config['strip_path'] : null;
+        $project = isset($config['project_root']) ? $config['project_root'] : null;
+        $stripRegex = isset($config['strip_path_regex']) ? $config['strip_path_regex'] : null;
+        $projectRegex = isset($config['project_root_regex']) ? $config['project_root_regex'] : null;
 
         $client->setProjectRoot($projectDefault);
         $client->setStripPath($stripDefault);
