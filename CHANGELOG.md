@@ -1,7 +1,13 @@
 Changelog
 =========
 
-## TBD
+## 2.17.0 (Beta)
+
+### Enhancements
+
+* Allow installation on Laravel 6 projects
+  [#360](https://github.com/bugsnag/bugsnag-laravel/pull/360)
+  [taylorotwell](https://github.com/taylorotwell)
 
 ### Fixes
 
