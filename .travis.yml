@@ -5,18 +5,22 @@ sudo: false
 matrix:
   include:
     - php: 5.5.9
+      dist: trusty
       env:
         - GUZZLE_VERSION=^5.3
         - LARAVEL_VERSION=5.1.*
     - php: 5.5.9
+      dist: trusty
       env:
         - GUZZLE_VERSION=^6.0
         - LARAVEL_VERSION=5.1.*
     - php: 5.5
+      dist: trusty
       env:
         - GUZZLE_VERSION=^5.3
         - LARAVEL_VERSION=5.1.*
     - php: 5.5
+      dist: trusty
       env:
         - GUZZLE_VERSION=^6.0
         - LARAVEL_VERSION=5.1.*
