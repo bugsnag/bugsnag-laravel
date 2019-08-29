@@ -1,6 +1,19 @@
 Changelog
 =========
 
+## 2.17.0 (2019-08-29)
+
+### Enhancements
+
+* Allow installation on Laravel 6 projects
+  [#360](https://github.com/bugsnag/bugsnag-laravel/pull/360)
+  [taylorotwell](https://github.com/taylorotwell)
+
+### Fixes
+
+* Disabled automatic session capturing for Lumen 5.3+ (where `session()` is not available)
+  [#358](https://github.com/bugsnag/bugsnag-laravel/pull/358)
+
 ## 2.16.0 (2019-06-17)
 
 ### Enhancements
@@ -8,7 +21,7 @@ Changelog
 * Add Laravel/Lumen version string to report and session payloads (device.runtimeVersions)
   [#352](https://github.com/bugsnag/bugsnag-laravel/pull/352)
 
-## Fixes
+### Fixes
 
 * Changed caching TTL to use DateTime instead. 
   [#344](https://github.com/bugsnag/bugsnag-laravel/pull/344)

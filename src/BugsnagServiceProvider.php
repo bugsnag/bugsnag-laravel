@@ -12,6 +12,7 @@ use Bugsnag\Configuration;
 use Bugsnag\PsrLogger\BugsnagLogger;
 use Bugsnag\PsrLogger\MultiLogger as BaseMultiLogger;
 use Bugsnag\Report;
+use DateTime;
 use Illuminate\Auth\GenericUser;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -27,7 +28,6 @@ use Laravel\Lumen\Application as LumenApplication;
 use Monolog\Handler\PsrHandler;
 use Monolog\Logger;
 use ReflectionClass;
-use DateTime;
 
 class BugsnagServiceProvider extends ServiceProvider
 {
@@ -36,7 +36,7 @@ class BugsnagServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    const VERSION = '2.16.0';
+    const VERSION = '2.17.0';
 
     /**
      * Boot the service provider.
@@ -82,7 +82,7 @@ class BugsnagServiceProvider extends ServiceProvider
      */
     protected function setupEvents(Dispatcher $events, array $config)
     {
-        if (isset($config['auto_capture_sessions']) && $config['auto_capture_sessions']) {
+        if ($this->isSessionTrackingAllowed($config)) {
             $events->listen(RouteMatched::class, function ($event) {
                 $this->app->bugsnag->getSessionTracker()->startSession();
             });
@@ -213,7 +213,7 @@ class BugsnagServiceProvider extends ServiceProvider
                 $client->setFilters($config['filters']);
             }
 
-            if (isset($config['auto_capture_sessions']) && $config['auto_capture_sessions']) {
+            if ($this->isSessionTrackingAllowed($config)) {
                 $endpoint = isset($config['session_endpoint']) ? $config['session_endpoint'] : null;
                 $this->setupSessionTracking($client, $endpoint, $this->app->events);
             }
@@ -416,8 +416,24 @@ class BugsnagServiceProvider extends ServiceProvider
         if (preg_match('/(\d+\.\d+\.\d+)/', $version, $versionMatches)) {
             $version = $versionMatches[0];
         }
-        return [ ($this->app instanceof LumenApplication ? 'lumen' : 'laravel' ) => $version ];
 
+        return [($this->app instanceof LumenApplication ? 'lumen' : 'laravel') => $version];
+    }
+
+    /**
+     * Tests whether session tracking can/should be enabled.
+     *
+     * @param array $config The configuration array
+     *
+     * @return bool true if session tracking should be enabled.
+     */
+    protected function isSessionTrackingAllowed($config)
+    {
+        // Session support removed in Lumen 5.3 - only setup automatic session
+        // tracking if the session function is avaiable
+        return isset($config['auto_capture_sessions'])
+               && $config['auto_capture_sessions']
+               && function_exists('session');
     }
 
     /**
