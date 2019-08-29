@@ -36,7 +36,7 @@ class BugsnagServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    const VERSION = '2.17.0-beta';
+    const VERSION = '2.17.0';
 
     /**
      * Boot the service provider.

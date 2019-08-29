@@ -1,7 +1,7 @@
 Changelog
 =========
 
-## 2.17.0 (Beta)
+## 2.17.0 (2019-08-29)
 
 ### Enhancements
 
