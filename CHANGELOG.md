@@ -1,13 +1,21 @@
 Changelog
 =========
 
+## 2.17.1 (2019-09-09)
+
+### Fixes
+
+* Added support for Monolog 2.0
+  [GrahamCampbell](https://github.com/GrahamCampbell)
+  [#360](https://github.com/bugsnag/bugsnag-laravel/pull/366)
+
 ## 2.17.0 (2019-08-29)
 
 ### Enhancements
 
 * Allow installation on Laravel 6 projects
-  [#360](https://github.com/bugsnag/bugsnag-laravel/pull/360)
   [taylorotwell](https://github.com/taylorotwell)
+  [#360](https://github.com/bugsnag/bugsnag-laravel/pull/360)
 
 ### Fixes
 
@@ -24,8 +32,8 @@ Changelog
 ### Fixes
 
 * Changed caching TTL to use DateTime instead. 
-  [#344](https://github.com/bugsnag/bugsnag-laravel/pull/344)
   [Mozammil Khodabacchas](https://github.com/mozammil)
+  [#344](https://github.com/bugsnag/bugsnag-laravel/pull/344)
 * Update axiom dependency in laravel56 example to remove security vulnerability warning
   [#354](https://github.com/bugsnag/bugsnag-laravel/pull/354)
 * Exclude the features directory on StyleCI
@@ -65,8 +73,8 @@ Changelog
 ### Enhancements
 
 * Add support for Laravel 5.6
-  [#288](https://github.com/bugsnag/bugsnag-laravel/pull/288)
   [Graham Campbell](https://github.com/GrahamCampbell)
+  [#288](https://github.com/bugsnag/bugsnag-laravel/pull/288)
 
 ## 2.13.0 (2018-01-29)
 
