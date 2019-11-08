@@ -3,6 +3,7 @@
 namespace Bugsnag\BugsnagLaravel;
 
 use Bugsnag\Breadcrumbs\Breadcrumb;
+use Bugsnag\BugsnagLaravel\Middleware\ShutdownStrategyMiddleware;
 use Bugsnag\BugsnagLaravel\Middleware\UnhandledState;
 use Bugsnag\BugsnagLaravel\Queue\Tracker;
 use Bugsnag\BugsnagLaravel\Request\LaravelResolver;
@@ -39,9 +40,17 @@ class BugsnagServiceProvider extends ServiceProvider
     const VERSION = '2.17.1';
 
     /**
+     * The shutdown strategy (implemented as a Laravel middleware)
+     *
+     * @var ShutdownStrategyMiddleware
+     */
+    private $shutdownStrategyMiddleware;
+
+    /**
      * Boot the service provider.
      *
      * @return void
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function boot()
     {
@@ -50,6 +59,9 @@ class BugsnagServiceProvider extends ServiceProvider
         $this->setupEvents($this->app->events, $this->app->config->get('bugsnag'));
 
         $this->setupQueue($this->app->queue);
+
+        // Add our shutdown strategy to the middleware stack.
+        $this->app->make('Illuminate\Contracts\Http\Kernel')->pushMiddleware(ShutdownStrategyMiddleware::class);
     }
 
     /**
@@ -183,7 +195,12 @@ class BugsnagServiceProvider extends ServiceProvider
     {
         $this->app->singleton('bugsnag', function (Container $app) {
             $config = $app->config->get('bugsnag');
-            $client = new Client(new Configuration($config['api_key']), new LaravelResolver($app), $this->getGuzzle($config));
+            $client = new Client(
+                new Configuration($config['api_key']),
+                new LaravelResolver($app),
+                $this->getGuzzle($config),
+                $app->make(ShutdownStrategyMiddleware::class)
+            );
 
             $this->setupCallbacks($client, $app, $config);
             $this->setupPaths($client, $app->basePath(), $app->path(), isset($config['strip_path']) ? $config['strip_path'] : null, isset($config['project_root']) ? $config['project_root'] : null);
@@ -221,8 +238,12 @@ class BugsnagServiceProvider extends ServiceProvider
             if (isset($config['build_endpoint'])) {
                 $client->setBuildEndpoint($config['build_endpoint']);
             }
-
             return $client;
+        });
+
+        // Wire ShutdownStrategyMiddleware as a singleton
+        $this->app->singleton(ShutdownStrategyMiddleware::class, function () {
+            return new ShutdownStrategyMiddleware();
         });
 
         $this->app->singleton('bugsnag.tracker', function () {
