@@ -15,15 +15,16 @@ use Symfony\Component\HttpKernel\TerminableInterface;
 class ShutdownStrategyMiddleware implements TerminableInterface, ShutdownStrategyInterface
 {
     /**
-     * @var \Bugsnag\Client $client
+     * @var \Bugsnag\Client
      */
     private $client;
 
     /**
-     * A no-op handle(). This function is required for a Laravel middleware object (strange there's no interface for it though)
+     * A no-op handle(). This function is required for a Laravel middleware object (strange there's no interface for it though).
      *
      * @param $request
      * @param \Closure $next
+     *
      * @return mixed
      */
     public function handle($request, \Closure $next)
@@ -32,7 +33,8 @@ class ShutdownStrategyMiddleware implements TerminableInterface, ShutdownStrateg
     }
 
     /**
-     * Called by the Bugsnag\Client constructor
+     * Called by the Bugsnag\Client constructor.
+     *
      * @param \Bugsnag\Client $client
      */
     public function registerShutdownStrategy(Client $client)
@@ -41,8 +43,9 @@ class ShutdownStrategyMiddleware implements TerminableInterface, ShutdownStrateg
     }
 
     /**
-     * Called when the HTTP response has been sent and the Kernel is terminating
-     * @param Request $request
+     * Called when the HTTP response has been sent and the Kernel is terminating.
+     *
+     * @param Request  $request
      * @param Response $response
      */
     public function terminate(Request $request, Response $response)

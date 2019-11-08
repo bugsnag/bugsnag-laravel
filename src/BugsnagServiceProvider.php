@@ -40,7 +40,7 @@ class BugsnagServiceProvider extends ServiceProvider
     const VERSION = '2.17.1';
 
     /**
-     * The shutdown strategy (implemented as a Laravel middleware)
+     * The shutdown strategy (implemented as a Laravel middleware).
      *
      * @var ShutdownStrategyMiddleware
      */
@@ -49,8 +49,9 @@ class BugsnagServiceProvider extends ServiceProvider
     /**
      * Boot the service provider.
      *
-     * @return void
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     *
+     * @return void
      */
     public function boot()
     {
@@ -238,6 +239,7 @@ class BugsnagServiceProvider extends ServiceProvider
             if (isset($config['build_endpoint'])) {
                 $client->setBuildEndpoint($config['build_endpoint']);
             }
+
             return $client;
         });
 
