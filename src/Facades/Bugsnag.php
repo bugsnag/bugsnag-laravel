@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \Bugsnag\BugsnagLaravel\Facades\Bugsnag setFallbackType(string $type)
  * @method static \Bugsnag\BugsnagLaravel\Facades\Bugsnag setNotifier(array $notifier)
  * @method static \Bugsnag\BugsnagLaravel\Facades\Bugsnag setHostname(string $hostname)
+ * @method static \Bugsnag\BugsnagLaravel\Facades\Bugsnag setMetaData(array $metaData, bool $merge = true)
  * @method static \Bugsnag\BugsnagLaravel\Facades\Bugsnag registerCallback(callable $callback)
  * @method static \Bugsnag\BugsnagLaravel\Facades\Bugsnag function registerDefaultCallbacks()
  * @method static \Bugsnag\BugsnagLaravel\Facades\Bugsnag registerMiddleware(callable $middleware)
