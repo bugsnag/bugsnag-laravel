@@ -5,6 +5,7 @@ namespace Bugsnag\BugsnagLaravel\Facades;
 use Illuminate\Support\Facades\Facade;
 
 /**
+ * @method static \Bugsnag\BugsnagLaravel\Facades\Bugsnag setAppVersion(string $appVersion)
  * @method static \Bugsnag\BugsnagLaravel\Facades\Bugsnag registerCallback(callable $callback)
  * @method static \Bugsnag\BugsnagLaravel\Facades\Bugsnag function registerDefaultCallbacks()
  * @method static \Bugsnag\BugsnagLaravel\Facades\Bugsnag registerMiddleware(callable $middleware)
