@@ -6,6 +6,11 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static \Bugsnag\BugsnagLaravel\Facades\Bugsnag setAppVersion(string $appVersion)
+ * @method static \Bugsnag\BugsnagLaravel\Facades\Bugsnag setAppType(string $type)
+ * @method static \Bugsnag\BugsnagLaravel\Facades\Bugsnag setReleaseStage(string $releaseStage)
+ * @method static \Bugsnag\BugsnagLaravel\Facades\Bugsnag setFallbackType(string $type)
+ * @method static \Bugsnag\BugsnagLaravel\Facades\Bugsnag setNotifier(array $notifier)
+ * @method static \Bugsnag\BugsnagLaravel\Facades\Bugsnag setHostname(string $hostname)
  * @method static \Bugsnag\BugsnagLaravel\Facades\Bugsnag registerCallback(callable $callback)
  * @method static \Bugsnag\BugsnagLaravel\Facades\Bugsnag function registerDefaultCallbacks()
  * @method static \Bugsnag\BugsnagLaravel\Facades\Bugsnag registerMiddleware(callable $middleware)
