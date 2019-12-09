@@ -13,15 +13,29 @@ When(/^I start the laravel fixture$/) do
 end
 
 When(/^I wait for the app to respond on the appropriate port$/) do
-  laravel_port = ENV['LARAVEL_FIXTURE'] === 'laravel58' ? 61258 : 61256
   steps %{
-    When I wait for the app to respond on port "#{laravel_port}"
+    When I wait for the app to respond on port "#{getLaravelPort}"
   }
 end
 
 When("I navigate to the route {string}") do |route|
-  laravel_port = ENV['LARAVEL_FIXTURE'] === 'laravel58' ? 61258 : 61256
   steps %{
-    When I navigate to the route "#{route}" on port "#{laravel_port}"
+    When I navigate to the route "#{route}" on port "#{getLaravelPort}"
   }
+end
+
+Then("the exception {string} matches one of the following:") do |path, values|
+  desired_value = read_key_path(find_request(get_request_index(nil))[:body], "events.0.exceptions.0.#{path}")
+  assert_includes(values.raw.flatten, desired_value)
+end
+
+def getLaravelPort
+  case ENV['LARAVEL_FIXTURE']
+  when 'laravel66'
+    61266
+  when 'laravel58'
+    61258
+  else
+    61256
+  end
 end
