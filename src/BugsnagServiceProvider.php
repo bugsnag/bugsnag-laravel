@@ -380,7 +380,9 @@ class BugsnagServiceProvider extends ServiceProvider
 
         $sessionStorage = function ($session = null) {
             if (is_null($session)) {
-                return session('bugsnag-session', []);
+                $result = session('bugsnag-session', []);
+                
+                return is_array($result) ? $result : [];
             } else {
                 session(['bugsnag-session' => $session]);
             }
@@ -392,7 +394,9 @@ class BugsnagServiceProvider extends ServiceProvider
 
         $genericStorage = function ($key, $value = null) use ($cache) {
             if (is_null($value)) {
-                return $cache->get($key, null);
+                $result = $cache->get($key, []);
+                
+                return is_array($result) ? $result : [];
             } else {
                 $cache->put($key, $value, new DateTime('+ 1 hour'));
             }
