@@ -1,26 +1,22 @@
 language: php
 
-sudo: false
-
 matrix:
   include:
-    - php: 5.5.9
-      dist: trusty
+    - php: 5.6
       env:
         - GUZZLE_VERSION=^5.3
         - LARAVEL_VERSION=5.1.*
-    - php: 5.5.9
-      dist: trusty
+        - COMPOSER_OPTIONS="--prefer-lowest"
+    - php: 5.6
       env:
         - GUZZLE_VERSION=^6.0
         - LARAVEL_VERSION=5.1.*
-    - php: 5.5
-      dist: trusty
+        - COMPOSER_OPTIONS="--prefer-lowest"
+    - php: 5.6
       env:
         - GUZZLE_VERSION=^5.3
         - LARAVEL_VERSION=5.1.*
-    - php: 5.5
-      dist: trusty
+    - php: 5.6
       env:
         - GUZZLE_VERSION=^6.0
         - LARAVEL_VERSION=5.1.*
@@ -96,48 +92,14 @@ matrix:
       env:
         - GUZZLE_VERSION=^6.0
         - LARAVEL_VERSION=5.8.*
-    - php: hhvm-3.6
-      sudo: required
-      dist: trusty
-      group: edge
+    - php: 7.4
       env:
         - GUZZLE_VERSION=^5.3
-        - LARAVEL_VERSION=5.1.*
-    - php: hhvm-3.6
-      sudo: required
-      dist: trusty
-      group: edge
+        - LARAVEL_VERSION=5.8.*
+    - php: 7.4
       env:
         - GUZZLE_VERSION=^6.0
-        - LARAVEL_VERSION=5.1.*
-    - php: hhvm-3.9
-      sudo: required
-      dist: trusty
-      group: edge
-      env:
-        - GUZZLE_VERSION=^5.3
-        - LARAVEL_VERSION=5.1.*
-    - php: hhvm-3.9
-      sudo: required
-      dist: trusty
-      group: edge
-      env:
-        - GUZZLE_VERSION=^6.0
-        - LARAVEL_VERSION=5.1.*
-    - php: hhvm-3.12
-      sudo: required
-      dist: trusty
-      group: edge
-      env:
-        - GUZZLE_VERSION=^5.3
-        - LARAVEL_VERSION=5.1.*
-    - php: hhvm-3.12
-      sudo: required
-      dist: trusty
-      group: edge
-      env:
-        - GUZZLE_VERSION=^6.0
-        - LARAVEL_VERSION=5.1.*
+        - LARAVEL_VERSION=5.8.*
     - addons:
         apt:
           packages:
@@ -185,8 +147,7 @@ before_install:
   - echo "memory_limit=2G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
 install:
-  - if [[ $TRAVIS_PHP_VERSION == 5.5.9 ]]; then travis_retry composer update --no-interaction --prefer-source --prefer-lowest ; fi
-  - if [[ $TRAVIS_PHP_VERSION != 5.5.9 ]]; then travis_retry composer update --no-interaction --prefer-source ; fi
+  - travis_retry composer update $COMPOSER_OPTIONS
 
 script:
   - make test
