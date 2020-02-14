@@ -88,6 +88,10 @@ matrix:
       env:
         - GUZZLE_VERSION=^6.0
         - LARAVEL_VERSION=5.8.*
+    - php: 7.2
+      env:
+        - GUZZLE_VERSION=^7.0
+        - LARAVEL_VERSION=5.8.*
     - php: 7.3
       env:
         - GUZZLE_VERSION=^5.3
@@ -95,6 +99,10 @@ matrix:
     - php: 7.3
       env:
         - GUZZLE_VERSION=^6.0
+        - LARAVEL_VERSION=5.8.*
+    - php: 7.3
+      env:
+        - GUZZLE_VERSION=^7.0
         - LARAVEL_VERSION=5.8.*
     - php: hhvm-3.6
       sudo: required
