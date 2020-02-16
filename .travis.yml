@@ -112,8 +112,7 @@ matrix:
       before_install: ruby --version
       install: bundle install
       script: bundle exec bugsnag-maze-runner -c
-      env:
-        - LARAVEL_FIXTURE=laravel56
+      env: LARAVEL_FIXTURE=laravel56
     - addons:
         apt:
           packages:
@@ -125,8 +124,7 @@ matrix:
       before_install: ruby --version
       install: bundle install
       script: bundle exec bugsnag-maze-runner -c
-      env:
-        - LARAVEL_FIXTURE=laravel58
+      env: LARAVEL_FIXTURE=laravel58
     - addons:
         apt:
           packages:
@@ -138,11 +136,10 @@ matrix:
       before_install: ruby --version
       install: bundle install
       script: bundle exec bugsnag-maze-runner -c
-      env:
-        - LARAVEL_FIXTURE=laravel66
+      env: LARAVEL_FIXTURE=laravel66
 
 before_install:
-  - composer require "laravel/framework:${LARAVEL_VERSION}" --no-update
+  - travis_retry composer require "laravel/framework:${LARAVEL_VERSION}" --no-update
   - echo "memory_limit=2G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
 install:
