@@ -2,11 +2,10 @@
 
 namespace Bugsnag\BugsnagLaravel\Commands;
 
-use Bugsnag\Bugsnag\Utils;
 use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
+use Bugsnag\Utils;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Process\Process;
 
 class DeployCommand extends Command
 {
@@ -31,19 +30,12 @@ class DeployCommand extends Command
      */
     public function handle()
     {
-        $builderName = $this->option('builder');
-        if (is_null($builderName)) {
-            if (class_exists(Process::class)) {
-                $process = new Process('whoami');
-                $process->run();
-                if ($process->isSuccessful()) {
-                    $builderName = trim($process->getOutput());
-                }
-            } else {
-                $builderName = Utils::getBuilderName();
-            }
-        }
-        Bugsnag::build($this->option('repository'), $this->option('revision'), $this->option('provider'), $builderName);
+        Bugsnag::build(
+            $this->option('repository'),
+            $this->option('revision'),
+            $this->option('provider'),
+            $this->option('builder') ?: Utils::getBuilderName()
+        );
 
         $this->info('Notified Bugsnag of the build!');
     }
