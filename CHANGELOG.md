@@ -1,9 +1,25 @@
 Changelog
 =========
 
+## 2.18.0 (2020-02-26)
+
+### Enhancements
+
+* Allow installation on Laravel 7 projects
+  [#385](https://github.com/bugsnag/bugsnag-laravel/pull/385)
+
+### Bug Fixes
+
+* Fixed determining the builder name
+  [#387](https://github.com/bugsnag/bugsnag-laravel/pull/387)
+
+* Added support for PHP 7.3 and 7.4
+  [#374](https://github.com/bugsnag/bugsnag-laravel/pull/374)
+  [#385](https://github.com/bugsnag/bugsnag-laravel/pull/385)
+
 ## 2.17.1 (2019-09-09)
 
-### Fixes
+### Bug Fixes
 
 * Added support for Monolog 2.0
   [GrahamCampbell](https://github.com/GrahamCampbell)
@@ -17,7 +33,7 @@ Changelog
   [taylorotwell](https://github.com/taylorotwell)
   [#360](https://github.com/bugsnag/bugsnag-laravel/pull/360)
 
-### Fixes
+### Bug Fixes
 
 * Disabled automatic session capturing for Lumen 5.3+ (where `session()` is not available)
   [#358](https://github.com/bugsnag/bugsnag-laravel/pull/358)
@@ -29,7 +45,7 @@ Changelog
 * Add Laravel/Lumen version string to report and session payloads (device.runtimeVersions)
   [#352](https://github.com/bugsnag/bugsnag-laravel/pull/352)
 
-### Fixes
+### Bug Fixes
 
 * Changed caching TTL to use DateTime instead. 
   [Mozammil Khodabacchas](https://github.com/mozammil)
@@ -42,14 +58,14 @@ Changelog
 
 ## 2.15.2 (2019-01-23)
 
-### Fixes
+### Bug Fixes
 
 * Removed duplicate event dispatching when using MultiLogger configuration
   [#337](https://github.com/bugsnag/bugsnag-laravel/pull/337)
 
 ## 2.15.1 (2018-11-05)
 
-### Fixes
+### Bug Fixes
 
 * Fixed issues where test fixtures polluted the App namespace
   [#332](https://github.com/bugsnag/bugsnag-laravel/pull/332)
@@ -63,7 +79,7 @@ Changelog
 
 ## 2.14.1 (2018-03-07)
 
-### Fixes
+### Bug Fixes
 
 * Fixed issue with incorrect Logger being returned by ServiceProvider
   [#295](https://github.com/bugsnag/bugsnag-laravel/pull/295)
@@ -102,7 +118,7 @@ The following options have been deprecated:
 
 ## 2.11.1 (2017-12-21)
 
-### Fixes
+### Bug Fixes
 
 * Bumped version of Bugsnag-Psr-Logger v1.4.0 due to released fix
 
