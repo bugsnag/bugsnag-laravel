@@ -6,14 +6,16 @@ Changelog
 ### Enhancements
 
 * Allow installation on Laravel 7 projects
-  [GrahamCampbell](https://github.com/GrahamCampbell)
   [#385](https://github.com/bugsnag/bugsnag-laravel/pull/385)
 
 ### Bug Fixes
 
 * Fixed determining the builder name
-  [GrahamCampbell](https://github.com/GrahamCampbell)
   [#387](https://github.com/bugsnag/bugsnag-laravel/pull/387)
+
+* Added support for PHP 7.3 and 7.4
+  [#374](https://github.com/bugsnag/bugsnag-laravel/pull/374)
+  [#385](https://github.com/bugsnag/bugsnag-laravel/pull/385)
 
 ## 2.17.1 (2019-09-09)
 
