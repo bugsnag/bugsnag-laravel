@@ -183,7 +183,7 @@ class BugsnagServiceProvider extends ServiceProvider
     {
         $this->app->singleton('bugsnag', function (Container $app) {
             $config = $app->config->get('bugsnag');
-            $client = new Client(new Configuration($config['api_key']), new LaravelResolver($app), $this->app->make('bugsnag.guzzle')));
+            $client = new Client(new Configuration($config['api_key']), new LaravelResolver($app), $this->app->make('bugsnag.guzzle'));
 
             $this->setupCallbacks($client, $app, $config);
             $this->setupPaths($client, $app->basePath(), $app->path(), isset($config['strip_path']) ? $config['strip_path'] : null, isset($config['project_root']) ? $config['project_root'] : null);
