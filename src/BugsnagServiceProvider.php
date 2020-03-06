@@ -183,7 +183,7 @@ class BugsnagServiceProvider extends ServiceProvider
     {
         $this->app->singleton('bugsnag', function (Container $app) {
             $config = $app->config->get('bugsnag');
-            $client = new Client(new Configuration($config['api_key']), new LaravelResolver($app), $this->getGuzzle($config));
+            $client = new Client(new Configuration($config['api_key']), new LaravelResolver($app), $this->app->make('bugsnag.guzzle')));
 
             $this->setupCallbacks($client, $app, $config);
             $this->setupPaths($client, $app->basePath(), $app->path(), isset($config['strip_path']) ? $config['strip_path'] : null, isset($config['project_root']) ? $config['project_root'] : null);
@@ -225,6 +225,20 @@ class BugsnagServiceProvider extends ServiceProvider
             return $client;
         });
 
+        $this->app->singleton('bugsnag.guzzle', function () {
+            $config = $app->config->get('bugsnag');
+
+            if (isset($config['proxy']) && $config['proxy']) {
+                if (isset($config['proxy']['http']) && php_sapi_name() != 'cli') {
+                    unset($config['proxy']['http']);
+                }
+
+                $options['proxy'] = $config['proxy'];
+            }
+
+            return Client::makeGuzzle(isset($config['endpoint']) ? $config['endpoint'] : null, $options);
+        });
+
         $this->app->singleton('bugsnag.tracker', function () {
             return new Tracker();
         });
@@ -252,31 +266,10 @@ class BugsnagServiceProvider extends ServiceProvider
         }
 
         $this->app->alias('bugsnag', Client::class);
+        // bugsnag.guzzle intentionally not aliased here
         $this->app->alias('bugsnag.tracker', Tracker::class);
         $this->app->alias('bugsnag.logger', interface_exists(Log::class) ? LaravelLogger::class : BugsnagLogger::class);
         $this->app->alias('bugsnag.multi', interface_exists(Log::class) ? MultiLogger::class : BaseMultiLogger::class);
-    }
-
-    /**
-     * Get the guzzle client instance.
-     *
-     * @param array $config
-     *
-     * @return \GuzzleHttp\ClientInterface
-     */
-    protected function getGuzzle(array $config)
-    {
-        $options = [];
-
-        if (isset($config['proxy']) && $config['proxy']) {
-            if (isset($config['proxy']['http']) && php_sapi_name() != 'cli') {
-                unset($config['proxy']['http']);
-            }
-
-            $options['proxy'] = $config['proxy'];
-        }
-
-        return Client::makeGuzzle(isset($config['endpoint']) ? $config['endpoint'] : null, $options);
     }
 
     /**
@@ -443,6 +436,6 @@ class BugsnagServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-        return ['bugsnag', 'bugsnag.tracker', 'bugsnag.logger', 'bugsnag.multi'];
+        return ['bugsnag', 'bugsnag.guzzle', 'bugsnag.tracker', 'bugsnag.logger', 'bugsnag.multi'];
     }
 }
