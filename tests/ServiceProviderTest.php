@@ -17,6 +17,13 @@ class ServiceProviderTest extends AbstractTestCase
 {
     use ServiceProviderTrait;
 
+    /**
+     * An Application instance provided by the parent test case
+     *
+     * @var Application
+     */
+    protected $app;
+
     public function testClientIsInjectable()
     {
         $this->assertIsInjectable(Client::class);
