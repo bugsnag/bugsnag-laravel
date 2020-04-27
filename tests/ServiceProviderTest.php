@@ -141,39 +141,39 @@ class ServiceProviderTest extends AbstractTestCase
     public function projectRootAndStripPathProvider()
     {
         return [
-            // If both parameters are provided, the project root should be null
+            // If both strings are provided, the project root should be null
             // and the strip path set to a regex matching the given string
             // TODO this might be a bug — when a strip path value is configured,
             //      we only set the project root path if one wasn't provided. If both
             //      strip path _and_ project root are given, no project root is set
-            'both provided' => [
+            'both strings provided' => [
                 'project_root' => '/example/project/root',
                 'strip_path' => '/example/strip/path',
                 'expected_project_root_regex' => null,
                 'expected_strip_path_regex' => $this->pathToRegex('/example/strip/path'),
             ],
 
-            // If only the project root is provided, both values should be set to
-            // the same regex matching the given project root string
-            'only project root provided' => [
+            // If only the project root string is provided, both values should be
+            // set to the same regex matching the given project root string
+            'only project root string provided' => [
                 'project_root' => '/example/project/root',
                 'strip_path' => null,
                 'expected_project_root_regex' => $this->pathToRegex('/example/project/root'),
                 'expected_strip_path_regex' => $this->pathToRegex('/example/project/root'),
             ],
 
-            // If the project root is setup to match the app's base path, we set
+            // If the project root string matches the app's base path, we set
             // the strip path to match too. The base path in the tests is set by
             // the TestBench package
-            'only project root provided (to root of test app)' => [
+            'only project root string provided (to root of test app)' => [
                 'project_root' => realpath(__DIR__.'/../vendor/orchestra/testbench-core/laravel'),
                 'strip_path' => null,
                 'expected_project_root_regex' => $this->pathToRegex(realpath(__DIR__.'/../vendor/orchestra/testbench-core/laravel')),
                 'expected_strip_path_regex' => $this->pathToRegex(realpath(__DIR__.'/../vendor/orchestra/testbench-core/laravel')),
             ],
 
-            // If only the strip path is provided, both values should be set to
-            // the same regex matching the given strip path string with "/app"
+            // If only the strip path string is provided, both values should be
+            // set to the same regex matching the given strip path string with "/app"
             // appended
             // TODO this might be a bug — when only strip path is configured,
             //      we set the strip path and then immediately overwrite it with
@@ -181,7 +181,7 @@ class ServiceProviderTest extends AbstractTestCase
             //      If the intention is to to have "/example" be the strip path
             //      and "/example/app" be the project root then we need to do these
             //      calls in the opposite order
-            'only strip path provided' => [
+            'only strip path string provided' => [
                 'project_root' => null,
                 'strip_path' => '/example/strip/path',
                 'expected_project_root_regex' => $this->pathToRegex('/example/strip/path/app'),
