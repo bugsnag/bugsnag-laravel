@@ -134,7 +134,7 @@ class ServiceProviderTest extends AbstractTestCase
         $this->assertSame(
             $expectedProjectRootRegex,
             $projectRootRegex,
-            "Expected the 'projectRootRegex' to be null because a 'strip_path' was provided"
+            "Expected the 'projectRootRegex' to match the string provided in Bugsnag configuration"
         );
     }
 
