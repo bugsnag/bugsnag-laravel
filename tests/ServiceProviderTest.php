@@ -66,7 +66,6 @@ class ServiceProviderTest extends AbstractTestCase
                 function ($closure) use ($loggerClass) {
                     if (is_callable($closure)) {
                         $internalApp = Mockery::mock(Application::class);
-                        $config = Mockery::mock();
                         $internalApp->shouldReceive('offsetGet')->with('config')->andReturn($internalApp);
                         $internalApp->shouldReceive('get')->with('bugsnag')->andReturn([
                             'logger_notify_level' => 'error',
