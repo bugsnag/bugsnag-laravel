@@ -343,7 +343,7 @@ class BugsnagServiceProvider extends ServiceProvider
 
             // TODO this may be a bug
             if (!isset($config['project_root']) && !isset($config['project_root_regex'])) {
-                $client->setProjectRoot($config['strip_path'] . '/app');
+                $client->setProjectRoot($config['strip_path'].'/app');
             }
 
             // Stop here to prevent changing the project root we just set
