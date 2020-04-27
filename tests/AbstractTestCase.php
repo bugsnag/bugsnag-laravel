@@ -20,7 +20,7 @@ abstract class AbstractTestCase extends AbstractPackageTestCase
     }
 
     /**
-     * Get the value of the given property on the given object
+     * Get the value of the given property on the given object.
      *
      * @param object $object
      * @param string $property
