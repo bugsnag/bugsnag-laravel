@@ -19,7 +19,7 @@ class ServiceProviderTest extends AbstractTestCase
     use ServiceProviderTrait;
 
     /**
-     * An Application instance provided by the parent test case
+     * An Application instance provided by the parent test case.
      *
      * @var Application
      */
@@ -47,7 +47,7 @@ class ServiceProviderTest extends AbstractTestCase
 
     /**
      * Ensure the project root and strip path are both set with sensible defaults
-     * when no explicit configuration is provided
+     * when no explicit configuration is provided.
      *
      * @return void
      */
@@ -85,7 +85,7 @@ class ServiceProviderTest extends AbstractTestCase
      * @param string|null $projectRoot
      * @param string|null $stripPath
      * @param string|null $expectedProjectRootRegex
-     * @param string $expectedStripPathRegex
+     * @param string      $expectedStripPathRegex
      *
      * @return void
      *
@@ -166,10 +166,10 @@ class ServiceProviderTest extends AbstractTestCase
             // the strip path to match too. The base path in the tests is set by
             // the TestBench package
             'only project root provided (to root of test app)' => [
-                'project_root' => realpath(__DIR__ . '/../vendor/orchestra/testbench-core/laravel'),
+                'project_root' => realpath(__DIR__.'/../vendor/orchestra/testbench-core/laravel'),
                 'strip_path' => null,
-                'expected_project_root_regex' => $this->pathToRegex(realpath(__DIR__ . '/../vendor/orchestra/testbench-core/laravel')),
-                'expected_strip_path_regex' => $this->pathToRegex(realpath(__DIR__ . '/../vendor/orchestra/testbench-core/laravel')),
+                'expected_project_root_regex' => $this->pathToRegex(realpath(__DIR__.'/../vendor/orchestra/testbench-core/laravel')),
+                'expected_strip_path_regex' => $this->pathToRegex(realpath(__DIR__.'/../vendor/orchestra/testbench-core/laravel')),
             ],
 
             // If only the strip path is provided, both values should be set to
