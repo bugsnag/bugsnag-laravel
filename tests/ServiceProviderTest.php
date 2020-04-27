@@ -83,6 +83,8 @@ class ServiceProviderTest extends AbstractTestCase
     /**
      * @param string|null $projectRoot
      * @param string|null $stripPath
+     * @param string|null $projectRootRegex
+     * @param string|null $stripPathRegex
      * @param string|null $expectedProjectRootRegex
      * @param string      $expectedStripPathRegex
      *
@@ -90,8 +92,14 @@ class ServiceProviderTest extends AbstractTestCase
      *
      * @dataProvider projectRootAndStripPathProvider
      */
-    public function testProjectRootAndStripPathAreSetCorrectly($projectRoot, $stripPath, $expectedProjectRootRegex, $expectedStripPathRegex)
-    {
+    public function testProjectRootAndStripPathAreSetCorrectly(
+        $projectRoot,
+        $stripPath,
+        $projectRootRegex,
+        $stripPathRegex,
+        $expectedProjectRootRegex,
+        $expectedStripPathRegex
+    ) {
         /** @var \Illuminate\Config\Repository $laravelConfig */
         $laravelConfig = $this->app->config;
         $bugsnagConfig = $laravelConfig->get('bugsnag');
@@ -106,8 +114,20 @@ class ServiceProviderTest extends AbstractTestCase
             "Expected the default configuration value for 'strip_path' to be null"
         );
 
+        $this->assertNull(
+            $bugsnagConfig['project_root_regex'],
+            "Expected the default configuration value for 'project_root_regex' to be null"
+        );
+
+        $this->assertNull(
+            $bugsnagConfig['strip_path_regex'],
+            "Expected the default configuration value for 'strip_path_regex' to be null"
+        );
+
         $bugsnagConfig['project_root'] = $projectRoot;
         $bugsnagConfig['strip_path'] = $stripPath;
+        $bugsnagConfig['project_root_regex'] = $projectRootRegex;
+        $bugsnagConfig['strip_path_regex'] = $stripPathRegex;
 
         $laravelConfig->set('bugsnag', $bugsnagConfig);
 
@@ -147,6 +167,8 @@ class ServiceProviderTest extends AbstractTestCase
             'both strings provided' => [
                 'project_root' => '/example/project/root',
                 'strip_path' => '/example/strip/path',
+                'project_root_regex' => null,
+                'strip_path_regex' => null,
                 'expected_project_root_regex' => null,
                 'expected_strip_path_regex' => $this->pathToRegex('/example/strip/path'),
             ],
@@ -156,6 +178,8 @@ class ServiceProviderTest extends AbstractTestCase
             'only project root string provided' => [
                 'project_root' => '/example/project/root',
                 'strip_path' => null,
+                'project_root_regex' => null,
+                'strip_path_regex' => null,
                 'expected_project_root_regex' => $this->pathToRegex('/example/project/root'),
                 'expected_strip_path_regex' => $this->pathToRegex('/example/project/root'),
             ],
@@ -166,6 +190,8 @@ class ServiceProviderTest extends AbstractTestCase
             'only project root string provided (to root of test app)' => [
                 'project_root' => realpath(__DIR__.'/../vendor/orchestra/testbench-core/laravel'),
                 'strip_path' => null,
+                'project_root_regex' => null,
+                'strip_path_regex' => null,
                 'expected_project_root_regex' => $this->pathToRegex(realpath(__DIR__.'/../vendor/orchestra/testbench-core/laravel')),
                 'expected_strip_path_regex' => $this->pathToRegex(realpath(__DIR__.'/../vendor/orchestra/testbench-core/laravel')),
             ],
@@ -182,6 +208,8 @@ class ServiceProviderTest extends AbstractTestCase
             'only strip path string provided' => [
                 'project_root' => null,
                 'strip_path' => '/example/strip/path',
+                'project_root_regex' => null,
+                'strip_path_regex' => null,
                 'expected_project_root_regex' => $this->pathToRegex('/example/strip/path/app'),
                 'expected_strip_path_regex' => $this->pathToRegex('/example/strip/path/app'),
             ],
