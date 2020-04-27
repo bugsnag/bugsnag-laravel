@@ -57,7 +57,6 @@ class ServiceProviderTest extends AbstractTestCase
 
         $this->assertInstanceOf(Client::class, $client);
 
-        $basePath = $this->app->basePath();
         $appRoot = $this->app->path();
 
         /** @var Client $client */
@@ -116,7 +115,6 @@ class ServiceProviderTest extends AbstractTestCase
 
         $this->assertInstanceOf(Client::class, $client);
 
-        $basePath = $this->app->basePath();
         $appRoot = $this->app->path();
 
         /** @var Client $client */
