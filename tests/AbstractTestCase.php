@@ -33,6 +33,6 @@ abstract class AbstractTestCase extends AbstractPackageTestCase
             return $this->{$property};
         };
 
-        return $propertyAccessor->call($object, $property);
+        return $propertyAccessor->bindTo($object, $object)($property);
     }
 }
