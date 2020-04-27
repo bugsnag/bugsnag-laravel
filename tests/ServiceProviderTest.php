@@ -190,6 +190,13 @@ class ServiceProviderTest extends AbstractTestCase
         ];
     }
 
+    /**
+     * Convert a file path to a regex that matches the path and any sub paths.
+     *
+     * @param string $path
+     *
+     * @return string
+     */
     private function pathToRegex($path)
     {
         return sprintf('/^%s[\\/]?/i', preg_quote($path, '/'));
