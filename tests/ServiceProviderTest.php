@@ -6,6 +6,7 @@ use Bugsnag\BugsnagLaravel\LaravelLogger;
 use Bugsnag\BugsnagLaravel\MultiLogger;
 use Bugsnag\BugsnagLaravel\Queue\Tracker;
 use Bugsnag\Client;
+use Bugsnag\Configuration;
 use Bugsnag\PsrLogger\BugsnagLogger;
 use Bugsnag\PsrLogger\MultiLogger as BaseMultiLogger;
 use GrahamCampbell\TestBenchCore\ServiceProviderTrait;
@@ -42,6 +43,156 @@ class ServiceProviderTest extends AbstractTestCase
     public function testBugsnagLoggerIsInjectable()
     {
         $this->assertIsInjectable(interface_exists(Log::class) ? LaravelLogger::class : BugsnagLogger::class);
+    }
+
+    /**
+     * Ensure the project root and strip path are both set with sensible defaults
+     * when no explicit configuration is provided
+     *
+     * @return void
+     */
+    public function testProjectRootAndStripPathAreInferredWhenNoSpecificConfigurationIsGiven()
+    {
+        $client = $this->app->make(Client::class);
+
+        $this->assertInstanceOf(Client::class, $client);
+
+        $basePath = $this->app->basePath();
+        $appRoot = $this->app->path();
+
+        /** @var Client $client */
+        $config = $client->getConfig();
+
+        $projectRootRegex = $this->getProperty($config, 'projectRootRegex');
+        $stripPathRegex = $this->getProperty($config, 'stripPathRegex');
+
+        $expectedProjectRootRegex = sprintf('/^%s[\\/]?/i', preg_quote($appRoot, '/'));
+        $expectedStripPathRegex = $expectedProjectRootRegex;
+
+        $this->assertSame(
+            $expectedStripPathRegex,
+            $stripPathRegex,
+            "Expected to set a sensible default for the 'stripPathRegex'"
+        );
+        $this->assertSame(
+            $expectedProjectRootRegex,
+            $projectRootRegex,
+            "Expected to set a sensible default for the 'projectRootRegex'"
+        );
+    }
+
+    /**
+     * @param string|null $projectRoot
+     * @param string|null $stripPath
+     * @param string|null $expectedProjectRootRegex
+     * @param string $expectedStripPathRegex
+     *
+     * @return void
+     *
+     * @dataProvider projectRootAndStripPathProvider
+     */
+    public function testProjectRootAndStripPathAreSetCorrectly($projectRoot, $stripPath, $expectedProjectRootRegex, $expectedStripPathRegex)
+    {
+        /** @var \Illuminate\Config\Repository $laravelConfig */
+        $laravelConfig = $this->app->config;
+        $bugsnagConfig = $laravelConfig->get('bugsnag');
+
+        $this->assertNull(
+            $bugsnagConfig['project_root'],
+            "Expected the default configuration value for 'project_root' to be null"
+        );
+
+        $this->assertNull(
+            $bugsnagConfig['strip_path'],
+            "Expected the default configuration value for 'strip_path' to be null"
+        );
+
+        $bugsnagConfig['project_root'] = $projectRoot;
+        $bugsnagConfig['strip_path'] = $stripPath;
+
+        $laravelConfig->set('bugsnag', $bugsnagConfig);
+
+        $client = $this->app->make(Client::class);
+
+        $this->assertInstanceOf(Client::class, $client);
+
+        $basePath = $this->app->basePath();
+        $appRoot = $this->app->path();
+
+        /** @var Client $client */
+        $config = $client->getConfig();
+
+        $projectRootRegex = $this->getProperty($config, 'projectRootRegex');
+        $stripPathRegex = $this->getProperty($config, 'stripPathRegex');
+
+        $this->assertSame(
+            $expectedStripPathRegex,
+            $stripPathRegex,
+            "Expected the 'stripPathRegex' to match the string provided in Bugsnag configuration"
+        );
+
+        $this->assertSame(
+            $expectedProjectRootRegex,
+            $projectRootRegex,
+            "Expected the 'projectRootRegex' to be null because a 'strip_path' was provided"
+        );
+    }
+
+    public function projectRootAndStripPathProvider()
+    {
+        return [
+            // If both parameters are provided, the project root should be null
+            // and the strip path set to a regex matching the given string
+            // TODO this might be a bug — when a strip path value is configured,
+            //      we only set the project root path if one wasn't provided. If both
+            //      strip path _and_ project root are given, no project root is set
+            'both provided' => [
+                'project_root' => '/example/project/root',
+                'strip_path' => '/example/strip/path',
+                'expected_project_root_regex' => null,
+                'expected_strip_path_regex' => $this->pathToRegex('/example/strip/path'),
+            ],
+
+            // If only the project root is provided, both values should be set to
+            // the same regex matching the given project root string
+            'only project root provided' => [
+                'project_root' => '/example/project/root',
+                'strip_path' => null,
+                'expected_project_root_regex' => $this->pathToRegex('/example/project/root'),
+                'expected_strip_path_regex' => $this->pathToRegex('/example/project/root'),
+            ],
+
+            // If the project root is setup to match the app's base path, we set
+            // the strip path to match too. The base path in the tests is set by
+            // the TestBench package
+            'only project root provided (to root of test app)' => [
+                'project_root' => realpath(__DIR__ . '/../vendor/orchestra/testbench-core/laravel'),
+                'strip_path' => null,
+                'expected_project_root_regex' => $this->pathToRegex(realpath(__DIR__ . '/../vendor/orchestra/testbench-core/laravel')),
+                'expected_strip_path_regex' => $this->pathToRegex(realpath(__DIR__ . '/../vendor/orchestra/testbench-core/laravel')),
+            ],
+
+            // If only the strip path is provided, both values should be set to
+            // the same regex matching the given strip path string with "/app"
+            // appended
+            // TODO this might be a bug — when only strip path is configured,
+            //      we set the strip path and then immediately overwrite it with
+            //      a new path with "/app" appended by calling `setProjectRoot`.
+            //      If the intention is to to have "/example" be the strip path
+            //      and "/example/app" be the project root then we need to do these
+            //      calls in the opposite order
+            'only strip path provided' => [
+                'project_root' => null,
+                'strip_path' => '/example/strip/path',
+                'expected_project_root_regex' => $this->pathToRegex('/example/strip/path/app'),
+                'expected_strip_path_regex' => $this->pathToRegex('/example/strip/path/app'),
+            ],
+        ];
+    }
+
+    private function pathToRegex($path)
+    {
+        return sprintf('/^%s[\\/]?/i', preg_quote($path, '/'));
     }
 
     public function testCorrectLoggerClassesReturned()
