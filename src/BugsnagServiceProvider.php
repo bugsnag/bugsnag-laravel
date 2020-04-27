@@ -336,30 +336,41 @@ class BugsnagServiceProvider extends ServiceProvider
      */
     protected function setupPaths(Client $client, Container $app, array $config)
     {
-        $stripDefault = $app->basePath();
-        $projectDefault = $app->path();
-        $strip = isset($config['strip_path']) ? $config['strip_path'] : null;
-        $project = isset($config['project_root']) ? $config['project_root'] : null;
-        $stripRegex = isset($config['strip_path_regex']) ? $config['strip_path_regex'] : null;
-        $projectRegex = isset($config['project_root_regex']) ? $config['project_root_regex'] : null;
+        $basePath = $app->basePath();
 
-        $client->setProjectRoot($projectDefault);
-        $client->setStripPath($stripDefault);
+        if (isset($config['strip_path']) && !isset($config['strip_path_regex'])) {
+            $client->setStripPath($config['strip_path']);
 
-        if ($project) {
-            $client->setProjectRoot($project);
+            // TODO this may be a bug
+            if (!isset($config['project_root']) && !isset($config['project_root_regex'])) {
+                $client->setProjectRoot($config['strip_path'] . '/app');
+            }
+
+            // Stop here to prevent changing the project root we just set
+            return;
+        } else {
+            $client->setStripPath($basePath);
         }
 
-        if ($strip) {
-            $client->setStripPath($strip);
+        if (isset($config['project_root_regex'])) {
+            $client->setProjectRootRegex($config['project_root_regex']);
+        } elseif (isset($config['project_root'])) {
+            // TODO this may be a bug
+            if (!isset($config['strip_path_regex'])
+                && !isset($config['strip_path'])
+                && $basePath
+                && substr($config['project_root'], 0, strlen($basePath)) === $basePath
+            ) {
+                $client->setStripPath($basePath);
+            }
+
+            $client->setProjectRoot($config['project_root']);
+        } elseif (!isset($config['strip_path_regex'])) {
+            $client->setProjectRoot($app->path());
         }
 
-        if ($projectRegex) {
-            $client->setProjectRootRegex($projectRegex);
-        }
-
-        if ($stripRegex) {
-            $client->setStripPathRegex($stripRegex);
+        if (isset($config['strip_path_regex'])) {
+            $client->setStripPathRegex($config['strip_path_regex']);
         }
     }
 
