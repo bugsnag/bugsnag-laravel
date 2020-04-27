@@ -18,4 +18,21 @@ abstract class AbstractTestCase extends AbstractPackageTestCase
     {
         return BugsnagServiceProvider::class;
     }
+
+    /**
+     * Get the value of the given property on the given object
+     *
+     * @param object $object
+     * @param string $property
+     *
+     * @return mixed
+     */
+    protected function getProperty($object, $property)
+    {
+        $propertyAccessor = function ($property) {
+            return $this->{$property};
+        };
+
+        return $propertyAccessor->call($object, $property);
+    }
 }
