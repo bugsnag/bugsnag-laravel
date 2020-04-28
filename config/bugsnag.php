@@ -129,9 +129,8 @@ return [
     | Bugsnag marks stacktrace lines as in-project if they come from files
     | inside your “project root”. You can set this here.
     |
-    | If this is not set, we will automatically try to detect it.
-    |
-    | Do not fill strip_path neither project_path using this option
+    | This option allows you to set it as a regular expression and will take
+    | precedence over "project_root" if both are defined.
     |
     */
 
@@ -142,8 +141,8 @@ return [
     | Strip Path
     |--------------------------------------------------------------------------
     |
-    | You can set a strip path to have it also trimmed from the start of any
-    | filepath in your stacktraces.
+    | The strip path is a path to be trimmed from the start of any filepaths in
+    | your stacktraces.
     |
     | If this is not set, we will automatically try to detect it.
     |
@@ -156,12 +155,11 @@ return [
     | Strip Path Regex
     |--------------------------------------------------------------------------
     |
-    | You can set a strip path regular expression to have it also trimmed from the start of any
-    | filepath in your stacktraces.
+    | The strip path is a path to be trimmed from the start of any filepaths in
+    | your stacktraces.
     |
-    | If this is not set, we will automatically try to detect it.
-    |
-    | Do not fill strip_path neither project_path using this option
+    | This option allows you to set it as a regular expression and will take
+    | precedence over "strip_path" if both are defined.
     |
     */
 
