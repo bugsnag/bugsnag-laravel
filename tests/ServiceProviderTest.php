@@ -162,16 +162,6 @@ class ServiceProviderTest extends AbstractTestCase
                 'expected_strip_path_regex' => $this->pathToRegex('/example/project/root'),
             ],
 
-            // If the project root is setup to match the app's base path, we set
-            // the strip path to match too. The base path in the tests is set by
-            // the TestBench package
-            'only project root provided (to root of test app)' => [
-                'project_root' => realpath(__DIR__.'/../vendor/orchestra/testbench-core/laravel'),
-                'strip_path' => null,
-                'expected_project_root_regex' => $this->pathToRegex(realpath(__DIR__.'/../vendor/orchestra/testbench-core/laravel')),
-                'expected_strip_path_regex' => $this->pathToRegex(realpath(__DIR__.'/../vendor/orchestra/testbench-core/laravel')),
-            ],
-
             // If only the strip path is provided, both values should be set to
             // the same regex matching the given strip path string with "/app"
             // appended
