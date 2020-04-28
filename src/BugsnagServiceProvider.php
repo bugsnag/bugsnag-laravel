@@ -336,41 +336,20 @@ class BugsnagServiceProvider extends ServiceProvider
      */
     protected function setupPaths(Client $client, Container $app, array $config)
     {
-        $basePath = $app->basePath();
-
-        if (isset($config['strip_path']) && !isset($config['strip_path_regex'])) {
-            $client->setStripPath($config['strip_path']);
-
-            // TODO this may be a bug
-            if (!isset($config['project_root']) && !isset($config['project_root_regex'])) {
-                $client->setProjectRoot($config['strip_path'].'/app');
-            }
-
-            // Stop here to prevent changing the project root we just set
-            return;
-        } else {
-            $client->setStripPath($basePath);
-        }
-
-        if (isset($config['project_root_regex'])) {
+        if (isset($config['project_root_regex']) && $config['project_root_regex'] !== '') {
             $client->setProjectRootRegex($config['project_root_regex']);
-        } elseif (isset($config['project_root'])) {
-            // TODO this may be a bug
-            if (!isset($config['strip_path_regex'])
-                && !isset($config['strip_path'])
-                && $basePath
-                && substr($config['project_root'], 0, strlen($basePath)) === $basePath
-            ) {
-                $client->setStripPath($basePath);
-            }
-
+        } elseif (isset($config['project_root']) && $config['project_root'] !== '') {
             $client->setProjectRoot($config['project_root']);
-        } elseif (!isset($config['strip_path_regex'])) {
+        } else {
             $client->setProjectRoot($app->path());
         }
 
-        if (isset($config['strip_path_regex'])) {
+        if (isset($config['strip_path_regex']) && $config['strip_path_regex'] !== '') {
             $client->setStripPathRegex($config['strip_path_regex']);
+        } elseif (isset($config['strip_path']) && $config['strip_path'] !== '') {
+            $client->setStripPath($config['strip_path']);
+        } else {
+            $client->setStripPath($app->basePath());
         }
     }
 
