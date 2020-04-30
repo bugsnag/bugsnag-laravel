@@ -336,17 +336,17 @@ class BugsnagServiceProvider extends ServiceProvider
      */
     protected function setupPaths(Client $client, Container $app, array $config)
     {
-        if (isset($config['project_root_regex']) && $config['project_root_regex'] !== '') {
+        if (isset($config['project_root_regex'])) {
             $client->setProjectRootRegex($config['project_root_regex']);
-        } elseif (isset($config['project_root']) && $config['project_root'] !== '') {
+        } elseif (isset($config['project_root'])) {
             $client->setProjectRoot($config['project_root']);
         } else {
             $client->setProjectRoot($app->path());
         }
 
-        if (isset($config['strip_path_regex']) && $config['strip_path_regex'] !== '') {
+        if (isset($config['strip_path_regex'])) {
             $client->setStripPathRegex($config['strip_path_regex']);
-        } elseif (isset($config['strip_path']) && $config['strip_path'] !== '') {
+        } elseif (isset($config['strip_path'])) {
             $client->setStripPath($config['strip_path']);
         } else {
             $client->setStripPath($app->basePath());

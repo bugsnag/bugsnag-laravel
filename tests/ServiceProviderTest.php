@@ -159,7 +159,7 @@ class ServiceProviderTest extends AbstractTestCase
         return [
             // If both strings are provided, both options should be set to the
             // regex version of the given strings
-            'both strings provided (regexes null)' => [
+            'both strings provided' => [
                 'project_root' => '/example/project/root',
                 'strip_path' => '/example/strip/path',
                 'project_root_regex' => null,
@@ -168,31 +168,10 @@ class ServiceProviderTest extends AbstractTestCase
                 'expected_strip_path_regex' => $this->pathToRegex('/example/strip/path'),
             ],
 
-            // If both strings are provided, both options should be set to the
-            // regex version of the given strings
-            'both strings provided (regexes empty string)' => [
-                'project_root' => '/example/project/root',
-                'strip_path' => '/example/strip/path',
-                'project_root_regex' => '',
-                'strip_path_regex' => '',
-                'expected_project_root_regex' => $this->pathToRegex('/example/project/root'),
-                'expected_strip_path_regex' => $this->pathToRegex('/example/strip/path'),
-            ],
-
             // If both regexes are provided they should be set verbatim
-            'both regexes provided (strings null)' => [
+            'both regexes provided' => [
                 'project_root' => null,
                 'strip_path' => null,
-                'project_root_regex' => '/^example project root regex/',
-                'strip_path_regex' => '/^example strip path regex/',
-                'expected_project_root_regex' => '/^example project root regex/',
-                'expected_strip_path_regex' => '/^example strip path regex/',
-            ],
-
-            // If both regexes are provided they should be set verbatim
-            'both regexes provided (strings empty string)' => [
-                'project_root' => '',
-                'strip_path' => '',
                 'project_root_regex' => '/^example project root regex/',
                 'strip_path_regex' => '/^example strip path regex/',
                 'expected_project_root_regex' => '/^example project root regex/',
