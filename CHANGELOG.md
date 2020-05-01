@@ -1,6 +1,11 @@
 Changelog
 =========
 
+## TBD
+
+* Add new options for using regexes to match the project root and strip path
+  [#398](https://github.com/bugsnag/bugsnag-laravel/pull/398)
+
 ## 2.18.0 (2020-02-26)
 
 ### Enhancements

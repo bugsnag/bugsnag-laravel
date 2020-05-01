@@ -57,17 +57,14 @@ class ServiceProviderTest extends AbstractTestCase
 
         $this->assertInstanceOf(Client::class, $client);
 
-        $basePath = $this->app->basePath();
-        $appRoot = $this->app->path();
-
         /** @var Client $client */
         $config = $client->getConfig();
 
         $projectRootRegex = $this->getProperty($config, 'projectRootRegex');
         $stripPathRegex = $this->getProperty($config, 'stripPathRegex');
 
-        $expectedProjectRootRegex = sprintf('/^%s[\\/]?/i', preg_quote($appRoot, '/'));
-        $expectedStripPathRegex = $expectedProjectRootRegex;
+        $expectedProjectRootRegex = $this->pathToRegex($this->app->path());
+        $expectedStripPathRegex = $this->pathToRegex($this->app->basePath());
 
         $this->assertSame(
             $expectedStripPathRegex,
@@ -84,6 +81,8 @@ class ServiceProviderTest extends AbstractTestCase
     /**
      * @param string|null $projectRoot
      * @param string|null $stripPath
+     * @param string|null $projectRootRegex
+     * @param string|null $stripPathRegex
      * @param string|null $expectedProjectRootRegex
      * @param string      $expectedStripPathRegex
      *
@@ -91,8 +90,14 @@ class ServiceProviderTest extends AbstractTestCase
      *
      * @dataProvider projectRootAndStripPathProvider
      */
-    public function testProjectRootAndStripPathAreSetCorrectly($projectRoot, $stripPath, $expectedProjectRootRegex, $expectedStripPathRegex)
-    {
+    public function testProjectRootAndStripPathAreSetCorrectly(
+        $projectRoot,
+        $stripPath,
+        $projectRootRegex,
+        $stripPathRegex,
+        $expectedProjectRootRegex,
+        $expectedStripPathRegex
+    ) {
         /** @var \Illuminate\Config\Repository $laravelConfig */
         $laravelConfig = $this->app->config;
         $bugsnagConfig = $laravelConfig->get('bugsnag');
@@ -107,8 +112,20 @@ class ServiceProviderTest extends AbstractTestCase
             "Expected the default configuration value for 'strip_path' to be null"
         );
 
+        $this->assertNull(
+            $bugsnagConfig['project_root_regex'],
+            "Expected the default configuration value for 'project_root_regex' to be null"
+        );
+
+        $this->assertNull(
+            $bugsnagConfig['strip_path_regex'],
+            "Expected the default configuration value for 'strip_path_regex' to be null"
+        );
+
         $bugsnagConfig['project_root'] = $projectRoot;
         $bugsnagConfig['strip_path'] = $stripPath;
+        $bugsnagConfig['project_root_regex'] = $projectRootRegex;
+        $bugsnagConfig['strip_path_regex'] = $stripPathRegex;
 
         $laravelConfig->set('bugsnag', $bugsnagConfig);
 
@@ -116,7 +133,6 @@ class ServiceProviderTest extends AbstractTestCase
 
         $this->assertInstanceOf(Client::class, $client);
 
-        $basePath = $this->app->basePath();
         $appRoot = $this->app->path();
 
         /** @var Client $client */
@@ -126,56 +142,120 @@ class ServiceProviderTest extends AbstractTestCase
         $stripPathRegex = $this->getProperty($config, 'stripPathRegex');
 
         $this->assertSame(
-            $expectedStripPathRegex,
-            $stripPathRegex,
-            "Expected the 'stripPathRegex' to match the string provided in Bugsnag configuration"
-        );
-
-        $this->assertSame(
             $expectedProjectRootRegex,
             $projectRootRegex,
             "Expected the 'projectRootRegex' to match the string provided in Bugsnag configuration"
+        );
+
+        $this->assertSame(
+            $expectedStripPathRegex,
+            $stripPathRegex,
+            "Expected the 'stripPathRegex' to match the string provided in Bugsnag configuration"
         );
     }
 
     public function projectRootAndStripPathProvider()
     {
         return [
-            // If both parameters are provided, the project root should be null
-            // and the strip path set to a regex matching the given string
-            // TODO this might be a bug — when a strip path value is configured,
-            //      we only set the project root path if one wasn't provided. If both
-            //      strip path _and_ project root are given, no project root is set
-            'both provided' => [
+            // If both strings are provided, both options should be set to the
+            // regex version of the given strings
+            'both strings provided' => [
                 'project_root' => '/example/project/root',
                 'strip_path' => '/example/strip/path',
-                'expected_project_root_regex' => null,
+                'project_root_regex' => null,
+                'strip_path_regex' => null,
+                'expected_project_root_regex' => $this->pathToRegex('/example/project/root'),
                 'expected_strip_path_regex' => $this->pathToRegex('/example/strip/path'),
             ],
 
-            // If only the project root is provided, both values should be set to
-            // the same regex matching the given project root string
-            'only project root provided' => [
-                'project_root' => '/example/project/root',
+            // If both regexes are provided they should be set verbatim
+            'both regexes provided' => [
+                'project_root' => null,
                 'strip_path' => null,
-                'expected_project_root_regex' => $this->pathToRegex('/example/project/root'),
-                'expected_strip_path_regex' => $this->pathToRegex('/example/project/root'),
+                'project_root_regex' => '/^example project root regex/',
+                'strip_path_regex' => '/^example strip path regex/',
+                'expected_project_root_regex' => '/^example project root regex/',
+                'expected_strip_path_regex' => '/^example strip path regex/',
             ],
 
-            // If only the strip path is provided, both values should be set to
-            // the same regex matching the given strip path string with "/app"
-            // appended
-            // TODO this might be a bug — when only strip path is configured,
-            //      we set the strip path and then immediately overwrite it with
-            //      a new path with "/app" appended by calling `setProjectRoot`.
-            //      If the intention is to to have "/example" be the strip path
-            //      and "/example/app" be the project root then we need to do these
-            //      calls in the opposite order
-            'only strip path provided' => [
+            // If only the project root string is provided, the project root should
+            // be set to the regex version of the string and the strip path to
+            // the application base path
+            'only project root string provided' => [
+                'project_root' => '/example/project/root',
+                'strip_path' => null,
+                'project_root_regex' => null,
+                'strip_path_regex' => null,
+                'expected_project_root_regex' => $this->pathToRegex('/example/project/root'),
+                'expected_strip_path_regex' => $this->pathToRegex($this->getBasePath()),
+            ],
+
+            // If only the project root regex is provided, both values should be
+            // set to the same regex
+            'only project root regex provided' => [
+                'project_root' => null,
+                'strip_path' => null,
+                'project_root_regex' => '/^example project root regex/',
+                'strip_path_regex' => null,
+                'expected_project_root_regex' => '/^example project root regex/',
+                'expected_strip_path_regex' => $this->pathToRegex($this->getBasePath()),
+            ],
+
+            // If only the strip path string is provided, both values should be
+            // set — the stip path to the regex version of the string and the
+            // project root with "/app" appended
+            'only strip path string provided' => [
                 'project_root' => null,
                 'strip_path' => '/example/strip/path',
-                'expected_project_root_regex' => $this->pathToRegex('/example/strip/path/app'),
-                'expected_strip_path_regex' => $this->pathToRegex('/example/strip/path/app'),
+                'project_root_regex' => null,
+                'strip_path_regex' => null,
+                'expected_project_root_regex' => $this->pathToRegex("{$this->getBasePath()}/app"),
+                'expected_strip_path_regex' => $this->pathToRegex('/example/strip/path'),
+            ],
+
+            // If only the strip path regex is provided, the strip path should be
+            // set verbatim and the project root should be set to the application
+            // path (i.e. "/base/path/app")
+            'only strip path regex provided' => [
+                'project_root' => null,
+                'strip_path' => null,
+                'project_root_regex' => null,
+                'strip_path_regex' => '/^example strip path regex/',
+                'expected_project_root_regex' => $this->pathToRegex("{$this->getBasePath()}/app"),
+                'expected_strip_path_regex' => '/^example strip path regex/',
+            ],
+
+            // If the regexes are provided and either string value is too then
+            // the regexes should take precedence and the string value ignored
+            'project root string and both regexes provided' => [
+                'project_root' => $this->pathToRegex('/example/project/root'),
+                'strip_path' => null,
+                'project_root_regex' => '/^example project root regex/',
+                'strip_path_regex' => '/^example strip path regex/',
+                'expected_project_root_regex' => '/^example project root regex/',
+                'expected_strip_path_regex' => '/^example strip path regex/',
+            ],
+
+            // If the regexes are provided and either string value is too then
+            // the regexes should take precedence and the string value ignored
+            'strip path string and both regexes provided' => [
+                'project_root' => null,
+                'strip_path' => $this->pathToRegex('/example/strip/path'),
+                'project_root_regex' => '/^example project root regex/',
+                'strip_path_regex' => '/^example strip path regex/',
+                'expected_project_root_regex' => '/^example project root regex/',
+                'expected_strip_path_regex' => '/^example strip path regex/',
+            ],
+
+            // If all four options are provided then the regexes should take
+            // precedence and the string values ignored
+            'all options provided' => [
+                'project_root' => $this->pathToRegex('/example/project/root'),
+                'strip_path' => $this->pathToRegex('/example/strip/path'),
+                'project_root_regex' => '/^example project root regex/',
+                'strip_path_regex' => '/^example strip path regex/',
+                'expected_project_root_regex' => '/^example project root regex/',
+                'expected_strip_path_regex' => '/^example strip path regex/',
             ],
         ];
     }
