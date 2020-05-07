@@ -1,7 +1,9 @@
 Changelog
 =========
 
-## TBD
+## 2.9.0
+
+### Enhancements
 
 * Add new options for using regexes to match the project root and strip path
   [jpcid](https://github.com/jpcid)
