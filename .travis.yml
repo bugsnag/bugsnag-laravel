@@ -150,6 +150,10 @@ matrix:
       script: bundle exec bugsnag-maze-runner -c
       env: LARAVEL_FIXTURE=laravel66
 
+cache:
+  directories:
+    - $HOME/.composer/cache
+
 before_install:
   - travis_retry composer require "laravel/framework:${LARAVEL_VERSION}" --no-update
   - echo "memory_limit=4G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
