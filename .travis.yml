@@ -70,6 +70,12 @@ matrix:
       env: LARAVEL_VERSION=5.8.*
     - php: 7.2
       dist: bionic
+      env: LARAVEL_VERSION=6.0
+    - php: 7.2
+      dist: bionic
+      env: LARAVEL_VERSION=7.0
+    - php: 7.2
+      dist: bionic
       env: LARAVEL_VERSION=6.*
     - php: 7.2
       dist: bionic
@@ -95,6 +101,12 @@ matrix:
     - php: 7.4
       dist: bionic
       env: LARAVEL_VERSION=5.8.*
+    - php: 7.4
+      dist: bionic
+      env: LARAVEL_VERSION=6.0
+    - php: 7.4
+      dist: bionic
+      env: LARAVEL_VERSION=7.0
     - php: 7.4
       dist: bionic
       env: LARAVEL_VERSION=6.*
