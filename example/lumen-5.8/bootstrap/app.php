@@ -76,10 +76,11 @@ $app->singleton(
 |
 */
 
+$app->register(Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class);
+
 // $app->register(App\Providers\AppServiceProvider::class);
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
-$app->register(Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
