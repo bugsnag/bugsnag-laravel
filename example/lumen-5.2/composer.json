@@ -6,7 +6,7 @@
     "type": "project",
     "require": {
         "php": ">=5.5.9",
-        "bugsnag/bugsnag-laravel": "^2.14",
+        "bugsnag/bugsnag-laravel": "^2.19",
         "laravel/lumen-framework": "5.2.*",
         "vlucas/phpdotenv": "^2.3"
     },

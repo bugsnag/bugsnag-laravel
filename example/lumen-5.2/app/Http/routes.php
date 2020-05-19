@@ -1,5 +1,8 @@
 <?php
 
+use Bugsnag\Report;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -11,10 +14,71 @@
 |
 */
 
-$app->get('/', function () use ($app) {
-    return $app->version();
+$app->get('crash', function () {
+    throw new Exception('Crashing exception!');
 });
 
-$app->get('test', function () {
-    throw new Exception('Example exception!');
+$app->get('notify', function () {
+    Bugsnag::notifyException(new Exception('A notified exception'));
+
+    return 'An exception has been notified.  Check your dashboard to view it!';
+});
+
+$app->get('metadata', function () {
+    Bugsnag::registerCallback(function(Report $report) {
+        $report->setMetaData([
+            'Route Details' => [
+                'path' => 'metadata',
+                'function' => 'Adds a callback to Bugsnag that adds metadata to a notification'
+            ]
+        ]);
+    });
+
+    throw new Exception('Metadata exception!');
+});
+
+$app->get('notify-with-metadata', function () {
+    Bugsnag::notifyException(
+        new Exception('A notified exception with metadata'),
+        function(Report $report) {
+            $report->setMetaData([
+                'Route Details' => [
+                    'path' => 'notify-with-metadata',
+                    'function' => 'Shows how to send extra data with a manually notified exception!'
+                ]
+            ]);
+        }
+    );
+
+    return 'An exception has been notified.  Check your dashboard to view it!';
+});
+
+$app->get('severity', function () {
+    Bugsnag::notifyException(
+        new Exception('A notified exception with a severity of "info"'),
+        function(Report $report) {
+            $report->setSeverity('info');
+        }
+    );
+
+    return 'An exception has been notified.  Check your dashboard to view it!';
+});
+
+$app->get('/', function () use ($app) {
+    $content = <<<HTML
+<pre style="font-size: 20px;">{
+    "Version": "{$app->version()}",
+    "Bugsnag": {
+        "Crash": "<a href="/crash">/crash</a>",
+        "Notify": "<a href="/notify">/notify</a>",
+        "Crash with added metadata": "<a href="/metadata">/metadata</a>",
+        "Notify with added metadata": "<a href="/notify-with-metadata">/notify-with-metadata</a>",
+        "Notify with modified severity": "<a href="/severity">/severity</a>"
+    }
+}</pre>
+HTML;
+
+    $response = response($content);
+
+    return $response;;
 });
