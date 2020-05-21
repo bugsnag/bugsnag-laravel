@@ -19,7 +19,12 @@ To get set up, follow the instructions below. Don't forget to replace the placeh
     composer install
     ```
 
-1. Ensure that your Bugsnag API Key is set in the `.env` file within the application.  If you do not have a `.env` file present, copy the `.env.example` file to `.env`, and add the `BUGSNAG_API_KEY` environment variable, setting it to your API Key.
+1. Copy the `.env.example` file to `.env`
+    ```shell
+    cp .env.example .env
+    ```
+
+1. Set the `BUGSNAG_API_KEY` in `.env` to your Bugsnag project's API Key
 
 1. Run the application.
     ```shell
