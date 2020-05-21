@@ -9,7 +9,7 @@ Try this out with [your own Bugsnag account](https://app.bugsnag.com/user/new), 
 To get set up, follow the instructions below. Don't forget to replace the placeholder API token with your own!
 
 
-1. Clone the repo and `cd` into this directory:
+1. Clone the repo and `cd` into this directory
     ```shell
     git clone https://github.com/bugsnag/bugsnag-laravel.git
     cd bugsnag-laravel/example/laravel-7
@@ -20,7 +20,17 @@ To get set up, follow the instructions below. Don't forget to replace the placeh
     composer install
     ```
 
-1. Ensure that your Bugsnag API Key is set in the `.env` file within the application.  If you do not have a `.env` file present, copy the `.env.example` file to `.env`, and add the `BUGSNAG_API_KEY` environment variable, setting it to your API Key.
+1. Copy the `.env.example` file to `.env`
+    ```shell
+    cp .env.example .env
+    ```
+
+1. Set the `BUGSNAG_API_KEY` in `.env` to your Bugsnag project's API Key
+
+1. Generate Laravel's application key
+    ```shell
+    php artisan key:generate
+    ```
 
 1. Run the application.
     ```shell
