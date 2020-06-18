@@ -28,7 +28,7 @@ LARAVEL_VERSION=$1
 if [ "$LARAVEL_VERSION" = "latest" ]; then
     composer require "laravel/framework:dev-master as 7" --no-update
 elif [ "$LARAVEL_VERSION" = "latest-v7" ]; then
-    composer require "laravel/framework:dev-7.x as 7" --no-update
+    composer require "laravel/framework:7.x-dev as 7" --no-update
 else
     composer require "laravel/framework:${LARAVEL_VERSION}" --no-update
 fi

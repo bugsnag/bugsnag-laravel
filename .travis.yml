@@ -113,6 +113,12 @@ matrix:
     - php: 7.4
       dist: bionic
       env: LARAVEL_VERSION=7.*
+    - php: 7.4
+      dist: bionic
+      env: LARAVEL_VERSION=latest-v7
+    - php: 7.4
+      dist: bionic
+      env: LARAVEL_VERSION=latest
     - addons:
         apt:
           packages:
@@ -155,13 +161,14 @@ cache:
     - $HOME/.composer/cache
 
 before_install:
-  - travis_retry composer require "laravel/framework:${LARAVEL_VERSION}" --no-update
   - echo "memory_limit=4G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
 install:
+  - ./.ci/require-laravel.sh "$LARAVEL_VERSION"
   - if [[ $TRAVIS_PHP_VERSION == 5.5.9 ]]; then travis_retry composer update --no-interaction --prefer-dist --prefer-lowest ; fi
   - if [[ $TRAVIS_PHP_VERSION != 5.5.9 ]]; then travis_retry composer update --no-interaction --prefer-dist ; fi
-  - composer show laravel/framework
+  # Show which versions of our direct dependencies we're using
+  - composer show --direct
 
 script:
   - make test
