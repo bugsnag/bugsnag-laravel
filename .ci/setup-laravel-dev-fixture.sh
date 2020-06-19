@@ -12,7 +12,7 @@ composer create-project laravel/laravel laravel-latest --no-dev
 
 cd laravel-latest
 
-composer require 'laravel/framework:dev-master as 7' --with-dependencies --no-update
+composer require 'laravel/framework:dev-master as 7' --update-with-dependencies --no-update
 composer require bugsnag/bugsnag-laravel --no-update
 
 composer update --no-dev
