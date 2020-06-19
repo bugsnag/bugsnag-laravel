@@ -163,6 +163,7 @@ matrix:
       sevices:
       - docker
       rvm: 2.4.1
+      php: 7.4
       before_install: ruby --version
       install:
         - bundle install
