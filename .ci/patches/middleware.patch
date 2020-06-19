@@ -1,0 +1,98 @@
+diff --git a/app/Http/Kernel.php b/app/Http/Kernel.php
+index 36ced13..71cc168 100644
+--- a/app/Http/Kernel.php
++++ b/app/Http/Kernel.php
+@@ -63,5 +63,9 @@ class Kernel extends HttpKernel
+         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
+         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
++        'unMidEx' => \App\Http\Middleware\UnhandledMiddlewareEx::class,
++        'unMidErr' => \App\Http\Middleware\UnhandledMiddlewareErr::class,
++        'hanMidEx' => \App\Http\Middleware\HandledMiddlewareEx::class,
++        'hanMidErr' => \App\Http\Middleware\HandledMiddlewareErr::class,
+     ];
+ }
+diff --git a/app/Http/Middleware/HandledMiddlewareErr.php b/app/Http/Middleware/HandledMiddlewareErr.php
+new file mode 100644
+index 0000000..f10e6d5
+--- /dev/null
++++ b/app/Http/Middleware/HandledMiddlewareErr.php
+@@ -0,0 +1,15 @@
++<?php
++
++namespace App\Http\Middleware;
++
++use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
++use Closure;
++
++class HandledMiddlewareErr
++{
++    public function handle($request, Closure $next)
++    {
++        Bugsnag::notifyError('Handled middleware error', 'This is a handled error');
++        return $next($request);
++    }
++}
+diff --git a/app/Http/Middleware/HandledMiddlewareEx.php b/app/Http/Middleware/HandledMiddlewareEx.php
+new file mode 100644
+index 0000000..9456ce8
+--- /dev/null
++++ b/app/Http/Middleware/HandledMiddlewareEx.php
+@@ -0,0 +1,16 @@
++<?php
++
++namespace App\Http\Middleware;
++
++use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
++use Closure;
++use Exception;
++
++class HandledMiddlewareEx
++{
++    public function handle($request, Closure $next)
++    {
++        Bugsnag::notifyException(new Exception('Handled middleware exception'));
++        return $next($request);
++    }
++}
+diff --git a/app/Http/Middleware/UnhandledMiddlewareErr.php b/app/Http/Middleware/UnhandledMiddlewareErr.php
+new file mode 100644
+index 0000000..f28d7e8
+--- /dev/null
++++ b/app/Http/Middleware/UnhandledMiddlewareErr.php
+@@ -0,0 +1,14 @@
++<?php
++
++namespace App\Http\Middleware;
++
++use Closure;
++
++class UnhandledMiddlewareErr
++{
++    public function handle($request, Closure $next)
++    {
++        foo();
++        return $next($request);
++    }
++}
+diff --git a/app/Http/Middleware/UnhandledMiddlewareEx.php b/app/Http/Middleware/UnhandledMiddlewareEx.php
+new file mode 100644
+index 0000000..3559022
+--- /dev/null
++++ b/app/Http/Middleware/UnhandledMiddlewareEx.php
+@@ -0,0 +1,15 @@
++<?php
++
++namespace App\Http\Middleware;
++
++use Closure;
++use Exception;
++
++class UnhandledMiddlewareEx
++{
++    public function handle($request, Closure $next)
++    {
++        throw new Exception('Unhandled middleware exception');
++        return $next($request);
++    }
++}

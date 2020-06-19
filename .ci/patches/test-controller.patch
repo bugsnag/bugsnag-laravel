@@ -1,0 +1,39 @@
+diff --git a/app/Http/Controllers/TestController.php b/app/Http/Controllers/TestController.php
+new file mode 100644
+index 0000000..35978b7
+--- /dev/null
++++ b/app/Http/Controllers/TestController.php
+@@ -0,0 +1,33 @@
++<?php
++
++namespace App\Http\Controllers;
++
++use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
++use Exception;
++
++class TestController extends Controller
++{
++    public function unhandledException()
++    {
++        throw new Exception('Crashing exception!');
++    }
++
++    public function unhandledError()
++    {
++        foo();
++    }
++
++    public function handledException()
++    {
++        Bugsnag::notifyException(new Exception('Handled exception'));
++
++        return 'done';
++    }
++
++    public function handledError()
++    {
++        Bugsnag::notifyError('Handled error', 'This is a handled error');
++
++        return 'done';
++    }
++}

@@ -155,6 +155,20 @@ matrix:
       install: bundle install
       script: bundle exec bugsnag-maze-runner -c
       env: LARAVEL_FIXTURE=laravel66
+    - addons:
+        apt:
+          packages:
+          - docker-ce
+      sudo: required
+      sevices:
+      - docker
+      rvm: 2.4.1
+      before_install: ruby --version
+      install:
+        - bundle install
+        - ./.ci/setup-laravel-dev-fixture.sh
+      script: bundle exec bugsnag-maze-runner -c
+      env: LARAVEL_FIXTURE=laravel-latest
 
 cache:
   directories:

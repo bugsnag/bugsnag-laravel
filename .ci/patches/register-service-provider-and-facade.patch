@@ -1,0 +1,21 @@
+diff --git a/config/app.php b/config/app.php
+index 8409e00..3592882 100644
+--- a/config/app.php
++++ b/config/app.php
+@@ -165,6 +165,7 @@ return [
+         /*
+          * Package Service Providers...
+          */
++        Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
+ 
+         /*
+          * Application Service Providers...
+@@ -227,6 +228,8 @@ return [
+         'Validator' => Illuminate\Support\Facades\Validator::class,
+         'View' => Illuminate\Support\Facades\View::class,
+ 
++        'Bugsnag' => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
++
+     ],
+ 
+ ];

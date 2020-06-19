@@ -39,3 +39,17 @@ services:
       - target: 8000
         published: 61266
     restart: "no"
+
+  laravel-latest:
+    build:
+      context: laravel-latest
+    environment:
+      - BUGSNAG_API_KEY
+      - BUGSNAG_ENDPOINT
+      - BUGSNAG_SESSION_ENDPOINT
+      - BUGSNAG_CAPTURE_SESSIONS
+    restart: "no"
+    ports:
+      - target: 8000
+        published: 61299
+    restart: "no"

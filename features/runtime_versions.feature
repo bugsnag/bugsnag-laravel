@@ -15,7 +15,7 @@ Scenario: report for handled event contains runtime version information
   And the request is a valid for the error reporting API
   And the event "unhandled" is false
   And the event "device.runtimeVersions.php" matches "(\d+\.){2}\d+"
-  And the event "device.runtimeVersions.laravel" matches "(\d+\.){2}\d+"
+  And the event "device.runtimeVersions.laravel" matches "((\d+\.){2}\d+|\d\.x-dev)"
 
 Scenario: report for unhandled event contains runtime version information
   Given I set environment variable "BUGSNAG_API_KEY" to "a35a2a72bd230ac0aa0f52715bbdc6aa"
@@ -28,7 +28,7 @@ Scenario: report for unhandled event contains runtime version information
   And the request is a valid for the error reporting API
   And the event "unhandled" is true
   And the event "device.runtimeVersions.php" matches "(\d+\.){2}\d+"
-  And the event "device.runtimeVersions.laravel" matches "(\d+\.){2}\d+"
+  And the event "device.runtimeVersions.laravel" matches "((\d+\.){2}\d+|\d\.x-dev)"
 
 Scenario: session payload contains runtime version information
   Given I set environment variable "BUGSNAG_API_KEY" to "a35a2a72bd230ac0aa0f52715bbdc6aa"
@@ -42,4 +42,4 @@ Scenario: session payload contains runtime version information
   And the request 0 is valid for the session tracking API
   And the payload has a valid sessions array for request 0
   And the payload field "device.runtimeVersions.php" matches the regex "(\d+\.){2}\d+"
-  And the payload field "device.runtimeVersions.laravel" matches the regex "(\d+\.){2}\d+"
+  And the payload field "device.runtimeVersions.laravel" matches the regex "((\d+\.){2}\d+|\d\.x-dev)"

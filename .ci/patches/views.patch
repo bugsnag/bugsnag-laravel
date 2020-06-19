@@ -1,0 +1,72 @@
+diff --git a/resources/views/handlederror.blade.php b/resources/views/handlederror.blade.php
+new file mode 100644
+index 0000000..093b53f
+--- /dev/null
++++ b/resources/views/handlederror.blade.php
+@@ -0,0 +1,12 @@
++<!doctype html>
++<html lang="{{ app()->getLocale() }}">
++    <head>
++        <meta charset="utf-8">
++        <meta http-equiv="X-UA-Compatible" content="IE=edge">
++        <meta name="viewport" content="width=device-width, initial-scale=1">
++        <title>Laravel</title>
++    </head>
++    <body>
++        <?php app('bugsnag')->notifyError("Handled error", "This is a handled error") ?>
++    </body>
++</html>
+diff --git a/resources/views/handledexception.blade.php b/resources/views/handledexception.blade.php
+new file mode 100644
+index 0000000..7de6e66
+--- /dev/null
++++ b/resources/views/handledexception.blade.php
+@@ -0,0 +1,12 @@
++<!doctype html>
++<html lang="{{ app()->getLocale() }}">
++    <head>
++        <meta charset="utf-8">
++        <meta http-equiv="X-UA-Compatible" content="IE=edge">
++        <meta name="viewport" content="width=device-width, initial-scale=1">
++        <title>Laravel</title>
++    </head>
++    <body>
++        <?php app('bugsnag')->notifyException(new Exception("Handled view exception")) ?>
++    </body>
++</html>
+diff --git a/resources/views/unhandlederror.blade.php b/resources/views/unhandlederror.blade.php
+new file mode 100644
+index 0000000..91bf125
+--- /dev/null
++++ b/resources/views/unhandlederror.blade.php
+@@ -0,0 +1,12 @@
++<!doctype html>
++<html lang="{{ app()->getLocale() }}">
++    <head>
++        <meta charset="utf-8">
++        <meta http-equiv="X-UA-Compatible" content="IE=edge">
++        <meta name="viewport" content="width=device-width, initial-scale=1">
++        <title>Laravel</title>
++    </head>
++    <body>
++        <?php foo() ?>
++    </body>
++</html>
+diff --git a/resources/views/unhandledexception.blade.php b/resources/views/unhandledexception.blade.php
+new file mode 100644
+index 0000000..c0ee78f
+--- /dev/null
++++ b/resources/views/unhandledexception.blade.php
+@@ -0,0 +1,12 @@
++<!doctype html>
++<html lang="{{ app()->getLocale() }}">
++    <head>
++        <meta charset="utf-8">
++        <meta http-equiv="X-UA-Compatible" content="IE=edge">
++        <meta name="viewport" content="width=device-width, initial-scale=1">
++        <title>Laravel</title>
++    </head>
++    <body>
++        <?php throw new Exception("Unhandled exception") ?>
++    </body>
++</html>
