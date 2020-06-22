@@ -115,10 +115,10 @@ matrix:
       env: LARAVEL_VERSION=7.*
     - php: 7.4
       dist: bionic
-      env: LARAVEL_VERSION=latest-v7
+      env: LARAVEL_VERSION=development
     - php: 7.4
       dist: bionic
-      env: LARAVEL_VERSION=latest
+      env: LARAVEL_VERSION=development-unstable
     - addons:
         apt:
           packages:
