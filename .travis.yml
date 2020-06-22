@@ -202,11 +202,11 @@ matrix:
 
     - php: 7.4
       dist: bionic
-      env: LARAVEL_VERSION=development
-      stage: unstable
+      env: LARAVEL_VERSION='7.x-dev as 7'
+      stage: Unstable
     - php: 7.4
       dist: bionic
-      env: LARAVEL_VERSION=development-unstable
+      env: LARAVEL_VERSION='dev-master as 7'
       stage: unstable
     - addons:
         apt:
@@ -222,7 +222,7 @@ matrix:
         - bundle install
         - ./.ci/setup-laravel-dev-fixture.sh
       script: bundle exec bugsnag-maze-runner -c
-      env: LARAVEL_FIXTURE=laravel-latest
+      env: LARAVEL_FIXTURE=laravel-laTest
       stage: unstable
 
 cache:
@@ -233,7 +233,7 @@ before_install:
   - echo "memory_limit=4G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
 install:
-  - ./.ci/require-laravel.sh "$LARAVEL_VERSION"
+  - composer require "laravel/framework:${LARAVEL_VERSION}" --no-update
   - if [[ $TRAVIS_PHP_VERSION == 5.5.9 ]]; then travis_retry composer update --no-interaction --prefer-dist --prefer-lowest ; fi
   - if [[ $TRAVIS_PHP_VERSION != 5.5.9 ]]; then travis_retry composer update --no-interaction --prefer-dist ; fi
   # Show which versions of our direct dependencies we're using
