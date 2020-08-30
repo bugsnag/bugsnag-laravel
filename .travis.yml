@@ -1,135 +1,106 @@
 language: php
 
-sudo: false
-
 matrix:
   include:
     - php: 5.5.9
       dist: trusty
-      env:
-        - GUZZLE_VERSION=^5.3
-        - LARAVEL_VERSION=5.1.*
-    - php: 5.5.9
-      dist: trusty
-      env:
-        - GUZZLE_VERSION=^6.0
-        - LARAVEL_VERSION=5.1.*
+      env: LARAVEL_VERSION=5.1.*
     - php: 5.5
       dist: trusty
-      env:
-        - GUZZLE_VERSION=^5.3
-        - LARAVEL_VERSION=5.1.*
+      env: LARAVEL_VERSION=5.1.*
     - php: 5.5
       dist: trusty
-      env:
-        - GUZZLE_VERSION=^6.0
-        - LARAVEL_VERSION=5.1.*
+      env: LARAVEL_VERSION=5.2.*
     - php: 5.6
-      env:
-        - GUZZLE_VERSION=^5.3
-        - LARAVEL_VERSION=5.4.*
+      dist: xenial
+      env: LARAVEL_VERSION=5.1.*
     - php: 5.6
-      env:
-        - GUZZLE_VERSION=^6.0
-        - LARAVEL_VERSION=5.4.*
+      dist: xenial
+      env: LARAVEL_VERSION=5.2.*
+    - php: 5.6
+      dist: xenial
+      env: LARAVEL_VERSION=5.3.*
+    - php: 5.6
+      dist: xenial
+      env: LARAVEL_VERSION=5.4.*
     - php: 7.0
-      env:
-        - GUZZLE_VERSION=^5.3
-        - LARAVEL_VERSION=5.5.*
+      dist: xenial
+      env: LARAVEL_VERSION=5.1.*
     - php: 7.0
-      env:
-        - GUZZLE_VERSION=^6.0
-        - LARAVEL_VERSION=5.5.*
+      dist: xenial
+      env: LARAVEL_VERSION=5.2.*
+    - php: 7.0
+      dist: xenial
+      env: LARAVEL_VERSION=5.3.*
+    - php: 7.0
+      dist: xenial
+      env: LARAVEL_VERSION=5.4.*
+    - php: 7.0
+      dist: xenial
+      env: LARAVEL_VERSION=5.5.*
     - php: 7.1
-      env:
-        - GUZZLE_VERSION=^5.3
-        - LARAVEL_VERSION=5.5.*
+      dist: bionic
+      env: LARAVEL_VERSION=5.3.*
     - php: 7.1
-      env:
-        - GUZZLE_VERSION=^6.0
-        - LARAVEL_VERSION=5.5.*
+      dist: bionic
+      env: LARAVEL_VERSION=5.4.*
     - php: 7.1
-      env:
-        - GUZZLE_VERSION=^5.3
-        - LARAVEL_VERSION=5.6.*
+      dist: bionic
+      env: LARAVEL_VERSION=5.5.*
     - php: 7.1
-      env:
-        - GUZZLE_VERSION=^6.0
-        - LARAVEL_VERSION=5.6.*
+      dist: bionic
+      env: LARAVEL_VERSION=5.6.*
     - php: 7.1
-      env:
-        - GUZZLE_VERSION=^5.3
-        - LARAVEL_VERSION=5.8.*
+      dist: bionic
+      env: LARAVEL_VERSION=5.7.*
     - php: 7.1
-      env:
-        - GUZZLE_VERSION=^6.0
-        - LARAVEL_VERSION=5.8.*
+      dist: bionic
+      env: LARAVEL_VERSION=5.8.*
     - php: 7.2
-      env:
-        - GUZZLE_VERSION=^5.3
-        - LARAVEL_VERSION=5.5.*
+      dist: bionic
+      env: LARAVEL_VERSION=5.5.*
     - php: 7.2
-      env:
-        - GUZZLE_VERSION=^6.0
-        - LARAVEL_VERSION=5.5.*
+      dist: bionic
+      env: LARAVEL_VERSION=5.6.*
     - php: 7.2
-      env:
-        - GUZZLE_VERSION=^5.3
-        - LARAVEL_VERSION=5.6.*
+      dist: bionic
+      env: LARAVEL_VERSION=5.7.*
     - php: 7.2
-      env:
-        - GUZZLE_VERSION=^6.0
-        - LARAVEL_VERSION=5.6.*
+      dist: bionic
+      env: LARAVEL_VERSION=5.8.*
     - php: 7.2
-      env:
-        - GUZZLE_VERSION=^5.3
-        - LARAVEL_VERSION=5.8.*
+      dist: bionic
+      env: LARAVEL_VERSION=6.*
     - php: 7.2
-      env:
-        - GUZZLE_VERSION=^6.0
-        - LARAVEL_VERSION=5.8.*
-    - php: hhvm-3.6
-      sudo: required
-      dist: trusty
-      group: edge
-      env:
-        - GUZZLE_VERSION=^5.3
-        - LARAVEL_VERSION=5.1.*
-    - php: hhvm-3.6
-      sudo: required
-      dist: trusty
-      group: edge
-      env:
-        - GUZZLE_VERSION=^6.0
-        - LARAVEL_VERSION=5.1.*
-    - php: hhvm-3.9
-      sudo: required
-      dist: trusty
-      group: edge
-      env:
-        - GUZZLE_VERSION=^5.3
-        - LARAVEL_VERSION=5.1.*
-    - php: hhvm-3.9
-      sudo: required
-      dist: trusty
-      group: edge
-      env:
-        - GUZZLE_VERSION=^6.0
-        - LARAVEL_VERSION=5.1.*
-    - php: hhvm-3.12
-      sudo: required
-      dist: trusty
-      group: edge
-      env:
-        - GUZZLE_VERSION=^5.3
-        - LARAVEL_VERSION=5.1.*
-    - php: hhvm-3.12
-      sudo: required
-      dist: trusty
-      group: edge
-      env:
-        - GUZZLE_VERSION=^6.0
-        - LARAVEL_VERSION=5.1.*
+      dist: bionic
+      env: LARAVEL_VERSION=7.*
+    - php: 7.3
+      dist: bionic
+      env: LARAVEL_VERSION=5.5.*
+    - php: 7.3
+      dist: bionic
+      env: LARAVEL_VERSION=5.6.*
+    - php: 7.3
+      dist: bionic
+      env: LARAVEL_VERSION=5.7.*
+    - php: 7.3
+      dist: bionic
+      env: LARAVEL_VERSION=5.8.*
+    - php: 7.3
+      dist: bionic
+      env: LARAVEL_VERSION=6.*
+    - php: 7.3
+      dist: bionic
+      env: LARAVEL_VERSION=7.*
+    - php: 7.4
+      dist: bionic
+      env: LARAVEL_VERSION=5.8.*
+    - php: 7.4
+      dist: bionic
+      env: LARAVEL_VERSION=6.*
+    - php: 7.4
+      dist: bionic
+      env: LARAVEL_VERSION=7.*
     - addons:
         apt:
           packages:
@@ -141,8 +112,7 @@ matrix:
       before_install: ruby --version
       install: bundle install
       script: bundle exec bugsnag-maze-runner -c
-      env:
-        - LARAVEL_FIXTURE=laravel56
+      env: LARAVEL_FIXTURE=laravel56
     - addons:
         apt:
           packages:
@@ -154,14 +124,23 @@ matrix:
       before_install: ruby --version
       install: bundle install
       script: bundle exec bugsnag-maze-runner -c
-      env:
-        - LARAVEL_FIXTURE=laravel58
+      env: LARAVEL_FIXTURE=laravel58
+    - addons:
+        apt:
+          packages:
+          - docker-ce
+      sudo: required
+      sevices:
+      - docker
+      rvm: 2.4.1
+      before_install: ruby --version
+      install: bundle install
+      script: bundle exec bugsnag-maze-runner -c
+      env: LARAVEL_FIXTURE=laravel66
 
 before_install:
-  - if [[ $TRAVIS_PHP_VERSION =~ ^hhvm ]]; then echo 'hhvm.jit = false' >> /etc/hhvm/php.ini ; fi
-  - composer require "guzzlehttp/guzzle:${GUZZLE_VERSION}" --no-update
-  - composer require "laravel/framework:${LARAVEL_VERSION}" --no-update
-  - echo "memory_limit=2G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
+  - travis_retry composer require "laravel/framework:${LARAVEL_VERSION}" --no-update
+  - echo "memory_limit=4G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
 install:
   - if [[ $TRAVIS_PHP_VERSION == 5.5.9 ]]; then travis_retry composer update --no-interaction --prefer-source --prefer-lowest ; fi

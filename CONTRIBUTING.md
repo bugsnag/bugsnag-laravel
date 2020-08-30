@@ -22,4 +22,3 @@ Releasing
     git push origin master && git push --tags
     ```
 5. Bump the branch alias to the next minor version
-

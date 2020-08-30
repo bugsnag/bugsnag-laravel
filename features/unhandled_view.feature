@@ -11,7 +11,9 @@ Scenario: Unhandled exceptions are delivered from views
   And the request is a valid for the error reporting API
   And the request contained the api key "a35a2a72bd230ac0aa0f52715bbdc6aa"
   And the payload field "events" is an array with 1 element
-  And the exception "errorClass" equals "ErrorException"
+  And the exception "errorClass" matches one of the following:
+    | ErrorException                              |
+    | Facade\\Ignition\\Exceptions\\ViewException |
   And the exception "message" starts with "Unhandled exception (View: /app/resources/views/unhandledexception.blade.php)"
   And the event "metaData.request.httpMethod" equals "GET"
   And the event "app.type" equals "HTTP"
@@ -32,7 +34,9 @@ Scenario: Unhandled errors are delivered from views
   And the request is a valid for the error reporting API
   And the request contained the api key "a35a2a72bd230ac0aa0f52715bbdc6aa"
   And the payload field "events" is an array with 1 element
-  And the exception "errorClass" equals "ErrorException"
+  And the exception "errorClass" matches one of the following:
+    | ErrorException                              |
+    | Facade\\Ignition\\Exceptions\\ViewException |
   And the exception "message" equals "Call to undefined function foo() (View: /app/resources/views/unhandlederror.blade.php)"
   And the event "metaData.request.httpMethod" equals "GET"
   And the event "app.type" equals "HTTP"

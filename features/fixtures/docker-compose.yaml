@@ -26,3 +26,16 @@ services:
       - target: 8000
         published: 61258
     restart: "no"
+  laravel66:
+    build:
+      context: laravel66
+    environment:
+      - BUGSNAG_API_KEY
+      - BUGSNAG_ENDPOINT
+      - BUGSNAG_SESSION_ENDPOINT
+      - BUGSNAG_CAPTURE_SESSIONS
+    restart: "no"
+    ports:
+      - target: 8000
+        published: 61266
+    restart: "no"

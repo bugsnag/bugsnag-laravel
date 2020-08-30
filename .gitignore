@@ -5,3 +5,4 @@
 /.idea
 Gemfile.lock
 maze_output
+.phpunit.result.cache
