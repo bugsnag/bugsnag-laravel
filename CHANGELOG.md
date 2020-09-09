@@ -11,6 +11,10 @@ Changelog
   [#405](https://github.com/bugsnag/bugsnag-laravel/pull/405)
   [#407](https://github.com/bugsnag/bugsnag-laravel/pull/407)
 
+* Add method documentation to the `Bugsnag` facade
+  [danieldevsquad](https://github.com/danieldevsquad)
+  [#373](https://github.com/bugsnag/bugsnag-laravel/pull/373)
+
 ## 2.19.0 (2020-05-11)
 
 ### Enhancements
