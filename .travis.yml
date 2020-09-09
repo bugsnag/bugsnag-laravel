@@ -70,6 +70,12 @@ matrix:
       env: LARAVEL_VERSION=5.8.*
     - php: 7.2
       dist: bionic
+      env: LARAVEL_VERSION=6.0
+    - php: 7.2
+      dist: bionic
+      env: LARAVEL_VERSION=7.0
+    - php: 7.2
+      dist: bionic
       env: LARAVEL_VERSION=6.*
     - php: 7.2
       dist: bionic
@@ -92,22 +98,34 @@ matrix:
     - php: 7.3
       dist: bionic
       env: LARAVEL_VERSION=7.*
+    - php: 7.3
+      dist: bionic
+      env: LARAVEL_VERSION=8.*
     - php: 7.4
       dist: bionic
       env: LARAVEL_VERSION=5.8.*
+    - php: 7.4
+      dist: bionic
+      env: LARAVEL_VERSION=6.0
+    - php: 7.4
+      dist: bionic
+      env: LARAVEL_VERSION=7.0
     - php: 7.4
       dist: bionic
       env: LARAVEL_VERSION=6.*
     - php: 7.4
       dist: bionic
       env: LARAVEL_VERSION=7.*
+    - php: 7.4
+      dist: bionic
+      env: LARAVEL_VERSION=8.*
     - addons:
         apt:
           packages:
-          - docker-ce
+            - docker-ce
       sudo: required
       sevices:
-      - docker
+        - docker
       rvm: 2.4.1
       before_install: ruby --version
       install: bundle install
@@ -116,10 +134,10 @@ matrix:
     - addons:
         apt:
           packages:
-          - docker-ce
+            - docker-ce
       sudo: required
       sevices:
-      - docker
+        - docker
       rvm: 2.4.1
       before_install: ruby --version
       install: bundle install
@@ -128,23 +146,28 @@ matrix:
     - addons:
         apt:
           packages:
-          - docker-ce
+            - docker-ce
       sudo: required
       sevices:
-      - docker
+        - docker
       rvm: 2.4.1
       before_install: ruby --version
       install: bundle install
       script: bundle exec bugsnag-maze-runner -c
       env: LARAVEL_FIXTURE=laravel66
 
+cache:
+  directories:
+    - $HOME/.composer/cache
+
 before_install:
   - travis_retry composer require "laravel/framework:${LARAVEL_VERSION}" --no-update
   - echo "memory_limit=4G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
 install:
-  - if [[ $TRAVIS_PHP_VERSION == 5.5.9 ]]; then travis_retry composer update --no-interaction --prefer-source --prefer-lowest ; fi
-  - if [[ $TRAVIS_PHP_VERSION != 5.5.9 ]]; then travis_retry composer update --no-interaction --prefer-source ; fi
+  - if [[ $TRAVIS_PHP_VERSION == 5.5.9 ]]; then travis_retry composer update --no-interaction --prefer-dist --prefer-lowest ; fi
+  - if [[ $TRAVIS_PHP_VERSION != 5.5.9 ]]; then travis_retry composer update --no-interaction --prefer-dist ; fi
+  - composer show laravel/framework
 
 script:
   - make test
