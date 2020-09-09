@@ -1,6 +1,16 @@
 Changelog
 =========
 
+## TBD
+
+### Enhancements
+
+* Allow installation on Laravel 8 projects
+  [jwpage](https://github.com/jwpage)
+  [jdavidbakr](https://github.com/jdavidbakr)
+  [#405](https://github.com/bugsnag/bugsnag-laravel/pull/405)
+  [#407](https://github.com/bugsnag/bugsnag-laravel/pull/407)
+
 ## 2.19.0 (2020-05-11)
 
 ### Enhancements
