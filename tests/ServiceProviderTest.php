@@ -6,7 +6,6 @@ use Bugsnag\BugsnagLaravel\LaravelLogger;
 use Bugsnag\BugsnagLaravel\MultiLogger;
 use Bugsnag\BugsnagLaravel\Queue\Tracker;
 use Bugsnag\Client;
-use Bugsnag\Configuration;
 use Bugsnag\PsrLogger\BugsnagLogger;
 use Bugsnag\PsrLogger\MultiLogger as BaseMultiLogger;
 use GrahamCampbell\TestBenchCore\ServiceProviderTrait;
@@ -335,5 +334,132 @@ class ServiceProviderTest extends AbstractTestCase
         $app->shouldReceive('alias')->with('bugsnag.logger', $loggerClass)->once();
         $app->shouldReceive('alias')->with('bugsnag.multi', $multiLoggerClass)->once();
         $provider->register();
+    }
+
+    public function testFiltersUseDefaultsIfNull()
+    {
+        /** @var \Illuminate\Config\Repository $laravelConfig */
+        $laravelConfig = $this->app->config;
+        $bugsnagConfig = $laravelConfig->get('bugsnag');
+
+        $this->assertNull(
+            $bugsnagConfig['filters'],
+            "Expected the default configuration value for 'filters' to be null"
+        );
+
+        $client = $this->app->make(Client::class);
+        $this->assertInstanceOf(Client::class, $client);
+
+        /** @var Client $client */
+        $config = $client->getConfig();
+
+        $this->assertNotEmpty($config->getFilters());
+    }
+
+    public function testFiltersUseProvdedValueIfArray()
+    {
+        /** @var \Illuminate\Config\Repository $laravelConfig */
+        $laravelConfig = $this->app->config;
+        $bugsnagConfig = $laravelConfig->get('bugsnag');
+        $bugsnagConfig['filters'] = ['abc', 'xyz'];
+
+        $laravelConfig->set('bugsnag', $bugsnagConfig);
+
+        $client = $this->app->make(Client::class);
+        $this->assertInstanceOf(Client::class, $client);
+
+        /** @var Client $client */
+        $config = $client->getConfig();
+
+        $this->assertSame(['abc', 'xyz'], $config->getFilters());
+    }
+
+    public function testFiltersUseDefaultsIfNotProvidedAnArray()
+    {
+        /** @var \Illuminate\Config\Repository $laravelConfig */
+        $laravelConfig = $this->app->config;
+        $bugsnagConfig = $laravelConfig->get('bugsnag');
+
+        $bugsnagConfig['filters'] = 'filtering';
+
+        $laravelConfig->set('bugsnag', $bugsnagConfig);
+
+        $client = $this->app->make(Client::class);
+        $this->assertInstanceOf(Client::class, $client);
+
+        /** @var Client $client */
+        $config = $client->getConfig();
+
+        $this->assertNotEquals('filtering', $config->getFilters());
+        $this->assertNotEmpty($config->getFilters());
+    }
+
+    public function testFiltersUseEnvironmentVariableIfProvided()
+    {
+        try {
+            $this->setEnvironmentVariable('BUGSNAG_FILTERS', 'abc, xyz , hello,hi, h e y ');
+
+            // At this point we already have a Laravel app loaded so the environment
+            // variable won't be picked up. Refreshing the application forces
+            // the config to re-load so that 'BUGSNAG_FILTERS' is used
+            $this->refreshApplication();
+
+            $client = $this->app->make(Client::class);
+            $this->assertInstanceOf(Client::class, $client);
+
+            /** @var Client $client */
+            $config = $client->getConfig();
+
+            $this->assertSame(
+                ['abc', 'xyz', 'hello', 'hi', 'hey'],
+                $config->getFilters()
+            );
+        } finally {
+            $this->removeEnvironmentVariable('BUGSNAG_FILTERS');
+        }
+    }
+
+    /**
+     * Set the environment variable "$name" to the given value.
+     *
+     * @param string $name
+     * @param string $value
+     *
+     * @return void
+     */
+    private function setEnvironmentVariable($name, $value)
+    {
+        // Workaround a PHP 5 parser issue - '$app::VERSION' is valid but
+        // '$this->app::VERSION' is not
+        $app = $this->app;
+
+        // Laravel >= 5.8.0 uses "$_ENV" instead of "putenv" by default
+        if (version_compare($app::VERSION, '5.8.0', '>=')) {
+            $_ENV[$name] = $value;
+        } else {
+            putenv("{$name}={$value}");
+        }
+    }
+
+    /**
+     * Remove the environment variable "$name" from the environment.
+     *
+     * @param string $name
+     * @param string $value
+     *
+     * @return void
+     */
+    private function removeEnvironmentVariable($name)
+    {
+        // Workaround a PHP 5 parser issue - '$app::VERSION' is valid but
+        // '$this->app::VERSION' is not
+        $app = $this->app;
+
+        // Laravel >= 5.8.0 uses "$_ENV" instead of "putenv" by default
+        if (version_compare($app::VERSION, '5.8.0', '>=')) {
+            unset($_ENV[$name]);
+        } else {
+            putenv("{$name}");
+        }
     }
 }

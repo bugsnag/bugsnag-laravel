@@ -1,6 +1,11 @@
 Changelog
 =========
 
+## TBD
+
+* The default value for `filters` in `config/bugsnag.php` is now `null` instead of `['password']`. This allows the default filters from Bugsnag PHP to be used. Existing projects can make the same change to benefit from the new default filters in [Bugsnag PHP v3.23.0](https://github.com/bugsnag/bugsnag-php/releases/tag/v3.23.0)
+  [#413](https://github.com/bugsnag/bugsnag-laravel/pull/413)
+
 ## 2.20.0 (2020-09-09)
 
 ### Enhancements
@@ -69,7 +74,7 @@ Changelog
 
 ### Bug Fixes
 
-* Changed caching TTL to use DateTime instead. 
+* Changed caching TTL to use DateTime instead.
   [Mozammil Khodabacchas](https://github.com/mozammil)
   [#344](https://github.com/bugsnag/bugsnag-laravel/pull/344)
 * Update axiom dependency in laravel56 example to remove security vulnerability warning
