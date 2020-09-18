@@ -140,6 +140,10 @@ matrix:
       dist: bionic
       env: LARAVEL_VERSION=7.*
       stage: Test
+    - php: 7.3
+      dist: bionic
+      env: LARAVEL_VERSION=8.*
+      stage: Test
     - php: 7.4
       dist: bionic
       env: LARAVEL_VERSION=5.8.*
@@ -160,13 +164,17 @@ matrix:
       dist: bionic
       env: LARAVEL_VERSION=7.*
       stage: Canary
+    - php: 7.4
+      dist: bionic
+      env: LARAVEL_VERSION=8.*
+      stage: Canary
     - addons:
         apt:
           packages:
-          - docker-ce
+            - docker-ce
       sudo: required
       sevices:
-      - docker
+        - docker
       rvm: 2.4.1
       before_install: ruby --version
       install: bundle install
@@ -176,10 +184,10 @@ matrix:
     - addons:
         apt:
           packages:
-          - docker-ce
+            - docker-ce
       sudo: required
       sevices:
-      - docker
+        - docker
       rvm: 2.4.1
       before_install: ruby --version
       install: bundle install
@@ -189,10 +197,10 @@ matrix:
     - addons:
         apt:
           packages:
-          - docker-ce
+            - docker-ce
       sudo: required
       sevices:
-      - docker
+        - docker
       rvm: 2.4.1
       before_install: ruby --version
       install: bundle install
