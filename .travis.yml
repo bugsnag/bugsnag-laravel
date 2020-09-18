@@ -210,11 +210,11 @@ matrix:
 
     - php: 7.4
       dist: bionic
-      env: LARAVEL_VERSION='7.x-dev as 7'
+      env: LARAVEL_VERSION='8.x-dev as 8'
       stage: Unstable
     - php: 7.4
       dist: bionic
-      env: LARAVEL_VERSION='dev-master as 7'
+      env: LARAVEL_VERSION='dev-master as 8'
       stage: Unstable
     - addons:
         apt:
