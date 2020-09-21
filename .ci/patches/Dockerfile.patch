@@ -19,4 +19,4 @@ index 0000000..ecc7d44
 +
 +RUN php artisan key:generate
 +
-+CMD php artisan serve --port=8000 --host=0.0.0.0
++CMD php -S 0.0.0.0:8000 -t public/
