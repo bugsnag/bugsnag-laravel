@@ -6,7 +6,7 @@ stages:
   # TODO remove 'OR branch = test-against-upcoming-laravel-versions' when
   #      ready to merge
   - name: Unstable
-    if: type = cron OR branch = master OR branch = next OR branch = test-against-upcoming-laravel-versions
+    if: type = cron OR branch = test-against-upcoming-laravel-versions
   - Canary
   - Test
   - Maze Runner
