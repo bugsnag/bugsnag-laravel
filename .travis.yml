@@ -1,12 +1,9 @@
 language: php
 
 stages:
-  # Run tests against unstable Laravel versions for builds triggered by a cron,
-  # or builds on the master & next branches
-  # TODO remove 'OR branch = test-against-upcoming-laravel-versions' when
-  #      ready to merge
+  # Run tests against unstable Laravel versions for builds triggered by a cron
   - name: Unstable
-    if: type = cron OR branch = test-against-upcoming-laravel-versions
+    if: type = cron
   - Canary
   - Test
   - Maze Runner
