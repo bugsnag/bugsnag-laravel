@@ -32,7 +32,7 @@ Scenario: Unhandled errors are delivered from controllers
   And the request is a valid for the error reporting API
   And the request contained the api key "a35a2a72bd230ac0aa0f52715bbdc6aa"
   And the payload field "events" is an array with 1 element
-  And the exception "errorClass" ends with "FatalThrowableError"
+  And the exception "errorClass" ends with "Error"
   And the exception "message" starts with "Call to undefined function"
   And the exception "message" ends with "foo()"
   And the event "metaData.request.httpMethod" equals "GET"

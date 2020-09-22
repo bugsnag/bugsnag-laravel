@@ -1,124 +1,170 @@
 language: php
 
+stages:
+  # Run tests against unstable Laravel versions for builds triggered by a cron
+  - name: Unstable
+    if: type = cron
+  - Canary
+  - Test
+  - Maze Runner
+
 matrix:
   include:
     - php: 5.5.9
       dist: trusty
       env: LARAVEL_VERSION=5.1.*
+      stage: Canary
     - php: 5.5
       dist: trusty
       env: LARAVEL_VERSION=5.1.*
+      stage: Canary
     - php: 5.5
       dist: trusty
       env: LARAVEL_VERSION=5.2.*
+      stage: Canary
     - php: 5.6
       dist: xenial
       env: LARAVEL_VERSION=5.1.*
+      stage: Test
     - php: 5.6
       dist: xenial
       env: LARAVEL_VERSION=5.2.*
+      stage: Test
     - php: 5.6
       dist: xenial
       env: LARAVEL_VERSION=5.3.*
+      stage: Canary
     - php: 5.6
       dist: xenial
       env: LARAVEL_VERSION=5.4.*
+      stage: Canary
     - php: 7.0
       dist: xenial
       env: LARAVEL_VERSION=5.1.*
+      stage: Test
     - php: 7.0
       dist: xenial
       env: LARAVEL_VERSION=5.2.*
+      stage: Test
     - php: 7.0
       dist: xenial
       env: LARAVEL_VERSION=5.3.*
     - php: 7.0
       dist: xenial
       env: LARAVEL_VERSION=5.4.*
+      stage: Test
     - php: 7.0
       dist: xenial
       env: LARAVEL_VERSION=5.5.*
+      stage: Canary
     - php: 7.1
       dist: bionic
       env: LARAVEL_VERSION=5.3.*
+      stage: Test
     - php: 7.1
       dist: bionic
       env: LARAVEL_VERSION=5.4.*
+      stage: Test
     - php: 7.1
       dist: bionic
       env: LARAVEL_VERSION=5.5.*
+      stage: Test
     - php: 7.1
       dist: bionic
       env: LARAVEL_VERSION=5.6.*
+      stage: Canary
     - php: 7.1
       dist: bionic
       env: LARAVEL_VERSION=5.7.*
+      stage: Canary
     - php: 7.1
       dist: bionic
       env: LARAVEL_VERSION=5.8.*
+      stage: Canary
     - php: 7.2
       dist: bionic
       env: LARAVEL_VERSION=5.5.*
+      stage: Test
     - php: 7.2
       dist: bionic
       env: LARAVEL_VERSION=5.6.*
+      stage: Test
     - php: 7.2
       dist: bionic
       env: LARAVEL_VERSION=5.7.*
+      stage: Test
     - php: 7.2
       dist: bionic
       env: LARAVEL_VERSION=5.8.*
+      stage: Test
     - php: 7.2
       dist: bionic
       env: LARAVEL_VERSION=6.0
+      stage: Canary
     - php: 7.2
       dist: bionic
       env: LARAVEL_VERSION=7.0
+      stage: Canary
     - php: 7.2
       dist: bionic
       env: LARAVEL_VERSION=6.*
+      stage: Test
     - php: 7.2
       dist: bionic
       env: LARAVEL_VERSION=7.*
+      stage: Test
     - php: 7.3
       dist: bionic
       env: LARAVEL_VERSION=5.5.*
+      stage: Test
     - php: 7.3
       dist: bionic
       env: LARAVEL_VERSION=5.6.*
+      stage: Test
     - php: 7.3
       dist: bionic
       env: LARAVEL_VERSION=5.7.*
+      stage: Test
     - php: 7.3
       dist: bionic
       env: LARAVEL_VERSION=5.8.*
+      stage: Test
     - php: 7.3
       dist: bionic
       env: LARAVEL_VERSION=6.*
+      stage: Test
     - php: 7.3
       dist: bionic
       env: LARAVEL_VERSION=7.*
+      stage: Test
     - php: 7.3
       dist: bionic
       env: LARAVEL_VERSION=8.*
+      stage: Test
     - php: 7.4
       dist: bionic
       env: LARAVEL_VERSION=5.8.*
+      stage: Test
     - php: 7.4
       dist: bionic
       env: LARAVEL_VERSION=6.0
+      stage: Test
     - php: 7.4
       dist: bionic
       env: LARAVEL_VERSION=7.0
+      stage: Test
     - php: 7.4
       dist: bionic
       env: LARAVEL_VERSION=6.*
+      stage: Canary
     - php: 7.4
       dist: bionic
       env: LARAVEL_VERSION=7.*
+      stage: Canary
     - php: 7.4
       dist: bionic
       env: LARAVEL_VERSION=8.*
+      stage: Canary
     - addons:
         apt:
           packages:
@@ -131,6 +177,7 @@ matrix:
       install: bundle install
       script: bundle exec bugsnag-maze-runner -c
       env: LARAVEL_FIXTURE=laravel56
+      stage: Maze Runner
     - addons:
         apt:
           packages:
@@ -143,6 +190,7 @@ matrix:
       install: bundle install
       script: bundle exec bugsnag-maze-runner -c
       env: LARAVEL_FIXTURE=laravel58
+      stage: Maze Runner
     - addons:
         apt:
           packages:
@@ -155,19 +203,46 @@ matrix:
       install: bundle install
       script: bundle exec bugsnag-maze-runner -c
       env: LARAVEL_FIXTURE=laravel66
+      stage: Maze Runner
+
+    - php: 7.4
+      dist: bionic
+      env: LARAVEL_VERSION='8.x-dev as 8'
+      stage: Unstable
+    - php: 7.4
+      dist: bionic
+      env: LARAVEL_VERSION='dev-master as 8'
+      stage: Unstable
+    - addons:
+        apt:
+          packages:
+          - docker-ce
+      sudo: required
+      sevices:
+      - docker
+      rvm: 2.4.1
+      php: 7.4
+      before_install: ruby --version
+      install:
+        - bundle install
+        - ./.ci/setup-laravel-dev-fixture.sh
+      script: bundle exec bugsnag-maze-runner -c
+      env: LARAVEL_FIXTURE=laravel-latest
+      stage: Unstable
 
 cache:
   directories:
     - $HOME/.composer/cache
 
 before_install:
-  - travis_retry composer require "laravel/framework:${LARAVEL_VERSION}" --no-update
   - echo "memory_limit=4G" >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
 install:
+  - composer require "laravel/framework:${LARAVEL_VERSION}" --no-update
   - if [[ $TRAVIS_PHP_VERSION == 5.5.9 ]]; then travis_retry composer update --no-interaction --prefer-dist --prefer-lowest ; fi
   - if [[ $TRAVIS_PHP_VERSION != 5.5.9 ]]; then travis_retry composer update --no-interaction --prefer-dist ; fi
-  - composer show laravel/framework
+  # Show which versions of our direct dependencies we're using
+  - composer show --direct
 
 script:
   - make test

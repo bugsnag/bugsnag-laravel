@@ -1,0 +1,50 @@
+diff --git a/routes/web.php b/routes/web.php
+index b130397..4b89d73 100644
+--- a/routes/web.php
++++ b/routes/web.php
+@@ -1,5 +1,6 @@
+ <?php
+
++use App\Http\Controllers\TestController;
+ use Illuminate\Support\Facades\Route;
+
+ /*
+@@ -16,3 +17,38 @@ use Illuminate\Support\Facades\Route;
+ Route::get('/', function () {
+     return view('welcome');
+ });
++
++Route::get('/unhandled_exception', function () {
++    throw new Exception('Crashing exception!');
++});
++
++Route::get('/unhandled_error', function () {
++    call_foo();
++});
++
++Route::get('/handled_exception', function () {
++    Bugsnag::notifyException(new Exception('Handled exception!'));
++});
++
++Route::get('/handled_error', function () {
++    Bugsnag::notifyError('Handled Error', 'This is a handled error');
++});
++
++Route::get('/unhandled_controller_exception', [TestController::class, 'unhandledException']);
++Route::get('/unhandled_controller_error', [TestController::class, 'unhandledError']);
++Route::get('/handled_controller_exception', [TestController::class, 'handledException']);
++Route::get('/handled_controller_error', [TestController::class, 'handledError']);
++
++Route::get('/unhandled_middleware_exception', function () {
++})->middleware('unMidEx');
++Route::get('/unhandled_middleware_error', function () {
++})->middleware('unMidErr');
++Route::get('/handled_middleware_exception', function () {
++})->middleware('hanMidEx');
++Route::get('/handled_middleware_error', function () {
++})->middleware('hanMidErr');
++
++Route::view('/unhandled_view_exception', 'unhandledexception');
++Route::view('/unhandled_view_error', 'unhandlederror');
++Route::view('/handled_view_exception', 'handledexception');
++Route::view('/handled_view_error', 'handlederror');

@@ -1,0 +1,20 @@
+diff --git a/config/logging.php b/config/logging.php
+index 088c204..107a3c7 100644
+--- a/config/logging.php
++++ b/config/logging.php
+@@ -37,10 +37,14 @@ return [
+     'channels' => [
+         'stack' => [
+             'driver' => 'stack',
+-            'channels' => ['single'],
++            'channels' => ['single', 'bugsnag'],
+             'ignore_exceptions' => false,
+         ],
+ 
++        'bugsnag' => [
++            'driver' => 'bugsnag'
++        ],
++
+         'single' => [
+             'driver' => 'single',
+             'path' => storage_path('logs/laravel.log'),
