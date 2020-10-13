@@ -14,13 +14,13 @@ end
 
 When(/^I wait for the app to respond on the appropriate port$/) do
   steps %{
-    When I wait for the app to respond on port "#{getLaravelPort}"
+    When I wait for the app to respond on port "#{fixture_port}"
   }
 end
 
 When("I navigate to the route {string}") do |route|
   steps %{
-    When I navigate to the route "#{route}" on port "#{getLaravelPort}"
+    When I navigate to the route "#{route}" on port "#{fixture_port}"
   }
 end
 
@@ -29,13 +29,12 @@ Then("the exception {string} matches one of the following:") do |path, values|
   assert_includes(values.raw.flatten, desired_value)
 end
 
-def getLaravelPort
+def fixture_port
   case ENV['LARAVEL_FIXTURE']
-  when 'laravel66'
-    61266
-  when 'laravel58'
-    61258
-  else
-    61256
+  when 'laravel-latest' then 61299
+  when 'laravel66' then 61266
+  when 'laravel58' then 61258
+  when 'laravel56' then 61256
+  else raise "Unknown laravel fixture '#{ENV['LARAVEL_FIXTURE']}'!"
   end
 end
