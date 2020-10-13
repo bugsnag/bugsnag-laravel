@@ -41,6 +41,9 @@
             "dev-master": "2.18-dev"
         }
     },
+    "scripts": {
+        "test": "phpunit"
+    },
     "minimum-stability": "dev",
     "prefer-stable": true
 }
