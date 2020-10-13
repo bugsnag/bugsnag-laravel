@@ -7,10 +7,10 @@ update: ## Update the dependencies
 	composer update
 
 test: ## Run the test suite
-	vendor/bin/phpunit
+	composer test
 
 coverage: ## Record the test coverage
-	vendor/bin/phpunit --coverage-html=build/coverage
+	composer test -- --coverage-html=build/coverage
 
 coverage-show: ## Show the test coverage
 	view-coverage
