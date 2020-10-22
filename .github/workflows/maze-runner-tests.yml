@@ -1,0 +1,35 @@
+name: Maze Runner tests
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: [7.4]
+        laravel-fixture: [laravel56, laravel58, laravel66]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: install PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php-version }}
+
+    - name: install Ruby
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 2.7
+
+    - run: gem install bundler
+
+    - run: bundle install
+
+    - run: LARAVEL_FIXTURE=${{ matrix.laravel-fixture }} bundle exec bugsnag-maze-runner -c
