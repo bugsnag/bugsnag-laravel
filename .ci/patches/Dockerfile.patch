@@ -3,8 +3,9 @@ new file mode 100644
 index 0000000..ecc7d44
 --- /dev/null
 +++ b/Dockerfile
-@@ -0,0 +1,16 @@
-+FROM php:latest
+@@ -0,0 +1,17 @@
++ARG PHP_VERSION
++FROM php:$PHP_VERSION
 +
 +RUN apt-get update && \
 +  apt-get install -y --no-install-recommends \
