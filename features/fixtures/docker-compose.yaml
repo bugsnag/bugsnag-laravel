@@ -3,6 +3,8 @@ services:
   laravel56:
     build:
       context: laravel56
+      args:
+        - PHP_VERSION
     environment:
       - BUGSNAG_API_KEY
       - BUGSNAG_ENDPOINT
@@ -13,9 +15,12 @@ services:
       - target: 8000
         published: 61256
     restart: "no"
+
   laravel58:
     build:
       context: laravel58
+      args:
+        - PHP_VERSION
     environment:
       - BUGSNAG_API_KEY
       - BUGSNAG_ENDPOINT
@@ -26,9 +31,12 @@ services:
       - target: 8000
         published: 61258
     restart: "no"
+
   laravel66:
     build:
       context: laravel66
+      args:
+        - PHP_VERSION
     environment:
       - BUGSNAG_API_KEY
       - BUGSNAG_ENDPOINT
@@ -43,6 +51,8 @@ services:
   laravel-latest:
     build:
       context: laravel-latest
+      args:
+        - PHP_VERSION
     environment:
       - BUGSNAG_API_KEY
       - BUGSNAG_ENDPOINT

@@ -42,11 +42,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: install PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: ${{ matrix.php-version }}
-
     - name: install Ruby
       uses: actions/setup-ruby@v1
       with:
@@ -58,4 +53,4 @@ jobs:
 
     - run: ./.ci/setup-laravel-dev-fixture.sh
 
-    - run: LARAVEL_FIXTURE=${{ matrix.laravel-fixture }} bundle exec bugsnag-maze-runner -c
+    - run: PHP_VERSION=${{ matrix.php-version }} LARAVEL_FIXTURE=${{ matrix.laravel-fixture }} bundle exec bugsnag-maze-runner -c
