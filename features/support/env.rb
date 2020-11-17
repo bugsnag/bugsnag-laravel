@@ -17,14 +17,16 @@ end
 
 # Copy current requirements into fixture requirements
 File.open('composer.json', 'r') do |source|
-  parsed_composer = JSON.parse source.read
+  parsed_composer = JSON.parse(source.read)
   requirements = parsed_composer["require"]
+
   Dir.glob(FIXTURE_DIR + '/laravel*').each do |directory|
     next if directory.end_with?('laravel-latest')
 
     File.open(directory + '/composer.json.template', 'r') do |template|
       parsed_template = JSON.parse template.read
       parsed_template["repositories"][0]["package"]["require"] = requirements
+
       File.open(directory + '/composer.json', 'w') do |target|
         target.write(JSON.pretty_generate(parsed_template))
       end
@@ -32,9 +34,9 @@ File.open('composer.json', 'r') do |source|
   end
 end
 
-
 Before do
-  find_default_docker_compose
+  ENV["BUGSNAG_API_KEY"] = $api_key
+  ENV["BUGSNAG_ENDPOINT"] = "http://#{current_ip}:9339"
 end
 
 at_exit do

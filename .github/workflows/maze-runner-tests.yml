@@ -18,6 +18,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Install libcurl4-openssl-dev
+      run: sudo apt-get install libcurl4-openssl-dev
+
     - name: install Ruby
       uses: actions/setup-ruby@v1
       with:
@@ -27,4 +30,4 @@ jobs:
 
     - run: bundle install
 
-    - run: PHP_VERSION=${{ matrix.php-version }} LARAVEL_FIXTURE=${{ matrix.laravel-fixture }} bundle exec bugsnag-maze-runner -c
+    - run: PHP_VERSION=${{ matrix.php-version }} LARAVEL_FIXTURE=${{ matrix.laravel-fixture }} bundle exec bugsnag-maze-runner

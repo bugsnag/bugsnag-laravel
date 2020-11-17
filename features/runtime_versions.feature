@@ -1,45 +1,30 @@
 Feature: Reporting runtime versions
 
-Background:
-  Given I set environment variable "BUGSNAG_API_KEY" to "a35a2a72bd230ac0aa0f52715bbdc6aa"
-  And I configure the bugsnag endpoint
-
 Scenario: report for handled event contains runtime version information
-  Given I set environment variable "BUGSNAG_API_KEY" to "a35a2a72bd230ac0aa0f52715bbdc6aa"
-  And I configure the bugsnag endpoint
-  And I start the laravel fixture
-  And I wait for the app to respond on the appropriate port
+  Given I start the laravel fixture
   When I navigate to the route "/handled_exception"
-  And I wait for 1 second
-  Then I should receive a request
-  And the request is a valid for the error reporting API
+  Then I wait to receive a request
+  And the request is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
   And the event "unhandled" is false
   And the event "device.runtimeVersions.php" matches "(\d+\.){2}\d+"
   And the event "device.runtimeVersions.laravel" matches "((\d+\.){2}\d+|\d\.x-dev)"
 
 Scenario: report for unhandled event contains runtime version information
-  Given I set environment variable "BUGSNAG_API_KEY" to "a35a2a72bd230ac0aa0f52715bbdc6aa"
-  And I configure the bugsnag endpoint
-  And I start the laravel fixture
-  And I wait for the app to respond on the appropriate port
+  Given I start the laravel fixture
   When I navigate to the route "/unhandled_exception"
-  And I wait for 1 second
-  Then I should receive a request
-  And the request is a valid for the error reporting API
+  Then I wait to receive a request
+  And the request is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
   And the event "unhandled" is true
   And the event "device.runtimeVersions.php" matches "(\d+\.){2}\d+"
   And the event "device.runtimeVersions.laravel" matches "((\d+\.){2}\d+|\d\.x-dev)"
 
 Scenario: session payload contains runtime version information
-  Given I set environment variable "BUGSNAG_API_KEY" to "a35a2a72bd230ac0aa0f52715bbdc6aa"
-  And I configure the bugsnag endpoint
-  And I enable session tracking
+  Given I enable session tracking
   And I start the laravel fixture
-  And I wait for the app to respond on the appropriate port
   When I navigate to the route "/unhandled_controller_exception"
-  And I wait for 1 second
-  Then I should receive 2 requests
-  And the request 0 is valid for the session tracking API
-  And the payload has a valid sessions array for request 0
-  And the payload field "device.runtimeVersions.php" matches the regex "(\d+\.){2}\d+"
-  And the payload field "device.runtimeVersions.laravel" matches the regex "((\d+\.){2}\d+|\d\.x-dev)"
+  And I wait to receive 2 requests
+  Then the request is valid for the session reporting API version "1.0" for the "Bugsnag Laravel" notifier
+  When I discard the oldest request
+  Then the request is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
+  And the payload field "events.0.session.events.unhandled" equals 1
+  And the payload field "events.0.session.events.handled" equals 0
