@@ -213,6 +213,10 @@ class BugsnagServiceProvider extends ServiceProvider
                 $client->setFilters($config['filters']);
             }
 
+            if (isset($config['endpoint'])) {
+                $client->setNotifyEndpoint($config['endpoint']);
+            }
+
             if ($this->isSessionTrackingAllowed($config)) {
                 $endpoint = isset($config['session_endpoint']) ? $config['session_endpoint'] : null;
                 $this->setupSessionTracking($client, $endpoint, $this->app->events);
@@ -281,7 +285,7 @@ class BugsnagServiceProvider extends ServiceProvider
             $options['proxy'] = $config['proxy'];
         }
 
-        return Client::makeGuzzle(isset($config['endpoint']) ? $config['endpoint'] : null, $options);
+        return Client::makeGuzzle(null, $options);
     }
 
     /**
