@@ -24,7 +24,11 @@ Scenario: session payload contains runtime version information
   When I navigate to the route "/unhandled_controller_exception"
   And I wait to receive 2 requests
   Then the request is valid for the session reporting API version "1.0" for the "Bugsnag Laravel" notifier
+  And the payload field "device.runtimeVersions.php" matches the regex "(\d+\.){2}\d+"
+  And the payload field "device.runtimeVersions.laravel" matches the regex "((\d+\.){2}\d+|\d\.x-dev)"
   When I discard the oldest request
   Then the request is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
   And the payload field "events.0.session.events.unhandled" equals 1
   And the payload field "events.0.session.events.handled" equals 0
+  And the event "device.runtimeVersions.php" matches "(\d+\.){2}\d+"
+  And the event "device.runtimeVersions.laravel" matches "((\d+\.){2}\d+|\d\.x-dev)"
