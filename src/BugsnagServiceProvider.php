@@ -266,6 +266,11 @@ class BugsnagServiceProvider extends ServiceProvider
      */
     protected function getGuzzle(array $config)
     {
+        // If a 'bugsnag.guzzle' instance exists in the container, use it
+        if ($this->app->bound('bugsnag.guzzle')) {
+            return $this->app->make('bugsnag.guzzle');
+        }
+
         $options = [];
 
         if (isset($config['proxy']) && $config['proxy']) {
