@@ -14,7 +14,6 @@ services:
     ports:
       - target: 8000
         published: 61256
-    restart: "no"
 
   laravel58:
     build:
@@ -30,7 +29,6 @@ services:
     ports:
       - target: 8000
         published: 61258
-    restart: "no"
 
   laravel66:
     build:
@@ -46,7 +44,6 @@ services:
     ports:
       - target: 8000
         published: 61266
-    restart: "no"
 
   laravel-latest:
     build:
@@ -62,4 +59,3 @@ services:
     ports:
       - target: 8000
         published: 61299
-    restart: "no"

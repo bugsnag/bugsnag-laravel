@@ -1,16 +1,10 @@
 Feature: Unhandled exceptions for routing support
 
 Scenario: Unhandled exceptions are delivered from routing
-  Given I set environment variable "BUGSNAG_API_KEY" to "a35a2a72bd230ac0aa0f52715bbdc6aa"
-  And I configure the bugsnag endpoint
-  And I start the laravel fixture
-  And I wait for the app to respond on the appropriate port
+  Given I start the laravel fixture
   When I navigate to the route "/unhandled_exception"
-  And I wait for 1 second
-  Then I should receive a request
-  And the request is a valid for the error reporting API
-  And the request contained the api key "a35a2a72bd230ac0aa0f52715bbdc6aa"
-  And the payload field "events" is an array with 1 element
+  Then I wait to receive a request
+  And the request is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
   And the exception "errorClass" equals "Exception"
   And the exception "message" starts with "Crashing exception!"
   And the event "metaData.request.httpMethod" equals "GET"
@@ -22,16 +16,10 @@ Scenario: Unhandled exceptions are delivered from routing
   And the event "severityReason.attributes.framework" equals "Laravel"
 
 Scenario: Unhandled errors are delivered from routing
-  Given I set environment variable "BUGSNAG_API_KEY" to "a35a2a72bd230ac0aa0f52715bbdc6aa"
-  And I configure the bugsnag endpoint
-  And I start the laravel fixture
-  And I wait for the app to respond on the appropriate port
+  Given I start the laravel fixture
   When I navigate to the route "/unhandled_error"
-  And I wait for 1 second
-  Then I should receive a request
-  And the request is a valid for the error reporting API
-  And the request contained the api key "a35a2a72bd230ac0aa0f52715bbdc6aa"
-  And the payload field "events" is an array with 1 element
+  Then I wait to receive a request
+  And the request is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
   And the exception "errorClass" ends with "Error"
   And the exception "message" equals "Call to undefined function call_foo()"
   And the event "metaData.request.httpMethod" equals "GET"
@@ -43,16 +31,12 @@ Scenario: Unhandled errors are delivered from routing
   And the event "severityReason.attributes.framework" equals "Laravel"
 
 Scenario: Sessions are correct in unhandled exceptions from routing
-  Given I set environment variable "BUGSNAG_API_KEY" to "a35a2a72bd230ac0aa0f52715bbdc6aa"
-  And I configure the bugsnag endpoint
-  And I enable session tracking
+  Given I enable session tracking
   And I start the laravel fixture
-  And I wait for the app to respond on the appropriate port
   When I navigate to the route "/unhandled_exception"
-  And I wait for 1 second
-  Then I should receive 2 requests
-  And the request 0 is valid for the session tracking API
-  And the request 1 is a valid for the error reporting API
-  And the payload has a valid sessions array for request 0
-  And the payload field "events.0.session.events.unhandled" equals 1 for request 1
-  And the payload field "events.0.session.events.handled" equals 0 for request 1
+  And I wait to receive 2 requests
+  Then the request is valid for the session reporting API version "1.0" for the "Bugsnag Laravel" notifier
+  When I discard the oldest request
+  Then the request is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
+  And the payload field "events.0.session.events.unhandled" equals 1
+  And the payload field "events.0.session.events.handled" equals 0

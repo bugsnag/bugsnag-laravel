@@ -11,7 +11,7 @@
         {
             "type": "package",
             "package": {
-                "name": "bugsnag-laravel",
+                "name": "bugsnag/bugsnag-laravel",
                 "version": "4.0",
                 "dist": {
                     "url": "./bugsnag-laravel.zip",
@@ -28,7 +28,7 @@
     ],
     "require": {
         "php": "^7.2",
-        "bugsnag/bugsnag-laravel": "^2.0",
+        "bugsnag/bugsnag-laravel": "4.0",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.2",
         "laravel/tinker": "^2.0"
