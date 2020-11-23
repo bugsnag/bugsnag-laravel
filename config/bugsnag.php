@@ -305,4 +305,16 @@ return [
 
     'build_endpoint' => env('BUGSNAG_BUILD_ENDPOINT'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Override the Bugsnag\Client class
+    |--------------------------------------------------------------------------
+    |
+    | Sets a full class name to use as the Bugsnag client
+    |
+    | e.g. \MyCompany\Bugsnag\Client
+    |
+    */
+
+    'client_class' => env('BUGSNAG_CLIENT_CLASS'),
 ];

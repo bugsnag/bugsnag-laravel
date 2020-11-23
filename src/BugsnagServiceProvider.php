@@ -12,7 +12,9 @@ use Bugsnag\Configuration;
 use Bugsnag\PsrLogger\BugsnagLogger;
 use Bugsnag\PsrLogger\MultiLogger as BaseMultiLogger;
 use Bugsnag\Report;
+use Bugsnag\Request\ResolverInterface;
 use DateTime;
+use GuzzleHttp\ClientInterface;
 use Illuminate\Auth\GenericUser;
 use Illuminate\Contracts\Container\Container;
 use Illuminate\Contracts\Events\Dispatcher;
@@ -183,7 +185,8 @@ class BugsnagServiceProvider extends ServiceProvider
     {
         $this->app->singleton('bugsnag', function (Container $app) {
             $config = $app->config->get('bugsnag');
-            $client = new Client(new Configuration($config['api_key']), new LaravelResolver($app), $this->getGuzzle($config));
+
+            $client = $this->getClient(new Configuration($config['api_key']), new LaravelResolver($app), $this->getGuzzle($config));
 
             $this->setupCallbacks($client, $app, $config);
             $this->setupPaths($client, $app, $config);
@@ -200,10 +203,10 @@ class BugsnagServiceProvider extends ServiceProvider
             $client->getPipeline()->insertBefore(new UnhandledState(), 'Bugsnag\\Middleware\\SessionData');
 
             $client->setNotifier([
-                'name' => 'Bugsnag Laravel',
-                'version' => static::VERSION,
-                'url' => 'https://github.com/bugsnag/bugsnag-laravel',
-            ]);
+                                     'name' => 'Bugsnag Laravel',
+                                     'version' => static::VERSION,
+                                     'url' => 'https://github.com/bugsnag/bugsnag-laravel',
+                                 ]);
 
             if (isset($config['notify_release_stages']) && is_array($config['notify_release_stages'])) {
                 $client->setNotifyReleaseStages($config['notify_release_stages']);
@@ -262,7 +265,7 @@ class BugsnagServiceProvider extends ServiceProvider
      *
      * @param array $config
      *
-     * @return \GuzzleHttp\ClientInterface
+     * @return ClientInterface
      */
     protected function getGuzzle(array $config)
     {
@@ -423,8 +426,8 @@ class BugsnagServiceProvider extends ServiceProvider
         // Session support removed in Lumen 5.3 - only setup automatic session
         // tracking if the session function is avaiable
         return isset($config['auto_capture_sessions'])
-               && $config['auto_capture_sessions']
-               && function_exists('session');
+            && $config['auto_capture_sessions']
+            && function_exists('session');
     }
 
     /**
@@ -436,4 +439,26 @@ class BugsnagServiceProvider extends ServiceProvider
     {
         return ['bugsnag', 'bugsnag.tracker', 'bugsnag.logger', 'bugsnag.multi'];
     }
+
+    /**
+     * Get an instance of the Bugsnag client
+     *
+     * @param Configuration $configuration
+     * @param ResolverInterface $resolver
+     * @param ClientInterface   $guzzle
+     *
+     * @return Client
+     */
+    protected function getClient(Configuration $configuration, ResolverInterface $resolver, ClientInterface $guzzle)
+    {
+        /** @var Client $clientClass */
+        $clientClass = config('bugsnag.client_class');
+
+        if (!class_exists($clientClass)) {
+            $clientClass = Client::class;
+        }
+
+        return new $clientClass($configuration, $resolver, $guzzle);
+    }
 }
+
