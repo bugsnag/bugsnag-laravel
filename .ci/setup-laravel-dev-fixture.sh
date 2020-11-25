@@ -13,7 +13,8 @@ composer create-project laravel/laravel laravel-latest --no-dev
 cd laravel-latest
 
 composer require 'laravel/framework:dev-master as 8' --update-with-dependencies --no-update
-composer require bugsnag/bugsnag-laravel --no-update
+composer config repositories.bugsnag-laravel '{ "type": "path", "url": "../../../", "options": { "symlink": false } }'
+composer require bugsnag/bugsnag-laravel '*' --no-update
 
 composer update --no-dev
 

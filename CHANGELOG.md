@@ -1,6 +1,13 @@
 Changelog
 =========
 
+## 2.21.0 (2020-11-25)
+
+### Enhancements
+
+* Use Guzzle instance with the `bugsnag.guzzle` alias, if one exists. If `bugsnag.guzzle` does not exist, a new Guzzle instance will be created as before
+  [#420](https://github.com/bugsnag/bugsnag-laravel/pull/420)
+
 ## 2.20.1 (2020-10-13)
 
 * The default value for `filters` in `config/bugsnag.php` is now `null` instead of `['password']`. This allows the default filters from Bugsnag PHP to be used. Existing projects can make the same change to benefit from the new default filters in [Bugsnag PHP v3.23.0](https://github.com/bugsnag/bugsnag-php/releases/tag/v3.23.0)

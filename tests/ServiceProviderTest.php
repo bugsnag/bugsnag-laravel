@@ -419,6 +419,27 @@ class ServiceProviderTest extends AbstractTestCase
         }
     }
 
+    public function testItUsesGuzzleInstanceFromTheContainer()
+    {
+        $this->app->singleton('bugsnag.guzzle', function () {
+            /** @var \Mockery\MockInterface $mock */
+            $mock = Mockery::mock(\GuzzleHttp\ClientInterface::class);
+            $mock->shouldIgnoreMissing();
+
+            return $mock;
+        });
+
+        $expected = $this->app->make('bugsnag.guzzle');
+        $this->assertInstanceOf(\GuzzleHttp\ClientInterface::class, $expected);
+
+        $client = $this->app->make(Client::class);
+
+        $httpClient = $this->getProperty($client, 'http');
+        $actual = $this->getProperty($httpClient, 'guzzle');
+
+        $this->assertSame($expected, $actual);
+    }
+
     /**
      * Set the environment variable "$name" to the given value.
      *
