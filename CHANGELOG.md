@@ -5,7 +5,7 @@ Changelog
 
 ### Enhancements
 
-* Use Guzzle instance with the `bugsnag.guzzle` alias, if one exists. If no`bugsnag.guzzle` does not exist, a new Guzzle instance will be created as before
+* Use Guzzle instance with the `bugsnag.guzzle` alias, if one exists. If `bugsnag.guzzle` does not exist, a new Guzzle instance will be created as before
   [#420](https://github.com/bugsnag/bugsnag-laravel/pull/420)
 
 ## 2.20.1 (2020-10-13)
