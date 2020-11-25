@@ -1,7 +1,7 @@
 Changelog
 =========
 
-## TBD
+## 2.21.0 (2020-11-25)
 
 ### Enhancements
 
