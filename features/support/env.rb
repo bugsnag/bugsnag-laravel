@@ -42,3 +42,7 @@ end
 at_exit do
   FileUtils.rm_rf(VENDORED_LIB)
 end
+
+AfterConfiguration do |_config|
+  MazeRunner.config.enforce_bugsnag_integrity = false if MazeRunner.config.respond_to? :enforce_bugsnag_integrity=
+end
