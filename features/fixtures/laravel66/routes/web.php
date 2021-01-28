@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -49,3 +51,43 @@ Route::view('/unhandled_view_exception', 'unhandledexception');
 Route::view('/unhandled_view_error', 'unhandlederror');
 Route::view('/handled_view_exception', 'handledexception');
 Route::view('/handled_view_error', 'handlederror');
+
+/**
+ * Return some diagnostics if an OOM did not happen when it should have.
+ *
+ * @return string
+ */
+function noOomResponse() {
+    $limit = ini_get('memory_limit');
+    $memory = var_export(memory_get_usage(), true);
+    $peak = var_export(memory_get_peak_usage(), true);
+
+    return <<<HTML
+        No OOM!
+        {$limit}
+        {$memory}
+        {$peak}
+    HTML;
+}
+
+Route::get('/oom/big', function () {
+    $a = str_repeat('a', 2147483647);
+
+    return noOomResponse();
+});
+
+Route::get('/oom/small', function () {
+    ini_set('memory_limit', memory_get_usage() + (1024 * 1024 * 5));
+    ini_set('display_errors', true);
+
+    $i = 0;
+
+    gc_disable();
+
+    while ($i++ < 12345678) {
+        $a = new stdClass;
+        $a->b = $a;
+    }
+
+    return noOomResponse();
+});
