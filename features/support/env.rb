@@ -37,6 +37,7 @@ end
 Before do
   ENV["BUGSNAG_API_KEY"] = $api_key
   ENV["BUGSNAG_ENDPOINT"] = "http://#{current_ip}:9339"
+  Laravel.reset!
 end
 
 at_exit do
