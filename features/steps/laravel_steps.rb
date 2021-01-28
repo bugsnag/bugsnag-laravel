@@ -22,6 +22,15 @@ When("I navigate to the route {string}") do |route|
   Laravel.navigate_to(route)
 end
 
+Then("the Laravel response matches {string}") do |regex|
+  wait = Maze::Wait.new(timeout: 10)
+  success = wait.until { Laravel.last_response != nil }
+
+  raise 'No response from the Laravel fixture!' unless success
+
+  assert_match(Regexp.new(regex), Laravel.last_response)
+end
+
 Then("the exception {string} matches one of the following:") do |path, values|
   desired_value = read_key_path(Server.current_request[:body], "events.0.exceptions.0.#{path}")
   assert_includes(values.raw.flatten, desired_value)
