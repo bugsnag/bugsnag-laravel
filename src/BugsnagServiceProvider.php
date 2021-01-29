@@ -50,6 +50,13 @@ class BugsnagServiceProvider extends ServiceProvider
         $this->setupEvents($this->app->events, $this->app->config->get('bugsnag'));
 
         $this->setupQueue($this->app->queue);
+
+        // Load the Client instance up-front if the OOM bootstrapper has been
+        // loaded. This avoids the possibility of initialising during an OOM,
+        // which can take a non-trivial amount of memory
+        if (class_exists(OomBootstrapper::class, false) && !$this->app->runningUnitTests()) {
+            $this->app->make('bugsnag');
+        }
     }
 
     /**
