@@ -226,6 +226,10 @@ class BugsnagServiceProvider extends ServiceProvider
                 $client->setBuildEndpoint($config['build_endpoint']);
             }
 
+            if (array_key_exists('memory_limit_increase', $config)) {
+                $client->setMemoryLimitIncrease($config['memory_limit_increase']);
+            }
+
             return $client;
         });
 
