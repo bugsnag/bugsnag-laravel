@@ -305,4 +305,16 @@ return [
 
     'build_endpoint' => env('BUGSNAG_BUILD_ENDPOINT'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Discard Classes
+    |--------------------------------------------------------------------------
+    |
+    | An array of classes that should not be sent to Bugsnag.
+    |
+    | This can contain both fully qualified class names and regular expressions.
+    |
+    */
+
+    'discard_classes' => empty(env('BUGSNAG_DISCARD_CLASSES')) ? null : explode(',', env('BUGSNAG_DISCARD_CLASSES')),
 ];
