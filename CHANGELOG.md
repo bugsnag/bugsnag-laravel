@@ -10,6 +10,9 @@ Changelog
   [Lumen](https://docs.bugsnag.com/platforms/php/lumen/#reporting-out-of-memory-exceptions)
   [#430](https://github.com/bugsnag/bugsnag-laravel/pull/430)
 
+* Support the new `discardClasses` configuration option. This allows events to be discarded based on the exception class name or PHP error name.
+  [#431](https://github.com/bugsnag/bugsnag-laravel/pull/431)
+
 ## 2.21.0 (2020-11-25)
 
 ### Enhancements
