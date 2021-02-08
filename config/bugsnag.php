@@ -317,4 +317,15 @@ return [
     */
 
     'discard_classes' => empty(env('BUGSNAG_DISCARD_CLASSES')) ? null : explode(',', env('BUGSNAG_DISCARD_CLASSES')),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Redacted Keys
+    |--------------------------------------------------------------------------
+    |
+    | An array of metadata keys that should be redacted.
+    |
+    */
+
+    'redacted_keys' => empty(env('BUGSNAG_REDACTED_KEYS')) ? null : explode(',', env('BUGSNAG_REDACTED_KEYS')),
 ];
