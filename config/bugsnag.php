@@ -75,6 +75,8 @@ return [
     | passwords, and credit card numbers to our servers. Any keys which
     | contain these strings will be filtered.
     |
+    | This option has been deprecated in favour of 'redacted_keys'
+    |
     */
 
     'filters' => empty(env('BUGSNAG_FILTERS')) ? null : explode(',', str_replace(' ', '', env('BUGSNAG_FILTERS'))),
