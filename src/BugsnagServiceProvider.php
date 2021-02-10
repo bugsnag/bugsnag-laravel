@@ -241,6 +241,10 @@ class BugsnagServiceProvider extends ServiceProvider
                 $client->setDiscardClasses($config['discard_classes']);
             }
 
+            if (isset($config['redacted_keys']) && is_array($config['redacted_keys'])) {
+                $client->setRedactedKeys($config['redacted_keys']);
+            }
+
             return $client;
         });
 

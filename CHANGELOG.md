@@ -13,6 +13,13 @@ Changelog
 * Support the new `discardClasses` configuration option. This allows events to be discarded based on the exception class name or PHP error name.
   [#431](https://github.com/bugsnag/bugsnag-laravel/pull/431)
 
+* Support the new `redactedKeys` configuration option. This is similar to `filters` but allows both strings and regexes. String matching is exact but case-insensitive. Regex matching allows for partial and wildcard matching.
+  [#432](https://github.com/bugsnag/bugsnag-laravel/pull/432)
+
+### Deprecations
+
+* The `filters` configuration option is now deprecated as `redactedKeys` can express everything that filters could and more.
+
 ## 2.21.0 (2020-11-25)
 
 ### Enhancements
