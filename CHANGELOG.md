@@ -1,6 +1,15 @@
 Changelog
 =========
 
+## TBD
+
+### Enhancements
+
+* Out of memory errors can now be reported by registering the new `OomBootstrapper` in your HTTP kernel, which will increase the memory limit by 5 MiB when an OOM occurs. See the docs for more details:
+  [Laravel](https://docs.bugsnag.com/platforms/php/laravel/#reporting-out-of-memory-exceptions)
+  [Lumen](https://docs.bugsnag.com/platforms/php/lumen/#reporting-out-of-memory-exceptions)
+  [#430](https://github.com/bugsnag/bugsnag-laravel/pull/430)
+
 ## 2.21.0 (2020-11-25)
 
 ### Enhancements
