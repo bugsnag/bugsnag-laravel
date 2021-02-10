@@ -1,6 +1,25 @@
 Changelog
 =========
 
+## 2.22.0 (2021-02-10)
+
+### Enhancements
+
+* Out of memory errors can now be reported by registering the new `OomBootstrapper` in your HTTP kernel, which will increase the memory limit by 5 MiB when an OOM occurs. See the docs for more details:
+  [Laravel](https://docs.bugsnag.com/platforms/php/laravel/#reporting-out-of-memory-exceptions)
+  [Lumen](https://docs.bugsnag.com/platforms/php/lumen/#reporting-out-of-memory-exceptions)
+  [#430](https://github.com/bugsnag/bugsnag-laravel/pull/430)
+
+* Support the new `discardClasses` configuration option. This allows events to be discarded based on the exception class name or PHP error name.
+  [#431](https://github.com/bugsnag/bugsnag-laravel/pull/431)
+
+* Support the new `redactedKeys` configuration option. This is similar to `filters` but allows both strings and regexes. String matching is exact but case-insensitive. Regex matching allows for partial and wildcard matching.
+  [#432](https://github.com/bugsnag/bugsnag-laravel/pull/432)
+
+### Deprecations
+
+* The `filters` configuration option is now deprecated as `redactedKeys` can express everything that filters could and more.
+
 ## 2.21.0 (2020-11-25)
 
 ### Enhancements

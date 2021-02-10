@@ -68,4 +68,16 @@ class Kernel extends HttpKernel
      */
     protected $middlewarePriority = [
     ];
+
+    protected function bootstrappers()
+    {
+        if (!getenv('BUGSNAG_REGISTER_OOM_BOOTSTRAPPER')) {
+            return parent::bootstrappers();
+        }
+
+        return array_merge(
+            [\Bugsnag\BugsnagLaravel\OomBootstrapper::class],
+            parent::bootstrappers(),
+        );
+    }
 }

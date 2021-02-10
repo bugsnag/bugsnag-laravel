@@ -441,6 +441,41 @@ class ServiceProviderTest extends AbstractTestCase
     }
 
     /**
+     * @param int|null $memoryLimitIncrease
+     *
+     * @return void
+     *
+     * @dataProvider memoryLimitIncreaseProvider
+     */
+    public function testMemoryLimitIncreaseIsSetCorrectly($memoryLimitIncrease)
+    {
+        /** @var \Illuminate\Config\Repository $laravelConfig */
+        $laravelConfig = $this->app->config;
+        $bugsnagConfig = $laravelConfig->get('bugsnag');
+
+        $this->assertFalse(array_key_exists('memory_limit_increase', $bugsnagConfig));
+
+        $bugsnagConfig['memory_limit_increase'] = $memoryLimitIncrease;
+
+        $laravelConfig->set('bugsnag', $bugsnagConfig);
+
+        /** @var Client $client */
+        $client = $this->app->make(Client::class);
+
+        $this->assertInstanceOf(Client::class, $client);
+        $this->assertSame($memoryLimitIncrease, $client->getMemoryLimitIncrease());
+    }
+
+    public function memoryLimitIncreaseProvider()
+    {
+        return [
+            [null],
+            [1234],
+            [1024 * 1024 * 20],
+        ];
+    }
+
+    /**
      * Set the environment variable "$name" to the given value.
      *
      * @param string $name
