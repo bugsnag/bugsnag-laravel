@@ -237,6 +237,10 @@ class BugsnagServiceProvider extends ServiceProvider
                 $client->setMemoryLimitIncrease($config['memory_limit_increase']);
             }
 
+            if (isset($config['discard_classes']) && is_array($config['discard_classes'])) {
+                $client->setDiscardClasses($config['discard_classes']);
+            }
+
             return $client;
         });
 

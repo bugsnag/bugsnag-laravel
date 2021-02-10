@@ -12,6 +12,7 @@ services:
       - BUGSNAG_CAPTURE_SESSIONS
       - BUGSNAG_USE_CUSTOM_GUZZLE
       - BUGSNAG_REGISTER_OOM_BOOTSTRAPPER
+      - BUGSNAG_DISCARD_CLASSES
     restart: "no"
     ports:
       - target: 8000
@@ -29,6 +30,7 @@ services:
       - BUGSNAG_CAPTURE_SESSIONS
       - BUGSNAG_USE_CUSTOM_GUZZLE
       - BUGSNAG_REGISTER_OOM_BOOTSTRAPPER
+      - BUGSNAG_DISCARD_CLASSES
     restart: "no"
     ports:
       - target: 8000
@@ -46,6 +48,7 @@ services:
       - BUGSNAG_CAPTURE_SESSIONS
       - BUGSNAG_USE_CUSTOM_GUZZLE
       - BUGSNAG_REGISTER_OOM_BOOTSTRAPPER
+      - BUGSNAG_DISCARD_CLASSES
     restart: "no"
     ports:
       - target: 8000
@@ -63,6 +66,7 @@ services:
       - BUGSNAG_CAPTURE_SESSIONS
       - BUGSNAG_USE_CUSTOM_GUZZLE
       - BUGSNAG_REGISTER_OOM_BOOTSTRAPPER
+      - BUGSNAG_DISCARD_CLASSES
     restart: "no"
     ports:
       - target: 8000
