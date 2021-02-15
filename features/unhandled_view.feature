@@ -7,6 +7,7 @@ Scenario: Unhandled exceptions are delivered from views
   And the request is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
   And the exception "errorClass" matches one of the following:
     | ErrorException                              |
+    | Illuminate\\View\\ViewException             |
     | Facade\\Ignition\\Exceptions\\ViewException |
   And the exception "message" starts with "Unhandled exception (View: /app/resources/views/unhandledexception.blade.php)"
   And the event "metaData.request.httpMethod" equals "GET"
@@ -24,6 +25,7 @@ Scenario: Unhandled errors are delivered from views
   And the request is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
   And the exception "errorClass" matches one of the following:
     | ErrorException                              |
+    | Illuminate\\View\\ViewException             |
     | Facade\\Ignition\\Exceptions\\ViewException |
   And the exception "message" equals "Call to undefined function foo() (View: /app/resources/views/unhandlederror.blade.php)"
   And the event "metaData.request.httpMethod" equals "GET"
