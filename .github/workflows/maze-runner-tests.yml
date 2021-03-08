@@ -18,18 +18,16 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Install libcurl4-openssl-dev
+    - name: Install libcurl4-openssl-dev and net-tools
       run: |
         sudo apt-get update
         sudo apt-get install libcurl4-openssl-dev
+        sudo apt-get install net-tools
 
     - name: install Ruby
-      uses: actions/setup-ruby@v1
+      uses: ruby/setup-ruby@v1
       with:
         ruby-version: 2.7
-
-    - run: gem install bundler
-
-    - run: bundle install
+        bundler-cache: true
 
     - run: PHP_VERSION=${{ matrix.php-version }} LARAVEL_FIXTURE=${{ matrix.laravel-fixture }} bundle exec bugsnag-maze-runner
