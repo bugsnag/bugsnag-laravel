@@ -49,13 +49,10 @@ jobs:
         sudo apt-get install net-tools
 
     - name: install Ruby
-      uses: actions/setup-ruby@v1
+      uses: ruby/setup-ruby@v1
       with:
         ruby-version: 2.7
-
-    - run: gem install bundler
-
-    - run: bundle install
+        bundler-cache: true
 
     - run: ./.ci/setup-laravel-dev-fixture.sh
 
