@@ -39,15 +39,26 @@ class OomBootstrapper
 
             $lastError = error_get_last();
 
-            // If this is an OOM and memory increase is enabled, bump the memory
-            // limit so we can report it
-            if ($lastError !== null
-                && app('bugsnag')->getMemoryLimitIncrease() !== null
-                && preg_match($this->oomRegex, $lastError['message'], $matches) === 1
-            ) {
+            if (!$lastError) {
+                return;
+            }
+
+            $isOom = preg_match($this->oomRegex, $lastError['message'], $matches) === 1;
+
+            if (!$isOom) {
+                return;
+            }
+
+            /** @var \Bugsnag\Client|null $client */
+            $client = app('bugsnag');
+
+            // If the client exists and memory increase is enabled, bump the
+            // memory limit so we can report it. The client can be missing when
+            // the container isn't complete, e.g. when unit tests are running
+            if ($client && $client->getMemoryLimitIncrease() !== null) {
                 $currentMemoryLimit = (int) $matches[1];
 
-                ini_set('memory_limit', $currentMemoryLimit + app('bugsnag')->getMemoryLimitIncrease());
+                ini_set('memory_limit', $currentMemoryLimit + $client->getMemoryLimitIncrease());
             }
         });
     }
