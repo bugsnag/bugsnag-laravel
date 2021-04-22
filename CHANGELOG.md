@@ -1,6 +1,13 @@
 Changelog
 =========
 
+## TBD
+
+### Bug Fixes
+
+* Fix a possible crash in the OOM bootstrapper with an incomplete container
+  [#442](https://github.com/bugsnag/bugsnag-laravel/pull/442)
+
 ## 2.22.0 (2021-02-10)
 
 ### Enhancements
