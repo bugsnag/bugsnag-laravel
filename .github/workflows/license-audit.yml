@@ -1,0 +1,37 @@
+name: Audit bugsnag-laravel dependency licenses
+
+on: [push, pull_request]
+
+jobs:
+  license-audit:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        laravel-version: ['^6.0', '^8.0']
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: install PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.0'
+        coverage: none
+        extensions: intl, mbstring
+
+    - name: Fetch decisions.yml
+      run: curl https://raw.githubusercontent.com/bugsnag/license-audit/master/config/decision_files/global.yml -o decisions.yml
+
+    - name: Install composer dependencies
+      run: |
+        composer require illuminate/contracts:${{ matrix.laravel-version }}
+        composer require illuminate/support:${{ matrix.laravel-version }}
+        composer install --no-dev
+
+    - name: Run License Finder
+      # for some reason license finder doesn't run without a login shell (-l)
+      run: >
+        docker run -v $PWD:/scan licensefinder/license_finder /bin/bash -lc "
+          cd /scan &&
+          license_finder --decisions-file decisions.yml --composer-check-require-only=true --enabled-package-managers=composer
+        "
