@@ -18,6 +18,7 @@
     <testsuites>
         <testsuite name="Bugsnag Laravel Test Suite">
             <directory suffix="Test.php">./tests</directory>
+            <directory suffix=".phpt">./tests/phpt</directory>
         </testsuite>
     </testsuites>
 
