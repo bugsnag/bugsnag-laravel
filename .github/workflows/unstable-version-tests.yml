@@ -37,8 +37,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: [7.4]
+        php-version: [8.0]
         laravel-fixture: [laravel-latest]
+        laravel-version: ['8.x-dev as 8'] #, 'dev-master as 8'] # disabled pending package updates in Laravel's skeleton app (PLAT-7040)
 
     steps:
     - uses: actions/checkout@v2
@@ -55,6 +56,6 @@ jobs:
         ruby-version: 2.7
         bundler-cache: true
 
-    - run: ./.ci/setup-laravel-dev-fixture.sh
+    - run: ./.ci/setup-laravel-dev-fixture.sh ${{ matrix.laravel-version }}
 
     - run: PHP_VERSION=${{ matrix.php-version }} LARAVEL_FIXTURE=${{ matrix.laravel-fixture }} bundle exec bugsnag-maze-runner
