@@ -1,6 +1,19 @@
 #!/usr/bin/env sh
 
-set -e
+set -ex
+
+if [ $# -eq 0 ]; then
+    printf "Error: No Laravel version given\n\n"
+    printf "Usage:\n"
+    printf "  $ %s <version>\n\n" "$0"
+    printf "Examples:\n"
+    printf "  $ %s 8.0.0\n" "$0"
+    printf "  $ %s 8.x-dev as 8\n" "$0"
+
+    exit 64
+fi
+
+LARAVEL_VERSION=$1
 
 cd features/fixtures
 
@@ -12,7 +25,7 @@ composer create-project laravel/laravel laravel-latest --no-dev
 
 cd laravel-latest
 
-composer require 'laravel/framework:dev-master as 8' --update-with-dependencies --no-update
+composer require laravel/framework:"$LARAVEL_VERSION" --update-with-dependencies --no-update
 composer config repositories.bugsnag-laravel '{ "type": "path", "url": "../../../", "options": { "symlink": false } }'
 composer require bugsnag/bugsnag-laravel '*' --no-update
 
