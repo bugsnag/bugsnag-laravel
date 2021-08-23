@@ -174,7 +174,7 @@ class BugsnagServiceProvider extends ServiceProvider
             ];
 
             if ($this->app->config->get('bugsnag.include_horizon_tags')) {
-                $job['tags'] = $event->job->payload()['tags'];
+                $job['horizon_tags'] = $event->job->payload()['tags'];
             }
 
             if (method_exists($event->job, 'resolveName')) {

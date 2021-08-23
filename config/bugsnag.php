@@ -230,10 +230,11 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Include Job Tags
+    | Include Horizon Tags
     |--------------------------------------------------------------------------
     |
-    | Enable this if you'd like us to send tags assigned in Horizon.
+    | When this option is enabled, Bugsnag will send all the tags
+    | that have been assigned to the failing queue job by Horizon.
     |
     */
     'include_horizon_tags' => env('BUGSNAG_INCLUDE_HORIZON_TAGS', false),
