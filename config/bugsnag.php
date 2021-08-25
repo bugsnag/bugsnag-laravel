@@ -237,7 +237,7 @@ return [
     | that have been assigned to the failing queue job by Horizon.
     |
     */
-    'full_job_payload' => env('BUGSNAG_FULL_JOB_PAYLOAD', false),
+    'entire_job_payload' => env('BUGSNAG_ENTIRE_JOB_PAYLOAD', false),
 
     /*
     |--------------------------------------------------------------------------

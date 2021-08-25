@@ -173,7 +173,7 @@ class BugsnagServiceProvider extends ServiceProvider
                 'connection' => $event->connectionName,
             ];
 
-            if ($this->app->config->get('bugsnag.full_job_payload')) {
+            if ($this->app->config->get('bugsnag.entire_job_payload')) {
                 $job = array_merge($job, $event->job->payload());
             }
 
