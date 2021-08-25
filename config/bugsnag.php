@@ -233,8 +233,7 @@ return [
     | Include Horizon Tags
     |--------------------------------------------------------------------------
     |
-    | When this option is enabled, this package will send
-    | the entire job payload to Bugsnag.
+    | Enable this if you'd like us to send the entire job payload to Bugsnag.
     |
     */
     'entire_job_payload' => env('BUGSNAG_ENTIRE_JOB_PAYLOAD', false),
