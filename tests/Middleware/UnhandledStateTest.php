@@ -65,7 +65,8 @@ class UnhandledStateTest extends TestCase
     }
 
     /**
-     * @dataProvider unhandledBacktraceProvider
+     * @dataProvider unhandledBacktraceProviderLaravel
+     * @dataProvider unhandledBacktraceProviderLumen
      */
     public function testReportIsUnhandled(array $backtrace)
     {
@@ -91,7 +92,7 @@ class UnhandledStateTest extends TestCase
         );
     }
 
-    public function unhandledBacktraceProvider()
+    public function unhandledBacktraceProviderLaravel()
     {
         yield 'minimal backtrace' => [[
             // the backtrace must go through the Handler::report method
@@ -160,8 +161,71 @@ class UnhandledStateTest extends TestCase
         ]];
     }
 
+    public function unhandledBacktraceProviderLumen()
+    {
+        yield 'Lumen (App exception handler)' => [[
+            ['class' => \Bugsnag\PsrLogger\AbstractLogger::class, 'function' => 'error'],
+            ['class' => \Laravel\Lumen\Exceptions\Handler::class, 'function' => 'report'],
+            ['class' => \App\Exceptions\Handler::class, 'function' => 'report'],
+            ['class' => \Laravel\Lumen\Application::class, 'function' => 'sendExceptionToHandler'],
+            ['class' => \Laravel\Lumen\Application::class, 'function' => 'dispatch'],
+            ['class' => \Laravel\Lumen\Application::class, 'function' => 'run'],
+        ]];
+
+        yield 'Lumen' => [[
+            ['class' => \SomeClass::class],
+            ['class' => \Laravel\Lumen\Exceptions\Handler::class, 'function' => 'report'],
+            ['class' => \Some\OtherClass::class],
+            ['class' => \Laravel\Lumen\Application::class, 'function' => 'sendExceptionToHandler'],
+            ['class' => \Laravel\Lumen\Application::class, 'function' => 'dispatch'],
+            ['class' => \Laravel\Lumen\Application::class, 'function' => 'run'],
+        ]];
+
+        yield 'Lumen with other classes (App exception handler)' => [[
+            ['class' => \SomeClass::class],
+            ['class' => \Laravel\Lumen\Exceptions\Handler::class, 'function' => 'report'],
+            ['class' => \Some\OtherClass::class],
+            ['class' => \App\Exceptions\Handler::class, 'function' => 'report'],
+            ['class' => \Laravel\Lumen\Application::class, 'function' => 'sendExceptionToHandler'],
+            ['class' => \Laravel\Lumen\Application::class, 'function' => 'dispatch'],
+            ['class' => \Laravel\Lumen\Application::class, 'function' => 'run'],
+        ]];
+
+        yield 'Lumen with other classes' => [[
+            ['class' => \Bugsnag\PsrLogger\AbstractLogger::class, 'function' => 'error'],
+            ['class' => \SomeClass::class],
+            ['class' => \Laravel\Lumen\Exceptions\Handler::class, 'function' => 'report'],
+            ['class' => \Some\OtherClass::class],
+            ['class' => \Laravel\Lumen\Application::class, 'function' => 'sendExceptionToHandler'],
+            ['class' => \Laravel\Lumen\Application::class, 'function' => 'dispatch'],
+            ['class' => \Laravel\Lumen\Application::class, 'function' => 'run'],
+        ]];
+
+        yield 'Lumen with non-class frames (App exception handler)' => [[
+            ['class' => \Bugsnag\PsrLogger\AbstractLogger::class, 'function' => 'error'],
+            ['function' => 'abc'],
+            ['class' => \Laravel\Lumen\Exceptions\Handler::class, 'function' => 'report'],
+            ['function' => 'xyz'],
+            ['class' => \App\Exceptions\Handler::class, 'function' => 'report'],
+            ['class' => \Laravel\Lumen\Application::class, 'function' => 'sendExceptionToHandler'],
+            ['class' => \Laravel\Lumen\Application::class, 'function' => 'dispatch'],
+            ['class' => \Laravel\Lumen\Application::class, 'function' => 'run'],
+        ]];
+
+        yield 'Lumen with non-class frames' => [[
+            ['class' => \Bugsnag\PsrLogger\AbstractLogger::class, 'function' => 'error'],
+            ['function' => 'abc'],
+            ['class' => \Laravel\Lumen\Exceptions\Handler::class, 'function' => 'report'],
+            ['function' => 'xyz'],
+            ['class' => \Laravel\Lumen\Application::class, 'function' => 'sendExceptionToHandler'],
+            ['class' => \Laravel\Lumen\Application::class, 'function' => 'dispatch'],
+            ['class' => \Laravel\Lumen\Application::class, 'function' => 'run'],
+        ]];
+    }
+
     /**
-     * @dataProvider handledBacktraceProvider
+     * @dataProvider handledBacktraceProviderLaravel
+     * @dataProvider handledBacktraceProviderLumen
      */
     public function testReportIsHandled(array $backtrace)
     {
@@ -177,7 +241,7 @@ class UnhandledStateTest extends TestCase
         $this->assertSame(['type' => 'handledException'], $this->report->getSeverityReason());
     }
 
-    public function handledBacktraceProvider()
+    public function handledBacktraceProviderLaravel()
     {
         yield 'empty backtrace' => [[[]]];
 
@@ -239,6 +303,44 @@ class UnhandledStateTest extends TestCase
             ['class' => \AnotherClass::class],
             ['class' => \Illuminate\AbcElse::class],
             ['class' => \Yet\AnotherClass::class],
+        ]];
+    }
+
+    public function handledBacktraceProviderLumen()
+    {
+        yield 'Lumen no exception handler' => [[
+            ['class' => \Bugsnag\PsrLogger\AbstractLogger::class, 'function' => 'error'],
+            ['class' => \Not\Laravel\Lumen\Exceptions\Handler::class, 'function' => 'report'],
+            ['class' => \App\Exceptions\Handler::class, 'function' => 'report'],
+            ['class' => \Laravel\Lumen\Application::class, 'function' => 'sendExceptionToHandler'],
+            ['class' => \Laravel\Lumen\Application::class, 'function' => 'dispatch'],
+            ['class' => \Laravel\Lumen\Application::class, 'function' => 'run'],
+        ]];
+
+        yield 'Lumen exception handler but wrong method' => [[
+            ['class' => \Bugsnag\PsrLogger\AbstractLogger::class, 'function' => 'error'],
+            ['class' => \Laravel\Lumen\Exceptions\Handler::class, 'function' => 'notReport'],
+            ['class' => \App\Exceptions\Handler::class, 'function' => 'report'],
+            ['class' => \Laravel\Lumen\Application::class, 'function' => 'sendExceptionToHandler'],
+            ['class' => \Laravel\Lumen\Application::class, 'function' => 'dispatch'],
+            ['class' => \Laravel\Lumen\Application::class, 'function' => 'run'],
+        ]];
+
+        yield 'Lumen non-consecutive frames after App exception handler' => [[
+            ['class' => \Bugsnag\PsrLogger\AbstractLogger::class, 'function' => 'error'],
+            ['class' => \Laravel\Lumen\Exceptions\Handler::class, 'function' => 'report'],
+            ['class' => \App\Exceptions\Handler::class, 'function' => 'report'],
+            ['class' => \Not\Laravel\Lumen\Application::class, 'function' => 'sendExceptionToHandler'],
+            ['class' => \Laravel\Lumen\Application::class, 'function' => 'dispatch'],
+            ['class' => \Laravel\Lumen\Application::class, 'function' => 'run'],
+        ]];
+
+        yield 'Lumen non-consecutive frames after Lumen exception handler' => [[
+            ['class' => \Bugsnag\PsrLogger\AbstractLogger::class, 'function' => 'error'],
+            ['class' => \Laravel\Lumen\Exceptions\Handler::class, 'function' => 'report'],
+            ['class' => \Laravel\Lumen\Application::class, 'function' => 'sendExceptionToHandler'],
+            ['class' => \Not\Laravel\Lumen\Application::class, 'function' => 'dispatch'],
+            ['class' => \Laravel\Lumen\Application::class, 'function' => 'run'],
         ]];
     }
 }
