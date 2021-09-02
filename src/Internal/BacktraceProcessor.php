@@ -3,9 +3,11 @@
 namespace Bugsnag\BugsnagLaravel\Internal;
 
 /**
- * The criteria for an error to be unhandled in a Laravel app is as follows.
+ * The criteria for an error to be unhandled in a Laravel or Lumen app is as
+ * follows.
  *
- * 1. All unhandled exceptions must pass through the `HANDLER_CLASS` report method
+ * 1. All unhandled exceptions must pass through one of the `HANDLER_CLASSES`
+ *    report method
  * 2. Unhandled exceptions will have had a caller from inside a vendor namespace
  *    or the App exception handler
  * 3. The above exception handler must have originally been called from
@@ -36,25 +38,33 @@ final class BacktraceProcessor
     const STATE_DONE = 4;
 
     /**
-     * Laravel's built-in exception handler.
+     * Laravel and Lumen use different exception handlers which live in different
+     * namespaces.
      */
-    const HANDLER_CLASS = \Illuminate\Foundation\Exceptions\Handler::class;
+    const LARAVEL_HANDLER_CLASS = \Illuminate\Foundation\Exceptions\Handler::class;
+    const LUMEN_HANDLER_CLASS = \Laravel\Lumen\Exceptions\Handler::class;
 
     /**
-     * The method used by the HANDLER_CLASS to report errors.
+     * The method used by the x_HANDLER_CLASS to report errors.
      */
     const HANDLER_METHOD = 'report';
 
     /**
-     * The default app exception handler in a Laravel app.
+     * Laravel uses the "Exception" namespace, Lumen uses the plural "Exceptions"
+     * for the default app exception handler.
      */
-    const APP_EXCEPTION_HANDLER = \App\Exception\Handler::class;
+    const LARAVEL_APP_EXCEPTION_HANDLER = \App\Exception\Handler::class;
+    const LUMEN_APP_EXCEPTION_HANDLER = \App\Exceptions\Handler::class;
 
     /**
-     * Namespace used by Laravel so we can determine if code was called by the
-     * user's app or the framework itself.
+     * Namespaces used by Laravel and Lumen so we can determine if code was
+     * called by the user's app or the framework itself.
+     *
+     * Note this is not a mistake - Lumen uses the 'Laravel' namespace but
+     * Laravel itself does not
      */
-    const VENDOR_NAMESPACE = 'Illuminate\\';
+    const LARAVEL_VENDOR_NAMESPACE = 'Illuminate\\';
+    const LUMEN_VENDOR_NAMESPACE = 'Laravel\\';
 
     /**
      * The current state; one of the self::STATE_ constants.
@@ -122,7 +132,7 @@ final class BacktraceProcessor
                 // if this class is a framework exception handler and the function
                 // matches self::HANDLER_METHOD, we can move on to searching for
                 // the caller
-                if ($class === self::HANDLER_CLASS
+                if (($class === self::LARAVEL_HANDLER_CLASS || $class === self::LUMEN_HANDLER_CLASS)
                     && isset($frame['function'])
                     && $frame['function'] === self::HANDLER_METHOD
                 ) {
@@ -134,7 +144,8 @@ final class BacktraceProcessor
             case self::STATE_HANDLER_CALLER:
                 // if this is an app exception handler or a framework class, we
                 // can move on to determine if this was unhandled or not
-                if ($class === self::APP_EXCEPTION_HANDLER
+                if ($class === self::LARAVEL_APP_EXCEPTION_HANDLER
+                    || $class === self::LUMEN_APP_EXCEPTION_HANDLER
                     || $this->isVendor($class)
                 ) {
                     $this->state = self::STATE_IS_UNHANDLED;
@@ -161,7 +172,7 @@ final class BacktraceProcessor
     /**
      * Does the given class belong to a vendor namespace?
      *
-     * @see self::VENDOR_NAMESPACE
+     * @see self::VENDOR_NAMESPACES
      *
      * @param string $class
      *
@@ -169,6 +180,7 @@ final class BacktraceProcessor
      */
     private function isVendor($class)
     {
-        return substr($class, 0, strlen(self::VENDOR_NAMESPACE)) === self::VENDOR_NAMESPACE;
+        return substr($class, 0, strlen(self::LARAVEL_VENDOR_NAMESPACE)) === self::LARAVEL_VENDOR_NAMESPACE
+            || substr($class, 0, strlen(self::LUMEN_VENDOR_NAMESPACE)) === self::LUMEN_VENDOR_NAMESPACE;
     }
 }
