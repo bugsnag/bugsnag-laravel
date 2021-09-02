@@ -74,8 +74,8 @@ class UnhandledStateTest extends TestCase
         $this->assertFalse($this->report->getUnhandled());
         $this->assertSame(['type' => 'handledException'], $this->report->getSeverityReason());
 
-        $a = new UnhandledState();
-        $a->__invoke($this->report, $this->next);
+        $unhandledState = new UnhandledState();
+        $unhandledState->__invoke($this->report, $this->next);
 
         $this->assertTrue(
             $this->report->getUnhandled(),
@@ -170,8 +170,8 @@ class UnhandledStateTest extends TestCase
         $this->assertFalse($this->report->getUnhandled());
         $this->assertSame(['type' => 'handledException'], $this->report->getSeverityReason());
 
-        $a = new UnhandledState();
-        $a->__invoke($this->report, $this->next);
+        $unhandledState = new UnhandledState();
+        $unhandledState->__invoke($this->report, $this->next);
 
         $this->assertFalse($this->report->getUnhandled());
         $this->assertSame(['type' => 'handledException'], $this->report->getSeverityReason());
