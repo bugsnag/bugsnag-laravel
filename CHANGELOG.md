@@ -1,6 +1,13 @@
 Changelog
 =========
 
+## 2.22.2 (2021-09-06)
+
+### Bug Fixes
+
+* Fix events in Lumen always being handled
+  [#452](https://github.com/bugsnag/bugsnag-laravel/pull/452)
+
 ## 2.22.1 (2021-04-29)
 
 ### Bug Fixes
