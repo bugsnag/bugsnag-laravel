@@ -28,7 +28,7 @@ Scenario: Handled errors are delivered from views
   And the event "unhandled" is false
   And the event "severityReason.type" equals "handledError"
 
-@not-lumen
+@requires-sessions
 Scenario: Sessions are correct in Handled exceptions from views
   Given I enable session tracking
   And I start the laravel fixture

@@ -20,7 +20,7 @@ Scenario: report for unhandled event contains runtime version information
   And the event "device.runtimeVersions.laravel" matches the current major Laravel version
   And the event "device.runtimeVersions.lumen" matches the current major Lumen version
 
-@not-lumen
+@requires-sessions
 Scenario: session payload contains runtime version information
   Given I enable session tracking
   And I start the laravel fixture

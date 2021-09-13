@@ -31,7 +31,7 @@ Scenario: Unhandled errors are delivered from controllers
   And the event "severityReason.type" equals "unhandledExceptionMiddleware"
   And the event "severityReason.attributes.framework" equals "Laravel"
 
-@not-lumen
+@requires-sessions
 Scenario: Sessions are correct in unhandled exceptions from controllers
   Given I enable session tracking
   And I start the laravel fixture
