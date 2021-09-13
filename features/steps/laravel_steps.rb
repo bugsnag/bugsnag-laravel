@@ -38,3 +38,43 @@ Then("the exception {string} matches one of the following:") do |path, values|
   desired_value = read_key_path(Server.current_request[:body], "events.0.exceptions.0.#{path}")
   assert_includes(values.raw.flatten, desired_value)
 end
+
+Then("the event {string} matches the current major Laravel version") do |path|
+  # skip this assertion if we're running Lumen
+  next if Laravel.lumen?
+
+  steps %{
+    Then the event '#{path}' starts with '#{Laravel.major_version}'
+    And the event '#{path}' matches '^((\\d+\\.){2}\\d+|\d\.x-dev)$'
+  }
+end
+
+Then("the payload field {string} matches the current major Laravel version") do |path|
+  # skip this assertion if we're running Lumen
+  next if Laravel.lumen?
+
+  steps %{
+    Then the payload field '#{path}' starts with '#{Laravel.major_version}'
+    And the payload field '#{path}' matches the regex '^((\\d+\\.){2}\\d+|\d\.x-dev)$'
+  }
+end
+
+Then("the event {string} matches the current major Lumen version") do |path|
+  # skip this assertion if we're running Laravel
+  next unless Laravel.lumen?
+
+  steps %{
+    Then the event '#{path}' starts with '#{Laravel.major_version}'
+    And the event '#{path}' matches '^((\\d+\\.){2}\\d+|\d\.x-dev)$'
+  }
+end
+
+Then("the payload field {string} matches the current major Lumen version") do |path|
+  # skip this assertion if we're running Laravel
+  next unless Laravel.lumen?
+
+  steps %{
+    Then the payload field '#{path}' starts with '#{Laravel.major_version}'
+    And the payload field '#{path}' matches the regex '^((\\d+\\.){2}\\d+|\d\.x-dev)$'
+  }
+end

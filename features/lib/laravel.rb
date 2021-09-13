@@ -26,6 +26,15 @@ class Laravel
       @port ||= load_port_from_docker_compose
     end
 
+    def major_version
+      # e.g. laravel56 -> 5, lumen8 -> 8
+      Integer(/^(?:laravel|lumen)(\d)/.match(fixture)[1])
+    end
+
+    def lumen?
+      fixture.start_with?("lumen")
+    end
+
     private
 
     def load_port_from_docker_compose
