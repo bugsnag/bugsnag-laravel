@@ -1,6 +1,5 @@
 Feature: Unhandled exceptions in controllers support
 
-@not-lumen
 Scenario: Unhandled exceptions are delivered from controllers
   Given I start the laravel fixture
   When I navigate to the route "/unhandled_controller_exception"
@@ -16,7 +15,6 @@ Scenario: Unhandled exceptions are delivered from controllers
   And the event "severityReason.type" equals "unhandledExceptionMiddleware"
   And the event "severityReason.attributes.framework" equals "Laravel"
 
-@not-lumen
 Scenario: Unhandled errors are delivered from controllers
   Given I start the laravel fixture
   When I navigate to the route "/unhandled_controller_error"

@@ -1,6 +1,5 @@
 Feature: Handled exceptions in controllers support
 
-@not-lumen
 Scenario: Handled exceptions are delivered from controllers
   Given I start the laravel fixture
   When I navigate to the route "/handled_controller_exception"
@@ -15,7 +14,6 @@ Scenario: Handled exceptions are delivered from controllers
   And the event "unhandled" is false
   And the event "severityReason.type" equals "handledException"
 
-@not-lumen
 Scenario: Handled errors are delivered from controllers
   Given I start the laravel fixture
   When I navigate to the route "/handled_controller_error"
