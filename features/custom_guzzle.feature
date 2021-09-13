@@ -1,5 +1,6 @@
 Feature: A custom Guzzle client can be used
 
+@not-lumen
 Scenario: A custom Guzzle client can be used
   Given I enable session tracking
   And I set environment variable "BUGSNAG_USE_CUSTOM_GUZZLE" to "true"

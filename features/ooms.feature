@@ -18,6 +18,7 @@ Scenario: Big OOM without the OOM bootstrapper
   And the event "severityReason.type" equals "unhandledExceptionMiddleware"
   And the event "severityReason.attributes.framework" equals "Laravel"
 
+@not-lumen
 Scenario: Small OOM without the OOM bootstrapper
   Given I start the laravel fixture
   When I navigate to the route "/oom/small"

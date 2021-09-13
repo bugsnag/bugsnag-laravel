@@ -23,3 +23,11 @@ Before do
   ENV["BUGSNAG_ENDPOINT"] = "http://#{Utils.current_ip}:9339"
   Laravel.reset!
 end
+
+Before("@not-lumen") do
+  skip_this_scenario if Laravel.fixture.start_with?("lumen")
+end
+
+Before("@not-laravel") do
+  skip_this_scenario if Laravel.fixture.start_with?("laravel")
+end

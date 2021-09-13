@@ -1,5 +1,6 @@
 Feature: Reporting runtime versions
 
+@not-lumen
 Scenario: report for handled event contains runtime version information
   Given I start the laravel fixture
   When I navigate to the route "/handled_exception"
@@ -9,6 +10,7 @@ Scenario: report for handled event contains runtime version information
   And the event "device.runtimeVersions.php" matches "(\d+\.){2}\d+"
   And the event "device.runtimeVersions.laravel" matches "((\d+\.){2}\d+|\d\.x-dev)"
 
+@not-lumen
 Scenario: report for unhandled event contains runtime version information
   Given I start the laravel fixture
   When I navigate to the route "/unhandled_exception"
@@ -18,6 +20,7 @@ Scenario: report for unhandled event contains runtime version information
   And the event "device.runtimeVersions.php" matches "(\d+\.){2}\d+"
   And the event "device.runtimeVersions.laravel" matches "((\d+\.){2}\d+|\d\.x-dev)"
 
+@not-lumen
 Scenario: session payload contains runtime version information
   Given I enable session tracking
   And I start the laravel fixture

@@ -1,5 +1,6 @@
 Feature: Unhandled exceptions for middleware support
 
+@not-lumen
 Scenario: Unhandled exceptions are delivered from middleware
   Given I start the laravel fixture
   When I navigate to the route "/unhandled_middleware_exception"
@@ -15,6 +16,7 @@ Scenario: Unhandled exceptions are delivered from middleware
   And the event "severityReason.type" equals "unhandledExceptionMiddleware"
   And the event "severityReason.attributes.framework" equals "Laravel"
 
+@not-lumen
 Scenario: Unhandled errors are delivered from middleware
   Given I start the laravel fixture
   When I navigate to the route "/unhandled_middleware_error"
@@ -31,6 +33,7 @@ Scenario: Unhandled errors are delivered from middleware
   And the event "severityReason.type" equals "unhandledExceptionMiddleware"
   And the event "severityReason.attributes.framework" equals "Laravel"
 
+@not-lumen
 Scenario: Sessions are correct in unhandled exceptions from middleware
   Given I enable session tracking
   And I start the laravel fixture
