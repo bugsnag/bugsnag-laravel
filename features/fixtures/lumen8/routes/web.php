@@ -40,19 +40,19 @@ $router->get('/unhandled_controller_error', 'TestController@unhandledError');
 $router->get('/handled_controller_exception', 'TestController@handledException');
 $router->get('/handled_controller_error', 'TestController@handledError');
 
-$router->group(['middleware' => 'unMidEx'], function () use ($router) {
+$router->group(['middleware' => 'unhandledMiddlewareException'], function () use ($router) {
     $router->get('/unhandled_middleware_exception', function () {});
 });
 
-$router->group(['middleware' => 'unMidErr'], function () use ($router) {
+$router->group(['middleware' => 'unhandledMiddlewareError'], function () use ($router) {
     $router->get('/unhandled_middleware_error', function () {});
 });
 
-$router->group(['middleware' => 'hanMidEx'], function () use ($router) {
+$router->group(['middleware' => 'handledMiddlewareException'], function () use ($router) {
     $router->get('/handled_middleware_exception', function () {});
 });
 
-$router->group(['middleware' => 'hanMidErr'], function () use ($router) {
+$router->group(['middleware' => 'handledMiddlewareError'], function () use ($router) {
     $router->get('/handled_middleware_error', function () {});
 });
 

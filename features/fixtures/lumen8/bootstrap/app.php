@@ -74,13 +74,12 @@ $app->configure('app');
 |
 */
 
-// $app->middleware([
-//     App\Http\Middleware\ExampleMiddleware::class
-// ]);
-
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+$app->routeMiddleware([
+    'unhandledMiddlewareException' => App\Http\Middleware\UnhandledMiddlewareException::class,
+    'unhandledMiddlewareError' => App\Http\Middleware\UnhandledMiddlewareError::class,
+    'handledMiddlewareException' => App\Http\Middleware\HandledMiddlewareException::class,
+    'handledMiddlewareError' => App\Http\Middleware\HandledMiddlewareError::class,
+]);
 
 /*
 |--------------------------------------------------------------------------

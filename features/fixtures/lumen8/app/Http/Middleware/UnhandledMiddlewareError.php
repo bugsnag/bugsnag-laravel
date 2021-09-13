@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class ExampleMiddleware
+class UnhandledMiddlewareError
 {
     /**
      * Handle an incoming request.
@@ -15,6 +15,8 @@ class ExampleMiddleware
      */
     public function handle($request, Closure $next)
     {
+        foo();
+
         return $next($request);
     }
 }
