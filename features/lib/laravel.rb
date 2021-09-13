@@ -1,4 +1,5 @@
 require 'net/http'
+require 'yaml'
 
 class Laravel
   class << self
@@ -22,13 +23,16 @@ class Laravel
     end
 
     def fixture_port
-      case fixture
-      when 'laravel-latest' then 61299
-      when 'laravel66' then 61266
-      when 'laravel58' then 61258
-      when 'laravel56' then 61256
-      else raise "Unknown laravel fixture '#{ENV['LARAVEL_FIXTURE']}'!"
-      end
+      @port ||= load_port_from_docker_compose
+    end
+
+    private
+
+    def load_port_from_docker_compose
+      compose_file = YAML.safe_load(File.read(Docker.singleton_class::COMPOSE_FILENAME))
+      service = compose_file.fetch("services").fetch(ENV['LARAVEL_FIXTURE'])
+
+      service.fetch("ports").first.fetch("published")
     end
   end
 end
