@@ -4,9 +4,19 @@
     "keywords": ["framework", "laravel", "lumen"],
     "license": "MIT",
     "type": "project",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "bugsnag-laravel",
+            "options": {
+                "symlink": false
+            }
+        }
+    ],
     "require": {
         "php": "^7.3|^8.0",
-        "laravel/lumen-framework": "^8.0"
+        "laravel/lumen-framework": "^8.0",
+        "bugsnag/bugsnag-laravel": "dev-master as 99.99.99"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
