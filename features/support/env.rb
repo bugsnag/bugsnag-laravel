@@ -25,9 +25,9 @@ Before do
 end
 
 Before("@not-lumen") do
-  skip_this_scenario if Laravel.fixture.start_with?("lumen")
+  skip_this_scenario if Laravel.lumen?
 end
 
 Before("@not-laravel") do
-  skip_this_scenario if Laravel.fixture.start_with?("laravel")
+  skip_this_scenario unless Laravel.lumen?
 end
