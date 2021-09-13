@@ -6,7 +6,9 @@ require_once __DIR__.'/../vendor/autoload.php';
     dirname(__DIR__)
 ))->bootstrap();
 
-(new Bugsnag\BugsnagLaravel\OomBootstrapper)->bootstrap();
+if (getenv('BUGSNAG_REGISTER_OOM_BOOTSTRAPPER')) {
+    (new Bugsnag\BugsnagLaravel\OomBootstrapper)->bootstrap();
+}
 
 date_default_timezone_set(env('APP_TIMEZONE', 'UTC'));
 
