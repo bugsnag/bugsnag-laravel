@@ -1,6 +1,5 @@
 Feature: Unhandled exceptions for views support
 
-@not-lumen
 Scenario: Unhandled exceptions are delivered from views
   Given I start the laravel fixture
   When I navigate to the route "/unhandled_view_exception"
@@ -19,7 +18,6 @@ Scenario: Unhandled exceptions are delivered from views
   And the event "severityReason.type" equals "unhandledExceptionMiddleware"
   And the event "severityReason.attributes.framework" equals "Laravel"
 
-@not-lumen
 Scenario: Unhandled errors are delivered from views
   Given I start the laravel fixture
   When I navigate to the route "/unhandled_view_error"
