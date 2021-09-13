@@ -1,6 +1,5 @@
 Feature: A custom Guzzle client can be used
 
-@not-lumen
 Scenario: A custom Guzzle client can be used
   Given I set environment variable "BUGSNAG_USE_CUSTOM_GUZZLE" to "true"
   And I start the laravel fixture
