@@ -13,90 +13,90 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - php-version: 5.5.9
+          - php-version: '5.5.9'
             laravel-version: '5.1.*'
             composer-flags: '--prefer-lowest'
-          - php-version: 5.5
+          - php-version: '5.5'
             laravel-version: '5.1.*'
-          - php-version: 5.5
+          - php-version: '5.5'
             laravel-version: '5.2.*'
-          - php-version: 5.6
+          - php-version: '5.6'
             laravel-version: '5.1.*'
-          - php-version: 5.6
+          - php-version: '5.6'
             laravel-version: '5.2.*'
-          - php-version: 5.6
+          - php-version: '5.6'
             laravel-version: '5.3.*'
-          - php-version: 5.6
+          - php-version: '5.6'
             laravel-version: '5.4.*'
-          - php-version: 7.0
+          - php-version: '7.0'
             laravel-version: '5.1.*'
-          - php-version: 7.0
+          - php-version: '7.0'
             laravel-version: '5.2.*'
-          - php-version: 7.0
+          - php-version: '7.0'
             laravel-version: '5.3.*'
-          - php-version: 7.0
+          - php-version: '7.0'
             laravel-version: '5.4.*'
-          - php-version: 7.0
+          - php-version: '7.0'
             laravel-version: '5.5.*'
-          - php-version: 7.1
+          - php-version: '7.1'
             laravel-version: '5.3.*'
-          - php-version: 7.1
+          - php-version: '7.1'
             laravel-version: '5.4.*'
-          - php-version: 7.1
+          - php-version: '7.1'
             laravel-version: '5.5.*'
-          - php-version: 7.1
+          - php-version: '7.1'
             laravel-version: '5.6.*'
-          - php-version: 7.1
+          - php-version: '7.1'
             laravel-version: '5.7.*'
-          - php-version: 7.1
+          - php-version: '7.1'
             laravel-version: '5.8.*'
-          - php-version: 7.2
+          - php-version: '7.2'
             laravel-version: '5.5.*'
-          - php-version: 7.2
+          - php-version: '7.2'
             laravel-version: '5.6.*'
-          - php-version: 7.2
+          - php-version: '7.2'
             laravel-version: '5.7.*'
-          - php-version: 7.2
+          - php-version: '7.2'
             laravel-version: '5.8.*'
-          - php-version: 7.2
+          - php-version: '7.2'
             laravel-version: '6.0'
-          - php-version: 7.2
+          - php-version: '7.2'
             laravel-version: '7.0'
-          - php-version: 7.2
+          - php-version: '7.2'
             laravel-version: '6.*'
-          - php-version: 7.2
+          - php-version: '7.2'
             laravel-version: '7.*'
-          - php-version: 7.3
+          - php-version: '7.3'
             laravel-version: '5.5.*'
-          - php-version: 7.3
+          - php-version: '7.3'
             laravel-version: '5.6.*'
-          - php-version: 7.3
+          - php-version: '7.3'
             laravel-version: '5.7.*'
-          - php-version: 7.3
+          - php-version: '7.3'
             laravel-version: '5.8.*'
-          - php-version: 7.3
+          - php-version: '7.3'
             laravel-version: '6.*'
-          - php-version: 7.3
+          - php-version: '7.3'
             laravel-version: '7.*'
-          - php-version: 7.3
+          - php-version: '7.3'
             laravel-version: '8.*'
-          - php-version: 7.4
+          - php-version: '7.4'
             laravel-version: '5.8.*'
-          - php-version: 7.4
+          - php-version: '7.4'
             laravel-version: '6.0'
-          - php-version: 7.4
+          - php-version: '7.4'
             laravel-version: '7.0'
-          - php-version: 7.4
+          - php-version: '7.4'
             laravel-version: '6.*'
-          - php-version: 7.4
+          - php-version: '7.4'
             laravel-version: '7.*'
-          - php-version: 7.4
+          - php-version: '7.4'
             laravel-version: '8.*'
-          - php-version: 8.0
+          - php-version: '8.0'
             laravel-version: '^6.20.0'
-          - php-version: 8.0
+          - php-version: '8.0'
             laravel-version: '^7.29.0'
-          - php-version: 8.0
+          - php-version: '8.0'
             laravel-version: '^8.12.0'
 
     steps:
