@@ -28,6 +28,7 @@ Scenario: Handled errors are delivered from middleware
   And the event "unhandled" is false
   And the event "severityReason.type" equals "handledError"
 
+@requires-sessions
 Scenario: Sessions are correct in handled exceptions from middleware
   Given I enable session tracking
   And I start the laravel fixture

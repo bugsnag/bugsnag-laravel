@@ -36,6 +36,7 @@ Scenario: Unhandled errors are delivered from views
   And the event "severityReason.type" equals "unhandledExceptionMiddleware"
   And the event "severityReason.attributes.framework" equals "Laravel"
 
+@requires-sessions
 Scenario: Sessions are correct in unhandled exceptions from views
   Given I enable session tracking
   And I start the laravel fixture
