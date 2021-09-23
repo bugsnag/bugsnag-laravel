@@ -35,6 +35,10 @@ class Laravel
       fixture.start_with?("lumen")
     end
 
+    def latest?
+      fixture.end_with?("-latest")
+    end
+
     private
 
     def load_port_from_docker_compose
