@@ -43,38 +43,46 @@ Then("the event {string} matches the current major Laravel version") do |path|
   # skip this assertion if we're running Lumen
   next if Laravel.lumen?
 
-  steps %{
-    Then the event '#{path}' starts with '#{Laravel.major_version}'
-    And the event '#{path}' matches '^((\\d+\\.){2}\\d+|\d\.x-dev)$'
-  }
+  # don't try to check the major version on the 'latest' fixture
+  unless Laravel.latest?
+    step("the event '#{path}' starts with '#{Laravel.major_version}'")
+  end
+
+  step("the event '#{path}' matches '^((\\d+\\.){2}\\d+|\d\.x-dev)$'")
 end
 
 Then("the payload field {string} matches the current major Laravel version") do |path|
   # skip this assertion if we're running Lumen
   next if Laravel.lumen?
 
-  steps %{
-    Then the payload field '#{path}' starts with '#{Laravel.major_version}'
-    And the payload field '#{path}' matches the regex '^((\\d+\\.){2}\\d+|\d\.x-dev)$'
-  }
+  # don't try to check the major version on the 'latest' fixture
+  unless Laravel.latest?
+    step("the payload field '#{path}' starts with '#{Laravel.major_version}'")
+  end
+
+  step("the payload field '#{path}' matches the regex '^((\\d+\\.){2}\\d+|\d\.x-dev)$'")
 end
 
 Then("the event {string} matches the current major Lumen version") do |path|
   # skip this assertion if we're running Laravel
   next unless Laravel.lumen?
 
-  steps %{
-    Then the event '#{path}' starts with '#{Laravel.major_version}'
-    And the event '#{path}' matches '^((\\d+\\.){2}\\d+|\d\.x-dev)$'
-  }
+  # don't try to check the major version on the 'latest' fixture
+  unless Laravel.latest?
+    step("the event '#{path}' starts with '#{Laravel.major_version}'")
+  end
+
+  step("the event '#{path}' matches '^((\\d+\\.){2}\\d+|\d\.x-dev)$'")
 end
 
 Then("the payload field {string} matches the current major Lumen version") do |path|
   # skip this assertion if we're running Laravel
   next unless Laravel.lumen?
 
-  steps %{
-    Then the payload field '#{path}' starts with '#{Laravel.major_version}'
-    And the payload field '#{path}' matches the regex '^((\\d+\\.){2}\\d+|\d\.x-dev)$'
-  }
+  # don't try to check the major version on the 'latest' fixture
+  unless Laravel.latest?
+    step("the payload field '#{path}' starts with '#{Laravel.major_version}'")
+  end
+
+  step("the payload field '#{path}' matches the regex '^((\\d+\\.){2}\\d+|\d\.x-dev)$'")
 end
