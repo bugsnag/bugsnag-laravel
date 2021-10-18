@@ -57,6 +57,25 @@ services:
       - target: 8000
         published: 61266
 
+  laravel8:
+    build:
+      context: laravel8
+      args:
+        - PHP_VERSION
+    environment:
+      - BUGSNAG_API_KEY
+      - BUGSNAG_ENDPOINT
+      - BUGSNAG_SESSION_ENDPOINT
+      - BUGSNAG_CAPTURE_SESSIONS
+      - BUGSNAG_USE_CUSTOM_GUZZLE
+      - BUGSNAG_REGISTER_OOM_BOOTSTRAPPER
+      - BUGSNAG_DISCARD_CLASSES
+      - BUGSNAG_REDACTED_KEYS
+    restart: "no"
+    ports:
+      - target: 8000
+        published: 61280
+
   laravel-latest:
     build:
       context: laravel-latest

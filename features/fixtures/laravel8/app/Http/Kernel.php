@@ -63,5 +63,21 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'unMidEx' => \App\Http\Middleware\UnhandledMiddlewareEx::class,
+        'unMidErr' => \App\Http\Middleware\UnhandledMiddlewareErr::class,
+        'hanMidEx' => \App\Http\Middleware\HandledMiddlewareEx::class,
+        'hanMidErr' => \App\Http\Middleware\HandledMiddlewareErr::class,
     ];
+
+    protected function bootstrappers()
+    {
+        if (!getenv('BUGSNAG_REGISTER_OOM_BOOTSTRAPPER')) {
+            return parent::bootstrappers();
+        }
+
+        return array_merge(
+            [\Bugsnag\BugsnagLaravel\OomBootstrapper::class],
+            parent::bootstrappers(),
+        );
+    }
 }
