@@ -12,6 +12,8 @@ WORKDIR /app
 
 COPY . .
 
+RUN cp .env.example .env
+
 RUN ./install_composer.sh
 
 RUN php composer.phar install --prefer-dist
