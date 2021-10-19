@@ -47,7 +47,7 @@ class BugsnagServiceProvider extends ServiceProvider
     {
         $this->setupConfig($this->app);
 
-        $this->setupEvents($this->app->events, $this->app->config->get('bugsnag'));
+        $this->setupEvents($this->app->events, $this->app->config->get('bugsnag', []));
 
         $this->setupQueue($this->app->queue);
 
