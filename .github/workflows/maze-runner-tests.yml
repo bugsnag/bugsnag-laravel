@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
       matrix:
         php-version: [7.4]
-        laravel-fixture: [laravel56, laravel58, laravel66, lumen8]
+        laravel-fixture: [laravel56, laravel58, laravel66, laravel8, lumen8]
 
     steps:
     - uses: actions/checkout@v2
