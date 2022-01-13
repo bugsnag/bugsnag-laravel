@@ -18,7 +18,7 @@
     ],
     "require": {
         "php": "^7.2",
-        "bugsnag/bugsnag-laravel": "dev-master as 99.99.99",
+        "bugsnag/bugsnag-laravel": "dev-main as 99.99.99",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.2",
         "laravel/tinker": "^2.0",
