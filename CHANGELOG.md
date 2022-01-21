@@ -1,6 +1,13 @@
 Changelog
 =========
 
+## TBD
+
+### Enhancements
+
+* Allow installing Bugsnag PSR Logger v2. This adds support for PSR Log v3
+  [#471](https://github.com/bugsnag/bugsnag-laravel/pull/471)
+
 ## 2.22.2 (2021-09-06)
 
 ### Bug Fixes
