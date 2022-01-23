@@ -1,6 +1,21 @@
 Changelog
 =========
 
+## 2.23.0 (2022-01-24)
+
+### Enhancements
+
+* Added support for Laravel 9
+  [#472](https://github.com/bugsnag/bugsnag-laravel/pull/472)
+
+* Added support for `psr/log` v3
+  [#472](https://github.com/bugsnag/bugsnag-laravel/pull/472)
+
+### Bug Fixes
+
+* Fixed crashes on PHP 8.1
+  [#472](https://github.com/bugsnag/bugsnag-laravel/pull/472)
+
 ## 2.22.2 (2021-09-06)
 
 ### Bug Fixes
