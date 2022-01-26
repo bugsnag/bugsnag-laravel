@@ -21,6 +21,8 @@ jobs:
             laravel-fixture: laravel66
           - php-version: '8.0'
             laravel-fixture: laravel8
+          - php-version: '8.1'
+            laravel-fixture: laravel9
           - php-version: '8.0'
             laravel-fixture: lumen8
 
@@ -36,7 +38,14 @@ jobs:
     - name: install Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 2.7
+        ruby-version: '2.7'
         bundler-cache: true
 
-    - run: PHP_VERSION=${{ matrix.php-version }} LARAVEL_FIXTURE=${{ matrix.laravel-fixture }} bundle exec bugsnag-maze-runner
+    # temporarily edit composer.json to allow Laravel 9 components
+    - run: |
+        sed -i 's/\^8.0/\^8.0\|\^9.0/g' composer.json
+        bundle exec bugsnag-maze-runner
+      env:
+        PHP_VERSION: ${{ matrix.php-version }}
+        LARAVEL_FIXTURE: ${{ matrix.laravel-fixture }}
+        COMPOSER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
