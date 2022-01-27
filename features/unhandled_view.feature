@@ -6,10 +6,11 @@ Scenario: Unhandled exceptions are delivered from views
   Then I wait to receive a request
   And the request is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
   And the exception "errorClass" matches one of the following:
-    | ErrorException                              |
-    | Illuminate\\View\\ViewException             |
-    | Facade\\Ignition\\Exceptions\\ViewException |
-  And the exception "message" starts with "Unhandled exception (View: /app/resources/views/unhandledexception.blade.php)"
+    | ErrorException                                     |
+    | Illuminate\\View\\ViewException                    |
+    | Facade\\Ignition\\Exceptions\\ViewException        |
+    | Spatie\\LaravelIgnition\\Exceptions\\ViewException |
+  And the exception "message" starts with "Unhandled exception"
   And the event "metaData.request.httpMethod" equals "GET"
   And the event "app.type" equals "HTTP"
   And the event "context" equals "GET /unhandled_view_exception"
@@ -24,10 +25,11 @@ Scenario: Unhandled errors are delivered from views
   Then I wait to receive a request
   And the request is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
   And the exception "errorClass" matches one of the following:
-    | ErrorException                              |
-    | Illuminate\\View\\ViewException             |
-    | Facade\\Ignition\\Exceptions\\ViewException |
-  And the exception "message" equals "Call to undefined function foo() (View: /app/resources/views/unhandlederror.blade.php)"
+    | ErrorException                                     |
+    | Illuminate\\View\\ViewException                    |
+    | Facade\\Ignition\\Exceptions\\ViewException        |
+    | Spatie\\LaravelIgnition\\Exceptions\\ViewException |
+  And the exception "message" starts with "Call to undefined function foo()"
   And the event "metaData.request.httpMethod" equals "GET"
   And the event "app.type" equals "HTTP"
   And the event "context" equals "GET /unhandled_view_error"
