@@ -14,7 +14,6 @@ use Bugsnag\PsrLogger\MultiLogger as BaseMultiLogger;
 use Illuminate\Contracts\Logging\Log;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
-use Mockery;
 
 class ServiceProviderTest extends AbstractTestCase
 {
@@ -323,66 +322,14 @@ class ServiceProviderTest extends AbstractTestCase
 
     public function testCorrectLoggerClassesReturned()
     {
-        $app = Mockery::mock(Application::class);
-        $provider = new BugsnagServiceProvider($app);
-
         $loggerClass = interface_exists(Log::class) ? LaravelLogger::class : BugsnagLogger::class;
         $multiLoggerClass = interface_exists(Log::class) ? MultiLogger::class : BaseMultiLogger::class;
 
-        $app->shouldReceive('singleton')
-            ->with('bugsnag', \Mockery::type('callable'))
-            ->once();
+        $logger = $this->app->make('bugsnag.logger');
+        $this->assertInstanceOf($loggerClass, $logger);
 
-        $app->shouldReceive('singleton')
-            ->with('bugsnag.tracker', \Mockery::type('callable'))
-            ->once();
-
-        $app->shouldReceive('singleton')
-            ->with('bugsnag.logger', \Mockery::on(
-                function ($closure) use ($loggerClass) {
-                    if (is_callable($closure)) {
-                        $internalApp = Mockery::mock(Application::class);
-                        $internalApp->shouldReceive('offsetGet')->with('config')->andReturn($internalApp);
-                        $internalApp->shouldReceive('get')->with('bugsnag')->andReturn([
-                            'logger_notify_level' => 'error',
-                        ]);
-                        $bugsnag = Mockery::mock(Client::class);
-                        $internalApp->shouldReceive('offsetGet')->with('bugsnag')->andReturn($bugsnag);
-                        $internalApp->shouldReceive('offsetGet')->with('events')->zeroOrMoreTimes();
-                        $logger = call_user_func($closure, $internalApp);
-                        $this->assertSame(get_class($logger), $loggerClass);
-
-                        return true;
-                    }
-
-                    return false;
-                }
-            ))
-            ->once();
-
-        $app->shouldReceive('singleton')
-            ->with('bugsnag.multi', \Mockery::on(
-                function ($closure) use ($multiLoggerClass) {
-                    if (is_callable($closure)) {
-                        $internalApp = Mockery::mock(Application::class);
-                        $internalApp->shouldReceive('offsetGet')->with(\Mockery::type('string'));
-                        $multiLogger = call_user_func($closure, $internalApp);
-                        $this->assertSame(get_class($multiLogger), $multiLoggerClass);
-
-                        return true;
-                    }
-
-                    return false;
-                }
-            ))
-            ->once();
-
-        $app->shouldReceive('offsetGet')->with('log')->andReturn(null);
-        $app->shouldReceive('alias')->with('bugsnag', Client::class)->once();
-        $app->shouldReceive('alias')->with('bugsnag.tracker', Tracker::class)->once();
-        $app->shouldReceive('alias')->with('bugsnag.logger', $loggerClass)->once();
-        $app->shouldReceive('alias')->with('bugsnag.multi', $multiLoggerClass)->once();
-        $provider->register();
+        $multiLogger = $this->app->make('bugsnag.multi');
+        $this->assertInstanceOf($multiLoggerClass, $multiLogger);
     }
 
     public function testFiltersUseDefaultsIfNull()
@@ -470,23 +417,18 @@ class ServiceProviderTest extends AbstractTestCase
 
     public function testItUsesGuzzleInstanceFromTheContainer()
     {
-        $this->app->singleton('bugsnag.guzzle', function () {
-            /** @var \Mockery\MockInterface $mock */
-            $mock = Mockery::mock(\GuzzleHttp\ClientInterface::class);
-            $mock->shouldIgnoreMissing();
+        $guzzleClient = new \GuzzleHttp\Client();
 
-            return $mock;
+        $this->app->singleton('bugsnag.guzzle', function () use ($guzzleClient) {
+            return $guzzleClient;
         });
-
-        $expected = $this->app->make('bugsnag.guzzle');
-        $this->assertInstanceOf(\GuzzleHttp\ClientInterface::class, $expected);
 
         $client = $this->app->make(Client::class);
 
         $httpClient = $this->getProperty($client, 'http');
         $actual = $this->getProperty($httpClient, 'guzzle');
 
-        $this->assertSame($expected, $actual);
+        $this->assertSame($guzzleClient, $actual);
     }
 
     /**

@@ -3,13 +3,10 @@
 namespace Bugsnag\BugsnagLaravel\Tests;
 
 use Bugsnag\BugsnagLaravel\BugsnagServiceProvider;
-use Mockery\Adapter\Phpunit\MockeryPHPUnitIntegration;
 use Orchestra\Testbench\TestCase;
 
 abstract class AbstractTestCase extends TestCase
 {
-    use MockeryPHPUnitIntegration;
-
     /**
      * Get the service provider class.
      *
