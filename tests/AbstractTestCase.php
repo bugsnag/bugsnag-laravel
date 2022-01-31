@@ -3,20 +3,22 @@
 namespace Bugsnag\BugsnagLaravel\Tests;
 
 use Bugsnag\BugsnagLaravel\BugsnagServiceProvider;
-use GrahamCampbell\TestBench\AbstractPackageTestCase;
+use Orchestra\Testbench\TestCase;
 
-abstract class AbstractTestCase extends AbstractPackageTestCase
+abstract class AbstractTestCase extends TestCase
 {
     /**
      * Get the service provider class.
      *
      * @param \Illuminate\Contracts\Foundation\Application $app
      *
-     * @return string
+     * @return array<string>
      */
-    protected function getServiceProviderClass($app)
+    protected function getPackageProviders($app)
     {
-        return BugsnagServiceProvider::class;
+        return [
+            BugsnagServiceProvider::class,
+        ];
     }
 
     /**
@@ -34,5 +36,49 @@ abstract class AbstractTestCase extends AbstractPackageTestCase
         };
 
         return call_user_func($propertyAccessor->bindTo($object, $object), $property);
+    }
+
+    /**
+     * Set the environment variable "$name" to the given value.
+     *
+     * @param string $name
+     * @param string $value
+     *
+     * @return void
+     */
+    protected function setEnvironmentVariable($name, $value)
+    {
+        // Workaround a PHP 5 parser issue - '$app::VERSION' is valid but
+        // '$this->app::VERSION' is not
+        $app = $this->app;
+
+        // Laravel >= 5.8.0 uses "$_ENV" instead of "putenv" by default
+        if (version_compare($app::VERSION, '5.8.0', '>=')) {
+            $_ENV[$name] = $value;
+        } else {
+            putenv("{$name}={$value}");
+        }
+    }
+
+    /**
+     * Remove the environment variable "$name" from the environment.
+     *
+     * @param string $name
+     * @param string $value
+     *
+     * @return void
+     */
+    protected function removeEnvironmentVariable($name)
+    {
+        // Workaround a PHP 5 parser issue - '$app::VERSION' is valid but
+        // '$this->app::VERSION' is not
+        $app = $this->app;
+
+        // Laravel >= 5.8.0 uses "$_ENV" instead of "putenv" by default
+        if (version_compare($app::VERSION, '5.8.0', '>=')) {
+            unset($_ENV[$name]);
+        } else {
+            putenv("{$name}");
+        }
     }
 }
