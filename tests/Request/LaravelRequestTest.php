@@ -1,8 +1,8 @@
 <?php
 
-// stub out php_sapi_name in the Illumnate\Foundation namespace so we can
-// change its behaviour. Some Laravel versions use this to determine if
-// the app is running in a console
+// stub out php_sapi_name in the Illumnate\Foundation namespace so we can change
+// its behaviour. Laravel 5.0 - 5.8 use this to determine if the app is running
+// in a console (6.0+ use an environment variable or the PHP_SAPI constant)
 
 namespace Illuminate\Foundation;
 
