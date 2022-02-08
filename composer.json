@@ -12,10 +12,10 @@
     ],
     "require": {
         "php": ">=5.5",
-        "bugsnag/bugsnag": "^3.26.0",
+        "bugsnag/bugsnag": "^3.27.0",
         "bugsnag/bugsnag-psr-logger": "^1.4|^2.0",
-        "illuminate/contracts": "^5.0|^6.0|^7.0|^8.0",
-        "illuminate/support": "^5.0|^6.0|^7.0|^8.0",
+        "illuminate/contracts": "^5.0|^6.0|^7.0|^8.0|^9.0",
+        "illuminate/support": "^5.0|^6.0|^7.0|^8.0|^9.0",
         "monolog/monolog": "^1.12|^2.0"
     },
     "require-dev": {

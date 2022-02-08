@@ -5,6 +5,10 @@ Changelog
 
 ### Enhancements
 
+* Allow installation on Laravel 9 projects
+  [jdanio](https://github.com/jdanio)
+  [#470](https://github.com/bugsnag/bugsnag-laravel/pull/470)
+  [#477](https://github.com/bugsnag/bugsnag-laravel/pull/477)
 * Allow installing Bugsnag PSR Logger v2. This adds support for PSR Log v3
   [#471](https://github.com/bugsnag/bugsnag-laravel/pull/471)
 
