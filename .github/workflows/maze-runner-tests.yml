@@ -41,10 +41,7 @@ jobs:
         ruby-version: '2.7'
         bundler-cache: true
 
-    # temporarily edit composer.json to allow Laravel 9 components
-    - run: |
-        sed -i 's/\^8.0/\^8.0\|\^9.0/g' composer.json
-        bundle exec bugsnag-maze-runner
+    - run: bundle exec bugsnag-maze-runner
       env:
         PHP_VERSION: ${{ matrix.php-version }}
         LARAVEL_FIXTURE: ${{ matrix.laravel-fixture }}
