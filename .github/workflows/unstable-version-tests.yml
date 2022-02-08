@@ -10,8 +10,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: [8.0]
-        laravel-version: ['8.x-dev as 8']
+        php-version: ['8.1']
+        laravel-version: ['9.x-dev', 'dev-master as 9']
 
     steps:
     - uses: actions/checkout@v2
@@ -37,9 +37,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: [8.0]
+        php-version: ['8.1']
         laravel-fixture: [laravel-latest]
-        laravel-version: ['8.x-dev as 8'] #, 'dev-master as 8'] # disabled pending package updates in Laravel's skeleton app (PLAT-7040)
+        laravel-version: ['9.x-dev'] #, 'dev-master as 9'] # disabled pending package updates in Laravel's skeleton app (PLAT-7040)
 
     steps:
     - uses: actions/checkout@v2
