@@ -5,39 +5,34 @@ namespace Bugsnag\BugsnagLaravel\Tests\Facades;
 use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Bugsnag\BugsnagLaravel\Tests\AbstractTestCase;
 use Bugsnag\Client;
-use GrahamCampbell\TestBenchCore\FacadeTrait;
+use Illuminate\Support\Facades\Facade;
 
 class BugsnagTest extends AbstractTestCase
 {
-    use FacadeTrait;
-
-    /**
-     * Get the facade accessor.
-     *
-     * @return string
-     */
-    protected function getFacadeAccessor()
+    public function testIsFacade()
     {
-        return 'bugsnag';
+        $this->assertInstanceOf(Facade::class, new Bugsnag());
     }
 
-    /**
-     * Get the facade class.
-     *
-     * @return string
-     */
-    protected function getFacadeClass()
+    public function testIsFacadeForBugsnagClient()
     {
-        return Bugsnag::class;
+        $root = Bugsnag::getFacadeRoot();
+
+        $this->assertInstanceOf(Client::class, $root);
+        $this->assertSame($root, $this->app->make('bugsnag'));
     }
 
-    /**
-     * Get the facade root.
-     *
-     * @return string
-     */
-    protected function getFacadeRoot()
+    public function testItCanCallClientMethods()
     {
-        return Client::class;
+        Bugsnag::setDiscardClasses(['Example']);
+        $this->assertSame(['Example'], Bugsnag::getDiscardClasses());
+
+        Bugsnag::setNotifyEndpoint('https://example.com');
+        $this->assertSame('https://example.com', Bugsnag::getNotifyEndpoint());
+
+        $client = $this->app->make('bugsnag');
+
+        $this->assertSame(['Example'], $client->getDiscardClasses());
+        $this->assertSame('https://example.com', $client->getNotifyEndpoint());
     }
 }

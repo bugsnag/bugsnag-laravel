@@ -48,7 +48,7 @@ Then("the event {string} matches the current major Laravel version") do |path|
     step("the event '#{path}' starts with '#{Laravel.major_version}'")
   end
 
-  step("the event '#{path}' matches '^((\\d+\\.){2}\\d+|\d\.x-dev)$'")
+  step("the event '#{path}' matches '^((\\d+\\.){2}\\d+|\\d\\.x-dev)$'")
 end
 
 Then("the payload field {string} matches the current major Laravel version") do |path|
@@ -60,7 +60,7 @@ Then("the payload field {string} matches the current major Laravel version") do 
     step("the payload field '#{path}' starts with '#{Laravel.major_version}'")
   end
 
-  step("the payload field '#{path}' matches the regex '^((\\d+\\.){2}\\d+|\d\.x-dev)$'")
+  step("the payload field '#{path}' matches the regex '^((\\d+\\.){2}\\d+|\\d\\.x-dev)$'")
 end
 
 Then("the event {string} matches the current major Lumen version") do |path|
@@ -72,7 +72,7 @@ Then("the event {string} matches the current major Lumen version") do |path|
     step("the event '#{path}' starts with '#{Laravel.major_version}'")
   end
 
-  step("the event '#{path}' matches '^((\\d+\\.){2}\\d+|\d\.x-dev)$'")
+  step("the event '#{path}' matches '^((\\d+\\.){2}\\d+|\\d\\.x-dev)$'")
 end
 
 Then("the payload field {string} matches the current major Lumen version") do |path|
@@ -84,5 +84,5 @@ Then("the payload field {string} matches the current major Lumen version") do |p
     step("the payload field '#{path}' starts with '#{Laravel.major_version}'")
   end
 
-  step("the payload field '#{path}' matches the regex '^((\\d+\\.){2}\\d+|\d\.x-dev)$'")
+  step("the payload field '#{path}' matches the regex '^((\\d+\\.){2}\\d+|\\d\\.x-dev)$'")
 end

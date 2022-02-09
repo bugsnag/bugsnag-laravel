@@ -3,6 +3,7 @@
 namespace Bugsnag\BugsnagLaravel\Request;
 
 use Bugsnag\Request\RequestInterface;
+use Exception;
 use Illuminate\Http\Request;
 
 class LaravelRequest implements RequestInterface
@@ -43,7 +44,11 @@ class LaravelRequest implements RequestInterface
      */
     public function getSession()
     {
-        $session = $this->request->getSession();
+        try {
+            $session = $this->request->getSession();
+        } catch (Exception $e) {
+            return [];
+        }
 
         return $session ? $session->all() : [];
     }

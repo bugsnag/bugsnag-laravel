@@ -2,21 +2,21 @@
 
 namespace Bugsnag\BugsnagLaravel\Tests;
 
+use Bugsnag\BugsnagLaravel\BugsnagServiceProvider;
 use Bugsnag\BugsnagLaravel\LaravelLogger;
 use Bugsnag\BugsnagLaravel\MultiLogger;
 use Bugsnag\BugsnagLaravel\Queue\Tracker;
+use Bugsnag\BugsnagLaravel\Tests\Stubs\Injectee;
+use Bugsnag\BugsnagLaravel\Tests\Stubs\InjecteeWithLogInterface;
 use Bugsnag\Client;
 use Bugsnag\PsrLogger\BugsnagLogger;
 use Bugsnag\PsrLogger\MultiLogger as BaseMultiLogger;
-use GrahamCampbell\TestBenchCore\ServiceProviderTrait;
 use Illuminate\Contracts\Logging\Log;
 use Illuminate\Foundation\Application;
-use Mockery;
+use Illuminate\Support\ServiceProvider;
 
 class ServiceProviderTest extends AbstractTestCase
 {
-    use ServiceProviderTrait;
-
     /**
      * An Application instance provided by the parent test case.
      *
@@ -24,24 +24,75 @@ class ServiceProviderTest extends AbstractTestCase
      */
     protected $app;
 
-    public function testClientIsInjectable()
+    public function testItIsAServiceProvider()
     {
-        $this->assertIsInjectable(Client::class);
+        $serviceProvider = $this->app->getProvider(BugsnagServiceProvider::class);
+
+        $this->assertInstanceOf(ServiceProvider::class, $serviceProvider);
     }
 
-    public function testJobTrackerIsInjectable()
+    public function testItProvidesAValidListOfServices()
     {
-        $this->assertIsInjectable(Tracker::class);
+        $serviceProvider = $this->app->getProvider(BugsnagServiceProvider::class);
+        $provides = $serviceProvider->provides();
+
+        // ensure there's at least one provided service
+        $this->assertNotEmpty($provides);
+
+        foreach ($provides as $serviceId) {
+            // assert this service exists in the container
+            $this->assertTrue(
+                $this->app->bound($serviceId),
+                "Expected the ID '{$serviceId}' to be bound in the DI container"
+            );
+
+            // ensure the service can be resolved
+            $this->app->make($serviceId);
+        }
     }
 
-    public function testMultiLoggerIsInjectable()
+    /**
+     * @dataProvider serviceAliasProvider
+     */
+    public function testItRegistersAnAliasForEachService($serviceId, $alias)
     {
-        $this->assertIsInjectable(interface_exists(Log::class) ? MultiLogger::class : BaseMultiLogger::class);
+        $this->assertTrue(
+            $this->app->bound($serviceId),
+            "Expected the ID '{$serviceId}' to be bound in the DI container"
+        );
+
+        $this->assertTrue(
+            $this->app->bound($alias),
+            "Expected the ID '{$alias}' to be bound in the DI container"
+        );
+
+        $service = $this->app->make($serviceId);
+        $aliasInstance = $this->app->make($alias);
+
+        $this->assertSame($service, $aliasInstance);
     }
 
-    public function testBugsnagLoggerIsInjectable()
+    public function serviceAliasProvider()
     {
-        $this->assertIsInjectable(interface_exists(Log::class) ? LaravelLogger::class : BugsnagLogger::class);
+        return [
+            'bugsnag' => ['bugsnag', Client::class],
+            'bugsnag.tracker' => ['bugsnag.tracker', Tracker::class],
+            'bugsnag.logger' => ['bugsnag.logger', interface_exists(Log::class) ? LaravelLogger::class : BugsnagLogger::class],
+            'bugsnag.multi' => ['bugsnag.multi', interface_exists(Log::class) ? MultiLogger::class : BaseMultiLogger::class],
+        ];
+    }
+
+    public function testServicesAreInjectable()
+    {
+        if (interface_exists(Log::class)) {
+            $injectee = InjecteeWithLogInterface::class;
+        } else {
+            $injectee = Injectee::class;
+        }
+
+        $service = $this->app->make($injectee);
+
+        $this->assertTrue($service->wasConstructed());
     }
 
     /**
@@ -131,8 +182,6 @@ class ServiceProviderTest extends AbstractTestCase
         $client = $this->app->make(Client::class);
 
         $this->assertInstanceOf(Client::class, $client);
-
-        $appRoot = $this->app->path();
 
         /** @var Client $client */
         $config = $client->getConfig();
@@ -273,67 +322,14 @@ class ServiceProviderTest extends AbstractTestCase
 
     public function testCorrectLoggerClassesReturned()
     {
-        $app = Mockery::mock(Application::class);
-        $providerClass = $this->getServiceProviderClass($app);
-        $provider = new $providerClass($app);
-
         $loggerClass = interface_exists(Log::class) ? LaravelLogger::class : BugsnagLogger::class;
         $multiLoggerClass = interface_exists(Log::class) ? MultiLogger::class : BaseMultiLogger::class;
 
-        $app->shouldReceive('singleton')
-            ->with('bugsnag', \Mockery::type('callable'))
-            ->once();
+        $logger = $this->app->make('bugsnag.logger');
+        $this->assertInstanceOf($loggerClass, $logger);
 
-        $app->shouldReceive('singleton')
-            ->with('bugsnag.tracker', \Mockery::type('callable'))
-            ->once();
-
-        $app->shouldReceive('singleton')
-            ->with('bugsnag.logger', \Mockery::on(
-                function ($closure) use ($loggerClass) {
-                    if (is_callable($closure)) {
-                        $internalApp = Mockery::mock(Application::class);
-                        $internalApp->shouldReceive('offsetGet')->with('config')->andReturn($internalApp);
-                        $internalApp->shouldReceive('get')->with('bugsnag')->andReturn([
-                            'logger_notify_level' => 'error',
-                        ]);
-                        $bugsnag = Mockery::mock(Client::class);
-                        $internalApp->shouldReceive('offsetGet')->with('bugsnag')->andReturn($bugsnag);
-                        $internalApp->shouldReceive('offsetGet')->with('events')->zeroOrMoreTimes();
-                        $logger = call_user_func($closure, $internalApp);
-                        $this->assertSame(get_class($logger), $loggerClass);
-
-                        return true;
-                    }
-
-                    return false;
-                }
-            ))
-            ->once();
-
-        $app->shouldReceive('singleton')
-            ->with('bugsnag.multi', \Mockery::on(
-                function ($closure) use ($multiLoggerClass) {
-                    if (is_callable($closure)) {
-                        $internalApp = Mockery::mock(Application::class);
-                        $internalApp->shouldReceive('offsetGet')->with(\Mockery::type('string'));
-                        $multiLogger = call_user_func($closure, $internalApp);
-                        $this->assertSame(get_class($multiLogger), $multiLoggerClass);
-
-                        return true;
-                    }
-
-                    return false;
-                }
-            ))
-            ->once();
-
-        $app->shouldReceive('offsetGet')->with('log')->andReturn(null);
-        $app->shouldReceive('alias')->with('bugsnag', Client::class)->once();
-        $app->shouldReceive('alias')->with('bugsnag.tracker', Tracker::class)->once();
-        $app->shouldReceive('alias')->with('bugsnag.logger', $loggerClass)->once();
-        $app->shouldReceive('alias')->with('bugsnag.multi', $multiLoggerClass)->once();
-        $provider->register();
+        $multiLogger = $this->app->make('bugsnag.multi');
+        $this->assertInstanceOf($multiLoggerClass, $multiLogger);
     }
 
     public function testFiltersUseDefaultsIfNull()
@@ -421,23 +417,18 @@ class ServiceProviderTest extends AbstractTestCase
 
     public function testItUsesGuzzleInstanceFromTheContainer()
     {
-        $this->app->singleton('bugsnag.guzzle', function () {
-            /** @var \Mockery\MockInterface $mock */
-            $mock = Mockery::mock(\GuzzleHttp\ClientInterface::class);
-            $mock->shouldIgnoreMissing();
+        $guzzleClient = new \GuzzleHttp\Client();
 
-            return $mock;
+        $this->app->singleton('bugsnag.guzzle', function () use ($guzzleClient) {
+            return $guzzleClient;
         });
-
-        $expected = $this->app->make('bugsnag.guzzle');
-        $this->assertInstanceOf(\GuzzleHttp\ClientInterface::class, $expected);
 
         $client = $this->app->make(Client::class);
 
         $httpClient = $this->getProperty($client, 'http');
         $actual = $this->getProperty($httpClient, 'guzzle');
 
-        $this->assertSame($expected, $actual);
+        $this->assertSame($guzzleClient, $actual);
     }
 
     /**
@@ -473,49 +464,5 @@ class ServiceProviderTest extends AbstractTestCase
             [1234],
             [1024 * 1024 * 20],
         ];
-    }
-
-    /**
-     * Set the environment variable "$name" to the given value.
-     *
-     * @param string $name
-     * @param string $value
-     *
-     * @return void
-     */
-    private function setEnvironmentVariable($name, $value)
-    {
-        // Workaround a PHP 5 parser issue - '$app::VERSION' is valid but
-        // '$this->app::VERSION' is not
-        $app = $this->app;
-
-        // Laravel >= 5.8.0 uses "$_ENV" instead of "putenv" by default
-        if (version_compare($app::VERSION, '5.8.0', '>=')) {
-            $_ENV[$name] = $value;
-        } else {
-            putenv("{$name}={$value}");
-        }
-    }
-
-    /**
-     * Remove the environment variable "$name" from the environment.
-     *
-     * @param string $name
-     * @param string $value
-     *
-     * @return void
-     */
-    private function removeEnvironmentVariable($name)
-    {
-        // Workaround a PHP 5 parser issue - '$app::VERSION' is valid but
-        // '$this->app::VERSION' is not
-        $app = $this->app;
-
-        // Laravel >= 5.8.0 uses "$_ENV" instead of "putenv" by default
-        if (version_compare($app::VERSION, '5.8.0', '>=')) {
-            unset($_ENV[$name]);
-        } else {
-            putenv("{$name}");
-        }
     }
 }
