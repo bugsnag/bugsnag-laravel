@@ -1,8 +1,8 @@
 diff --git a/config/app.php b/config/app.php
-index 8409e00..3592882 100644
+index 1941d7c..039b0d4 100644
 --- a/config/app.php
 +++ b/config/app.php
-@@ -165,6 +165,7 @@ return [
+@@ -167,6 +167,7 @@
          /*
           * Package Service Providers...
           */
@@ -10,12 +10,12 @@ index 8409e00..3592882 100644
  
          /*
           * Application Service Providers...
-@@ -227,6 +228,8 @@ return [
-         'Validator' => Illuminate\Support\Facades\Validator::class,
-         'View' => Illuminate\Support\Facades\View::class,
+@@ -191,7 +192,7 @@
+     */
  
+     'aliases' => Facade::defaultAliases()->merge([
+-        // ...
 +        'Bugsnag' => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
-+
-     ],
+     ])->toArray(),
  
  ];
