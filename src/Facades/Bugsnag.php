@@ -2,6 +2,7 @@
 
 namespace Bugsnag\BugsnagLaravel\Facades;
 
+use Bugsnag\BugsnagLaravel\Testing\BugsnagFake;
 use Illuminate\Support\Facades\Facade;
 
 /**
@@ -61,6 +62,10 @@ use Illuminate\Support\Facades\Facade;
  * @method static bool shouldNotify()
  * @method static bool shouldSendCode()
  * @method static void startSession()
+ * @method static void assertNotified(string $reportName, callable|null $callback = null)
+ * @method static void assertNotifiedTimes(string $reportName, int $times = 1, callable|null $callback = null)
+ * @method static void assertNotNotified(string $reportName, callable|null $callback = null)
+ * @method static void assertNothingNotified()
  *
  * @see \Bugsnag\Client
  */
@@ -69,5 +74,17 @@ class Bugsnag extends Facade
     protected static function getFacadeAccessor()
     {
         return 'bugsnag';
+    }
+
+    /**
+     * Replace the bound instance with a fake.
+     *
+     * @return BugsnagFake
+     */
+    public static function fake()
+    {
+        static::swap($fake = BugsnagFake::fromClient(static::getFacadeRoot()));
+
+        return $fake;
     }
 }
