@@ -15,7 +15,8 @@ class BugsnagFake extends Client
     protected $http;
 
     /**
-     * @param  Client  $client
+     * @param Client $client
+     *
      * @return BugsnagFake
      */
     public static function fromClient(Client $client)
@@ -38,31 +39,32 @@ class BugsnagFake extends Client
     /**
      * Get all the reports matching a truth-test callback.
      *
-     * @param  string  $name
-     * @param  callable(Report): bool|null  $callback
+     * @param string                      $reportName
+     * @param callable(Report): bool|null $callback
+     *
      * @return Collection
      */
-    public function notified($name, $callback = null)
+    public function notified($reportName, $callback = null)
     {
         $callback = $callback ?: function () {
             return true;
         };
 
         return collect($this->http->getQueue())
-            ->filter(function (Report $report) use ($name) {
-                return $report->getName() === $name;
+            ->filter(function (Report $report) use ($reportName) {
+                return $report->getName() === $reportName;
             })
             ->filter(function (Report $report) use ($callback) {
                 return $callback($report);
             });
     }
 
-
     /**
      * Assert if a report was notified based on a truth-test callback.
      *
-     * @param  string  $reportName
-     * @param  callable(Report): bool|null  $callback
+     * @param string                      $reportName
+     * @param callable(Report): bool|null $callback
+     *
      * @return void
      */
     public function assertNotified($reportName, $callback = null)
@@ -76,9 +78,10 @@ class BugsnagFake extends Client
     /**
      * Assert if a report was pushed a number of times.
      *
-     * @param  string  $reportName
-     * @param  int  $times
-     * @param  callable(Report): bool|int|null  $callback
+     * @param string                          $reportName
+     * @param int                             $times
+     * @param callable(Report): bool|int|null $callback
+     *
      * @return void
      */
     public function assertNotifiedTimes($reportName, $times = 1, $callback = null)
@@ -86,7 +89,8 @@ class BugsnagFake extends Client
         $count = $this->notified($reportName, $callback)->count();
 
         PHPUnit::assertSame(
-            $times, $count,
+            $times,
+            $count,
             "The expected [{$reportName}] bugsnag was reported {$count} times instead of {$times} times."
         );
     }
@@ -94,8 +98,9 @@ class BugsnagFake extends Client
     /**
      * Determine if a report was notified based on a truth-test callback.
      *
-     * @param  string  $reportName
-     * @param  callable(Report): bool|null  $callback
+     * @param string                      $reportName
+     * @param callable(Report): bool|null $callback
+     *
      * @return void
      */
     public function assertNotNotified($reportName, $callback = null)
