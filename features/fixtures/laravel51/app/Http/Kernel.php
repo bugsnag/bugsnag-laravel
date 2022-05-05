@@ -29,5 +29,21 @@ class Kernel extends HttpKernel
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'unMidEx' => \App\Http\Middleware\UnhandledMiddlewareEx::class,
+        'unMidErr' => \App\Http\Middleware\UnhandledMiddlewareErr::class,
+        'hanMidEx' => \App\Http\Middleware\HandledMiddlewareEx::class,
+        'hanMidErr' => \App\Http\Middleware\HandledMiddlewareErr::class,
     ];
+
+    protected function bootstrappers()
+    {
+        if (!getenv('BUGSNAG_REGISTER_OOM_BOOTSTRAPPER')) {
+            return parent::bootstrappers();
+        }
+
+        return array_merge(
+            [\Bugsnag\BugsnagLaravel\OomBootstrapper::class],
+            parent::bootstrappers(),
+        );
+    }
 }

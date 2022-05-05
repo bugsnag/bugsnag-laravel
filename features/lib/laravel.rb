@@ -39,6 +39,13 @@ class Laravel
       fixture.end_with?("-latest")
     end
 
+    def supports_sessions?
+      return false if lumen?
+      return false if fixture == "laravel51"
+
+      true
+    end
+
     private
 
     def load_port_from_docker_compose

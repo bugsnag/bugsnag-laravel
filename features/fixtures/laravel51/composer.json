@@ -4,15 +4,19 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "type": "project",
+    "repositories": [
+        {
+            "type": "path",
+            "url": "bugsnag-laravel",
+            "options": {
+                "symlink": false
+            }
+        }
+    ],
     "require": {
         "php": ">=5.5.9",
+        "bugsnag/bugsnag-laravel": "dev-main as 99.99.99",
         "laravel/framework": "5.1.*"
-    },
-    "require-dev": {
-        "fzaninotto/faker": "~1.4",
-        "mockery/mockery": "0.9.*",
-        "phpunit/phpunit": "~4.0",
-        "phpspec/phpspec": "~2.1"
     },
     "autoload": {
         "classmap": [
