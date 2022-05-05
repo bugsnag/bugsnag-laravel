@@ -14,6 +14,8 @@ jobs:
       matrix:
         include:
           - php-version: '7.4'
+            laravel-fixture: laravel51
+          - php-version: '7.4'
             laravel-fixture: laravel56
           - php-version: '7.4'
             laravel-fixture: laravel58

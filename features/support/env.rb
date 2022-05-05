@@ -24,10 +24,14 @@ Before do
   Laravel.reset!
 end
 
-Before("@not-lumen or @requires-sessions") do
+Before("@not-lumen") do
   skip_this_scenario if Laravel.lumen?
 end
 
 Before("@not-laravel") do
   skip_this_scenario unless Laravel.lumen?
+end
+
+Before("@requires-sessions") do
+  skip_this_scenario unless Laravel.supports_sessions?
 end
