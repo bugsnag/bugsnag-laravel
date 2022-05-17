@@ -465,4 +465,53 @@ class ServiceProviderTest extends AbstractTestCase
             [1024 * 1024 * 20],
         ];
     }
+
+    public function testFeatureFlagsCanBeSetFromConfig()
+    {
+        /** @var \Illuminate\Config\Repository $laravelConfig */
+        $laravelConfig = $this->app->config;
+        $bugsnagConfig = $laravelConfig->get('bugsnag');
+        $bugsnagConfig['feature_flags'] = [
+            ['name' => 'flag1'],
+            ['name' => 'flag2', 'variant' => 'yes'],
+            ['not name' => 'flag3'],
+            ['name' => 'flag4', 'not variant' => 'xyz'],
+        ];
+
+        $laravelConfig->set('bugsnag', $bugsnagConfig);
+
+        /** @var Client $client */
+        $client = $this->app->make(Client::class);
+
+        $this->assertInstanceOf(Client::class, $client);
+
+        $expected = [
+            ['featureFlag' => 'flag1'],
+            ['featureFlag' => 'flag2', 'variant' => 'yes'],
+            ['featureFlag' => 'flag4'],
+        ];
+
+        $actual = $client->getConfig()->getFeatureFlagsCopy()->toArray();
+
+        $this->assertSame($expected, $actual);
+    }
+
+    public function testFeatureFlagsAreNotSetWhenNotAnArray()
+    {
+        /** @var \Illuminate\Config\Repository $laravelConfig */
+        $laravelConfig = $this->app->config;
+        $bugsnagConfig = $laravelConfig->get('bugsnag');
+        $bugsnagConfig['feature_flags'] = new \stdClass();
+
+        $laravelConfig->set('bugsnag', $bugsnagConfig);
+
+        /** @var Client $client */
+        $client = $this->app->make(Client::class);
+
+        $this->assertInstanceOf(Client::class, $client);
+
+        $actual = $client->getConfig()->getFeatureFlagsCopy()->toArray();
+
+        $this->assertSame([], $actual);
+    }
 }

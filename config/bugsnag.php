@@ -330,4 +330,23 @@ return [
     */
 
     'redacted_keys' => empty(env('BUGSNAG_REDACTED_KEYS')) ? null : explode(',', env('BUGSNAG_REDACTED_KEYS')),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Feature flags
+    |--------------------------------------------------------------------------
+    |
+    | An array of feature flags to add to all reports.
+    |
+    | Each element in the array must have a "name" key and can optionally have a
+    | "variant" key, for example:
+    |
+    | [
+    |     ['name' => 'example without a variant'],
+    |     ['name' => 'example with a variant', 'variant' => 'example of a variant'],
+    | ]
+    |
+    */
+
+    'feature_flags' => [],
 ];

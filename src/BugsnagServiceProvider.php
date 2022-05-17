@@ -9,6 +9,7 @@ use Bugsnag\BugsnagLaravel\Request\LaravelResolver;
 use Bugsnag\Callbacks\CustomUser;
 use Bugsnag\Client;
 use Bugsnag\Configuration;
+use Bugsnag\FeatureFlag;
 use Bugsnag\PsrLogger\BugsnagLogger;
 use Bugsnag\PsrLogger\MultiLogger as BaseMultiLogger;
 use Bugsnag\Report;
@@ -243,6 +244,24 @@ class BugsnagServiceProvider extends ServiceProvider
 
             if (isset($config['redacted_keys']) && is_array($config['redacted_keys'])) {
                 $client->setRedactedKeys($config['redacted_keys']);
+            }
+
+            if (isset($config['feature_flags']) && is_array($config['feature_flags']) && $config['feature_flags'] !== []) {
+                $featureFlags = [];
+
+                foreach ($config['feature_flags'] as $flag) {
+                    if (!is_array($flag) || !array_key_exists('name', $flag)) {
+                        continue;
+                    }
+
+                    if (array_key_exists('variant', $flag)) {
+                        $featureFlags[] = new FeatureFlag($flag['name'], $flag['variant']);
+                    } else {
+                        $featureFlags[] = new FeatureFlag($flag['name']);
+                    }
+                }
+
+                $client->addFeatureFlags($featureFlags);
             }
 
             return $client;
