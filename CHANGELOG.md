@@ -1,6 +1,13 @@
 Changelog
 =========
 
+## TBD
+
+ ### Enhancements
+
+ * New APIs to support feature flag and experiment functionality. For more information, please see https://docs.bugsnag.com/product/features-experiments.
+   [#153](https://github.com/bugsnag/bugsnag-laravel/pull/487)
+
 ## 2.23.0 (2022-02-09)
 
 ### Enhancements
