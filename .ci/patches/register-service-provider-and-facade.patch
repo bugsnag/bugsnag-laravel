@@ -14,7 +14,7 @@ index 1941d7c..039b0d4 100644
      */
  
      'aliases' => Facade::defaultAliases()->merge([
--        // ...
+-        // 'ExampleClass' => App\Example\ExampleClass::class,
 +        'Bugsnag' => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
      ])->toArray(),
  
