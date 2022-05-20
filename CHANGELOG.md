@@ -1,6 +1,13 @@
 Changelog
 =========
 
+## TBD
+
+### Enhancements
+
+* Added support for Monolog 3.0
+  [#489](https://github.com/bugsnag/bugsnag-laravel/pull/489)
+
 ## 2.24.0 (2022-05-20)
 
 ### Enhancements
