@@ -62,6 +62,10 @@
         ]
     },
     "config": {
+        "allow-plugins": {
+            "kylekatarnls/update-helper": false,
+            "symfony/thanks": false
+        },
         "preferred-install": "dist",
         "sort-packages": true,
         "optimize-autoloader": true
