@@ -13,6 +13,7 @@ use Bugsnag\FeatureFlag;
 use Bugsnag\PsrLogger\BugsnagLogger;
 use Bugsnag\PsrLogger\MultiLogger as BaseMultiLogger;
 use Bugsnag\Report;
+use Bugsnag\Shutdown\NullableShutdownStrategy;
 use DateTime;
 use Illuminate\Auth\GenericUser;
 use Illuminate\Contracts\Container\Container;
@@ -191,7 +192,14 @@ class BugsnagServiceProvider extends ServiceProvider
     {
         $this->app->singleton('bugsnag', function (Container $app) {
             $config = $app->config->get('bugsnag');
-            $client = new Client(new Configuration($config['api_key']), new LaravelResolver($app), $this->getGuzzle($config));
+
+            $shutdownStrategy = null;
+
+            if ($app instanceof LaravelApplication && $app->runningUnitTests()) {
+                $shutdownStrategy = new NullableShutdownStrategy();
+            }
+
+            $client = new Client(new Configuration($config['api_key']), new LaravelResolver($app), $this->getGuzzle($config), $shutdownStrategy);
 
             $this->setupCallbacks($client, $app, $config);
             $this->setupPaths($client, $app, $config);
