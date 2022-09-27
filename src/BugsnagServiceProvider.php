@@ -195,7 +195,7 @@ class BugsnagServiceProvider extends ServiceProvider
 
             $shutdownStrategy = null;
 
-            if ($app instanceof LaravelApplication && $app->runningUnitTests()) {
+            if (class_exists(NullableShutdownStrategy::class) && $app instanceof LaravelApplication && $app->runningUnitTests()) {
                 $shutdownStrategy = new NullableShutdownStrategy();
             }
 
