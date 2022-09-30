@@ -86,6 +86,6 @@ class LaravelLogger extends BugsnagLogger implements Log
             return var_export($message->toArray(), true);
         }
 
-        return $message;
+        return (string) $message;
     }
 }
