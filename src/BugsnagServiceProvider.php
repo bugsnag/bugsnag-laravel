@@ -264,6 +264,10 @@ class BugsnagServiceProvider extends ServiceProvider
                 $client->addFeatureFlags($featureFlags);
             }
 
+            if (isset($config['max_breadcrumbs'])) {
+                $client->setMaxBreadcrumbs($config['max_breadcrumbs']);
+            }
+
             return $client;
         });
 
