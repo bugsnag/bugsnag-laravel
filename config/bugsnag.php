@@ -349,4 +349,16 @@ return [
     */
 
     'feature_flags' => [],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Max breadcrumbs
+    |--------------------------------------------------------------------------
+    |
+    | The maximum number of breadcrumbs to send with a report.
+    |
+    | This should be an integer between 0-100 (inclusive).
+    */
+
+    'max_breadcrumbs' => null,
 ];

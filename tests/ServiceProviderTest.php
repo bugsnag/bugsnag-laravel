@@ -515,4 +515,20 @@ class ServiceProviderTest extends AbstractTestCase
 
         $this->assertSame([], $actual);
     }
+
+    public function testMaxBreadcrumbsCanBeSetFromConfig()
+    {
+        /** @var \Illuminate\Config\Repository $laravelConfig */
+        $laravelConfig = $this->app->config;
+        $bugsnagConfig = $laravelConfig->get('bugsnag');
+        $bugsnagConfig['max_breadcrumbs'] = 73;
+
+        $laravelConfig->set('bugsnag', $bugsnagConfig);
+
+        /** @var Client $client */
+        $client = $this->app->make(Client::class);
+
+        $this->assertInstanceOf(Client::class, $client);
+        $this->assertSame(73, $client->getMaxBreadcrumbs());
+    }
 }
