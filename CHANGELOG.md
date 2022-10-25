@@ -1,12 +1,15 @@
 Changelog
 =========
 
-## TBD
+## 2.25.0 (2022-10-25)
 
 ### Enhancements
 
 * Added support for Monolog 3.0
   [#489](https://github.com/bugsnag/bugsnag-laravel/pull/489)
+
+* Add `max_breadcrumbs` config option for configuring the maximum number of breadcrumbs to attach to a report
+  [#496](https://github.com/bugsnag/bugsnag-laravel/pull/496)
 
 ## 2.24.0 (2022-05-20)
 

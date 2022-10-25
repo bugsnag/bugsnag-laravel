@@ -9,6 +9,7 @@ use Bugsnag\BugsnagLaravel\Queue\Tracker;
 use Bugsnag\BugsnagLaravel\Tests\Stubs\Injectee;
 use Bugsnag\BugsnagLaravel\Tests\Stubs\InjecteeWithLogInterface;
 use Bugsnag\Client;
+use Bugsnag\FeatureFlag;
 use Bugsnag\PsrLogger\BugsnagLogger;
 use Bugsnag\PsrLogger\MultiLogger as BaseMultiLogger;
 use Illuminate\Contracts\Logging\Log;
@@ -486,14 +487,14 @@ class ServiceProviderTest extends AbstractTestCase
         $this->assertInstanceOf(Client::class, $client);
 
         $expected = [
-            ['featureFlag' => 'flag1'],
-            ['featureFlag' => 'flag2', 'variant' => 'yes'],
-            ['featureFlag' => 'flag4'],
+            new FeatureFlag('flag1'),
+            new FeatureFlag('flag2', 'yes'),
+            new FeatureFlag('flag4'),
         ];
 
         $actual = $client->getConfig()->getFeatureFlagsCopy()->toArray();
 
-        $this->assertSame($expected, $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     public function testFeatureFlagsAreNotSetWhenNotAnArray()
@@ -513,5 +514,21 @@ class ServiceProviderTest extends AbstractTestCase
         $actual = $client->getConfig()->getFeatureFlagsCopy()->toArray();
 
         $this->assertSame([], $actual);
+    }
+
+    public function testMaxBreadcrumbsCanBeSetFromConfig()
+    {
+        /** @var \Illuminate\Config\Repository $laravelConfig */
+        $laravelConfig = $this->app->config;
+        $bugsnagConfig = $laravelConfig->get('bugsnag');
+        $bugsnagConfig['max_breadcrumbs'] = 73;
+
+        $laravelConfig->set('bugsnag', $bugsnagConfig);
+
+        /** @var Client $client */
+        $client = $this->app->make(Client::class);
+
+        $this->assertInstanceOf(Client::class, $client);
+        $this->assertSame(73, $client->getMaxBreadcrumbs());
     }
 }

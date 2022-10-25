@@ -37,7 +37,7 @@ class BugsnagServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    const VERSION = '2.24.0';
+    const VERSION = '2.25.0';
 
     /**
      * Boot the service provider.
@@ -262,6 +262,10 @@ class BugsnagServiceProvider extends ServiceProvider
                 }
 
                 $client->addFeatureFlags($featureFlags);
+            }
+
+            if (isset($config['max_breadcrumbs'])) {
+                $client->setMaxBreadcrumbs($config['max_breadcrumbs']);
             }
 
             return $client;
