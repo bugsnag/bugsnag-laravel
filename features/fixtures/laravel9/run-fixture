@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# run the PHP webserver
+php -S 0.0.0.0:8000 -t public &
+
+# wait for any process to exit
+wait -n
+
+# exit with the status of the first process to exit
+exit $?
