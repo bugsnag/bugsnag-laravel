@@ -53,7 +53,7 @@ jobs:
     - name: install Ruby
       uses: ruby/setup-ruby@v1
       with:
-        ruby-version: 2.7
+        ruby-version: '3.1'
         bundler-cache: true
 
     - name: install PHP
@@ -64,4 +64,8 @@ jobs:
 
     - run: ./.ci/setup-laravel-dev-fixture.sh ${{ matrix.laravel-version }}
 
-    - run: PHP_VERSION=${{ matrix.php-version }} LARAVEL_FIXTURE=${{ matrix.laravel-fixture }} bundle exec bugsnag-maze-runner
+    - run: bundle exec maze-runner --no-source
+      env:
+        PHP_VERSION: ${{ matrix.php-version }}
+        LARAVEL_FIXTURE: ${{ matrix.laravel-fixture }}
+        COMPOSER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

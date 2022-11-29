@@ -3,8 +3,8 @@ Feature: Unhandled exceptions for views support
 Scenario: Unhandled exceptions are delivered from views
   Given I start the laravel fixture
   When I navigate to the route "/unhandled_view_exception"
-  Then I wait to receive a request
-  And the request is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
+  Then I wait to receive an error
+  And the error is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
   And the exception "errorClass" matches one of the following:
     | ErrorException                                     |
     | Illuminate\\View\\ViewException                    |
@@ -22,8 +22,8 @@ Scenario: Unhandled exceptions are delivered from views
 Scenario: Unhandled errors are delivered from views
   Given I start the laravel fixture
   When I navigate to the route "/unhandled_view_error"
-  Then I wait to receive a request
-  And the request is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
+  Then I wait to receive an error
+  And the error is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
   And the exception "errorClass" matches one of the following:
     | ErrorException                                     |
     | Illuminate\\View\\ViewException                    |
@@ -43,9 +43,9 @@ Scenario: Sessions are correct in unhandled exceptions from views
   Given I enable session tracking
   And I start the laravel fixture
   When I navigate to the route "/unhandled_view_exception"
-  And I wait to receive 2 requests
-  Then the request is valid for the session reporting API version "1.0" for the "Bugsnag Laravel" notifier
-  When I discard the oldest request
-  Then the request is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
-  And the payload field "events.0.session.events.unhandled" equals 1
-  And the payload field "events.0.session.events.handled" equals 0
+  And I wait to receive a session
+  Then the session is valid for the session reporting API version "1.0" for the "Bugsnag Laravel" notifier
+  When I wait to receive an error
+  Then the error is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
+  And the error payload field "events.0.session.events.unhandled" equals 1
+  And the error payload field "events.0.session.events.handled" equals 0

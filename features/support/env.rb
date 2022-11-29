@@ -4,8 +4,19 @@ require_relative "../lib/utils"
 PROJECT_ROOT = File.realpath("#{__dir__}/../../")
 FIXTURE_PATH = File.realpath("#{PROJECT_ROOT}/features/fixtures/#{Laravel.fixture}")
 
-AfterConfiguration do |_config|
-  MazeRunner.config.enforce_bugsnag_integrity = false
+Maze.hooks.before_all do
+  # log to console, not a file
+  Maze.config.file_log = false
+  Maze.config.log_requests = true
+
+  # don't wait so long for requests/not to receive requests locally
+  unless ENV["CI"]
+    Maze.config.receive_requests_wait = 10
+    Maze.config.receive_no_requests_wait = 10
+  end
+
+  # bugsnag-laravel doesn't need to send the integrity header
+  Maze.config.enforce_bugsnag_integrity = false
 
   # the laravel-latest fixture uses a different mechanism for installing the
   # bugsnag-laravel library (see 'setup-laravel-dev-fixture.sh')
@@ -18,9 +29,10 @@ AfterConfiguration do |_config|
   end
 end
 
-Before do
-  ENV["BUGSNAG_API_KEY"] = $api_key
-  ENV["BUGSNAG_ENDPOINT"] = "http://#{Utils.current_ip}:9339"
+Maze.hooks.before do
+  Maze::Runner.environment["BUGSNAG_API_KEY"] = $api_key
+  Maze::Runner.environment["BUGSNAG_ENDPOINT"] = "http://#{Utils.current_ip}:#{Maze.config.port}/notify"
+  Maze::Runner.environment["BUGSNAG_SESSION_ENDPOINT"] = "http://#{Utils.current_ip}:#{Maze.config.port}/sessions"
   Laravel.reset!
 end
 

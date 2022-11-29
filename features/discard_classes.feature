@@ -16,8 +16,8 @@ Scenario: Exceptions will be delivered when discard classes does not match
   Given I set environment variable "BUGSNAG_DISCARD_CLASSES" to "DifferentException,/^NotThatException$/"
   And I start the laravel fixture
   When I navigate to the route "/unhandled_controller_exception"
-  Then I wait to receive a request
-  And the request is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
+  Then I wait to receive an error
+  And the error is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
   And the exception "errorClass" equals "Exception"
   And the exception "message" starts with "Crashing exception!"
   And the event "metaData.request.httpMethod" equals "GET"
