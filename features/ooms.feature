@@ -5,8 +5,8 @@ Scenario: Big OOM with the OOM bootstrapper
   And I start the laravel fixture
   When I navigate to the route "/oom/big"
   Then the Laravel response matches "Allowed memory size of \d+ bytes exhausted \(tried to allocate \d+ bytes\)"
-  When I wait to receive a request
-  Then the request is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
+  When I wait to receive an error
+  Then the error is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
   And the exception "errorClass" matches one of the following:
     | Symfony\Component\ErrorHandler\Error\FatalError       |
     | Symfony\Component\Debug\Exception\FatalErrorException |
@@ -24,8 +24,8 @@ Scenario: Small OOM with the OOM bootstrapper
   And I start the laravel fixture
   When I navigate to the route "/oom/small"
   Then the Laravel response matches "Allowed memory size of \d+ bytes exhausted \(tried to allocate \d+ bytes\)"
-  When I wait to receive a request
-  Then the request is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
+  When I wait to receive an error
+  Then the error is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
     And the exception "errorClass" matches one of the following:
     | Symfony\Component\ErrorHandler\Error\FatalError       |
     | Symfony\Component\Debug\Exception\FatalErrorException |

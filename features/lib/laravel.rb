@@ -49,7 +49,7 @@ class Laravel
     private
 
     def load_port_from_docker_compose
-      compose_file = YAML.safe_load(File.read(Docker.singleton_class::COMPOSE_FILENAME))
+      compose_file = YAML.safe_load(File.read(Maze::Docker.singleton_class::COMPOSE_FILENAME))
       service = compose_file.fetch("services").fetch(ENV['LARAVEL_FIXTURE'])
 
       service.fetch("ports").first.fetch("published")

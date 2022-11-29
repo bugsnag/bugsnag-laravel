@@ -64,4 +64,8 @@ jobs:
 
     - run: ./.ci/setup-laravel-dev-fixture.sh ${{ matrix.laravel-version }}
 
-    - run: PHP_VERSION=${{ matrix.php-version }} LARAVEL_FIXTURE=${{ matrix.laravel-fixture }} bundle exec bugsnag-maze-runner
+    - run: bundle exec maze-runner
+      env:
+        PHP_VERSION: ${{ matrix.php-version }}
+        LARAVEL_FIXTURE: ${{ matrix.laravel-fixture }}
+        COMPOSER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
