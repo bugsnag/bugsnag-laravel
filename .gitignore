@@ -6,5 +6,6 @@
 Gemfile.lock
 maze_output
 .phpunit.result.cache
+/features/fixtures/*/bugsnag-laravel
 /features/fixtures/laravel-latest/*
 !/features/fixtures/laravel-latest/.gitignore
