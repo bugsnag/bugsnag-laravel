@@ -17,4 +17,8 @@ RUN cp .env.example .env
 RUN composer install
 RUN php artisan key:generate
 
-CMD php -S 0.0.0.0:8000 -t public
+# apply database migrations
+# --force is required to create the database
+RUN php artisan migrate --force --no-interaction
+
+CMD ./run-fixture

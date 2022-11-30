@@ -47,3 +47,12 @@ end
 Before("@requires-sessions") do
   skip_this_scenario unless Laravel.supports_sessions?
 end
+
+# add a '@not-X' tag for each fixture
+fixtures = Dir.each_child(File.realpath("#{PROJECT_ROOT}/features/fixtures")) do |name|
+  next unless name.match?(/^(laravel|lumen)/)
+
+  Before("@not-#{name}") do
+    skip_this_scenario if Laravel.fixture == name
+  end
+end

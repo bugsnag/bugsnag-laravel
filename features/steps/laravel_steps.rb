@@ -14,6 +14,24 @@ When(/^I start the laravel fixture$/) do
   }
 end
 
+# TODO: contribute this back to Maze Runner
+#       https://github.com/bugsnag/maze-runner/pull/425
+module Maze
+  class Docker
+    class << self
+      def exec(service, command, detach: false)
+        flags = detach ? "--detach" : ""
+
+        run_docker_compose_command("exec #{flags} #{service} #{command}")
+      end
+    end
+  end
+end
+
+When("I start the laravel queue worker") do
+  Maze::Docker.exec(Laravel.fixture, "php artisan queue:work", detach: true)
+end
+
 When("I navigate to the route {string}") do |route|
   Laravel.navigate_to(route)
 end

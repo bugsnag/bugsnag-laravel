@@ -1,4 +1,5 @@
-version: '3.4'
+version: '3.8'
+
 services:
   laravel51:
     build:
@@ -96,6 +97,7 @@ services:
         published: 61280
 
   laravel9:
+    init: true
     build:
       context: laravel9
       args:
