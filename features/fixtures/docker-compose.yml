@@ -59,6 +59,7 @@ services:
         published: 61258
 
   laravel66:
+    init: true
     build:
       context: laravel66
       args:
