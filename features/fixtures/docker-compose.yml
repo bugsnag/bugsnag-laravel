@@ -78,6 +78,7 @@ services:
         published: 61266
 
   laravel8:
+    init: true
     build:
       context: laravel8
       args:

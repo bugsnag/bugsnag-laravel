@@ -17,4 +17,7 @@ RUN cp .env.example .env
 RUN composer install
 RUN php artisan key:generate
 
+# create database & apply migrations
+RUN touch database/database.sqlite && php artisan migrate --no-interaction
+
 CMD php -S 0.0.0.0:8000 -t public

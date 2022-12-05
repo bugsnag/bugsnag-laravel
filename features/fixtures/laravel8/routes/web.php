@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -51,6 +52,14 @@ Route::view('/unhandled_view_exception', 'unhandledexception');
 Route::view('/unhandled_view_error', 'unhandlederror');
 Route::view('/handled_view_exception', 'handledexception');
 Route::view('/handled_view_error', 'handlederror');
+
+Route::get('/queue/unhandled', function (Request $request) {
+    \App\Jobs\UnhandledJob::dispatch((int) $request->query('tries', '1'));
+});
+
+Route::get('/queue/handled', function (Request $request) {
+    \App\Jobs\HandledJob::dispatch((int) $request->query('tries', '1'));
+});
 
 /**
  * Return some diagnostics if an OOM did not happen when it should have.
