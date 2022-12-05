@@ -1,6 +1,13 @@
 Changelog
 =========
 
+## TBD
+
+### Bug fixes
+
+* Fix events from CLI commands always being handled when using the `NunoMaduro\Collision` package
+  [#503](https://github.com/bugsnag/bugsnag-laravel/pull/503)
+
 ## 2.25.0 (2022-10-25)
 
 ### Enhancements
