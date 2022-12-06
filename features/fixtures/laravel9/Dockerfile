@@ -21,4 +21,4 @@ RUN php artisan key:generate
 # --force is required to create the database
 RUN php artisan migrate --force --no-interaction
 
-CMD ./run-fixture
+CMD php -S 0.0.0.0:8000 -t public
