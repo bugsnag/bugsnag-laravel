@@ -26,7 +26,7 @@ Scenario: Unhandled exceptions are delivered from queues
 Scenario: Unhandled exceptions are delivered from queued jobs with multiple attmpts
   Given I start the laravel fixture
   And I start the laravel queue worker with --tries=3
-  When I navigate to the route "/queue/unhandled?tries=3"
+  When I navigate to the route "/queue/unhandled"
   And I wait to receive 3 errors
 
   # attempt 1

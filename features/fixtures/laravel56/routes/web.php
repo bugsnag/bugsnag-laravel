@@ -11,7 +11,6 @@
 |
 */
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -53,11 +52,11 @@ Route::view('/unhandled_view_error', 'unhandlederror');
 Route::view('/handled_view_exception', 'handledexception');
 Route::view('/handled_view_error', 'handlederror');
 
-Route::get('/queue/unhandled', function (Request $request) {
-    \App\Jobs\UnhandledJob::dispatch((int) $request->query('tries', '1'));
+Route::get('/queue/unhandled', function () {
+    \App\Jobs\UnhandledJob::dispatch();
 });
 
-Route::get('/queue/handled', function (Request $request) {
+Route::get('/queue/handled', function () {
     \App\Jobs\HandledJob::dispatch();
 });
 
