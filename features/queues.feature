@@ -1,6 +1,6 @@
 Feature: Queue support
 
-@not-laravel-latest @not-laravel51 @not-laravel56 @not-lumen8
+@not-laravel-latest @not-laravel51 @not-lumen8
 Scenario: Unhandled exceptions are delivered from queues
   Given I start the laravel fixture
   And I start the laravel queue worker
@@ -21,7 +21,7 @@ Scenario: Unhandled exceptions are delivered from queues
   And the event "severityReason.type" equals "unhandledExceptionMiddleware"
   And the event "severityReason.attributes.framework" equals "Laravel"
 
-@not-laravel-latest @not-laravel51 @not-laravel56 @not-lumen8
+@not-laravel-latest @not-laravel51 @not-lumen8
 Scenario: Unhandled exceptions are delivered from queued jobs with multiple attmpts
   Given I start the laravel fixture
   And I start the laravel queue worker
@@ -78,7 +78,7 @@ Scenario: Unhandled exceptions are delivered from queued jobs with multiple attm
   And the event "severityReason.type" equals "unhandledExceptionMiddleware"
   And the event "severityReason.attributes.framework" equals "Laravel"
 
-@not-laravel-latest @not-laravel51 @not-laravel56 @not-lumen8
+@not-laravel-latest @not-laravel51 @not-lumen8
 Scenario: Handled exceptions are delivered from queues
   Given I start the laravel fixture
   And I start the laravel queue worker
