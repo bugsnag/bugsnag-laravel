@@ -1,5 +1,7 @@
 require 'net/http'
 require 'yaml'
+require 'json'
+require 'tempfile'
 
 class Laravel
   class << self
@@ -33,17 +35,7 @@ class Laravel
     end
 
     def version
-      # e.g. laravel56 -> 56, lumen8 -> 8
-      raw_digits = /^(?:laravel|lumen)(\d+)/.match(fixture)[1]
-
-      # convert the raw digits to an array of: [major, minor, patch]
-      # in practice we only have 1 or 2 digits in our fixture names, so fill the
-      # rest with 0s to make sure Gem::Version doesn't get confused
-      # e.g. ['5', '6'] -> ['5', '6', '0'], ['8'] -> ['8', '0', '0']
-      version_string = raw_digits.chars
-      version_string.fill("0", version_string.length..2)
-
-      Gem::Version.new(version_string.join("."))
+      @version ||= load_version_from_fixture
     end
 
     def lumen?
@@ -79,6 +71,32 @@ class Laravel
       service = compose_file.fetch("services").fetch(ENV['LARAVEL_FIXTURE'])
 
       service.fetch("ports").first.fetch("published")
+    end
+
+    def load_version_from_fixture
+      # get and parse the composer.lock file from the fixture
+      composer_lock = Tempfile.create("#{fixture}-composer.lock") do |file|
+        # copy the composer lock file out of the fixture so we can read it
+        Maze::Docker.cp(fixture, source: "/app/composer.lock", destination: file.path)
+
+        # 'file.read' won't reflect the changes made by docker cp, so we use
+        # JSON.load_file to reload the file & parse it
+        JSON.load_file(file.path)
+      end
+
+      framework_section = composer_lock["packages"].find { |package| package["name"] == framework_package_name }
+      version = framework_section["version"].delete_prefix("v")
+
+      Gem::Version.new(version)
+    end
+
+    # the composer package name of the framework being used (Lumen or Laravel)
+    def framework_package_name
+      if lumen?
+        "laravel/lumen-framework"
+      else
+        "laravel/framework"
+      end
     end
   end
 end
