@@ -27,8 +27,9 @@ class Laravel
     end
 
     def major_version
-      # e.g. laravel56 -> 5, lumen8 -> 8
-      Integer(/^(?:laravel|lumen)(\d)/.match(fixture)[1])
+      # the first "canonical segment" is the first digit of the version number,
+      # aka the major version
+      version.canonical_segments.first
     end
 
     def version
