@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   laravel51:
+    init: true
     build:
       context: laravel51
       args:

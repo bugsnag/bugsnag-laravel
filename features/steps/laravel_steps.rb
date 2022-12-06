@@ -29,7 +29,11 @@ module Maze
 end
 
 When("I start the laravel queue worker") do
-  Maze::Docker.exec(Laravel.fixture, "php artisan queue:work", detach: true)
+  step("I start the laravel queue worker with --tries=1")
+end
+
+When("I start the laravel queue worker with --tries={int}") do |tries|
+  Maze::Docker.exec(Laravel.fixture, Laravel.queue_worker_command(tries: tries), detach: true)
 end
 
 When("I navigate to the route {string}") do |route|
@@ -98,4 +102,21 @@ Then("the session payload field {string} matches the current major Lumen version
   end
 
   step("the session payload field '#{path}' matches the regex '^((\\d+\\.){2}\\d+|\\d\\.x-dev)$'")
+end
+
+# conditionally run a step if the laravel version matches a specified version
+#
+# e.g. this will only check app.type on Laravel 5.2 and above:
+#      on Laravel versions > 5.1 the event "app.type" equals "Queue"
+Then(/^on Laravel versions (>=?|<=?|==) ([0-9.]+) (.*)$/) do |operator, version, step_to_run|
+  should_run_step = Laravel.version.send(operator, version)
+
+  # make sure this step is debuggable!
+  $logger.debug("Laravel v#{Laravel.version} #{operator} #{version}? #{should_run_step}")
+
+  if should_run_step
+    step(step_to_run)
+  else
+    $logger.info("Skipping step on Laravel v#{Laravel.version}: #{step_to_run}")
+  end
 end

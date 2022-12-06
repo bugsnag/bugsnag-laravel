@@ -31,6 +31,20 @@ class Laravel
       Integer(/^(?:laravel|lumen)(\d)/.match(fixture)[1])
     end
 
+    def version
+      # e.g. laravel56 -> 56, lumen8 -> 8
+      raw_digits = /^(?:laravel|lumen)(\d+)/.match(fixture)[1]
+
+      # convert the raw digits to an array of: [major, minor, patch]
+      # in practice we only have 1 or 2 digits in our fixture names, so fill the
+      # rest with 0s to make sure Gem::Version doesn't get confused
+      # e.g. ['5', '6'] -> ['5', '6', '0'], ['8'] -> ['8', '0', '0']
+      version_string = raw_digits.chars
+      version_string.fill("0", version_string.length..2)
+
+      Gem::Version.new(version_string.join("."))
+    end
+
     def lumen?
       fixture.start_with?("lumen")
     end
@@ -44,6 +58,17 @@ class Laravel
       return false if fixture == "laravel51"
 
       true
+    end
+
+    def queue_worker_command(tries:)
+      # the command to run the queue worker was 'queue:listen' but changed to
+      # 'queue:work' in Laravel 5.3 ('queue:work' exists on older Laravels, but
+      # is not quite equivalent)
+      if version < '5.3.0'
+        "php artisan queue:listen --tries=#{tries}"
+      else
+        "php artisan queue:work --tries=#{tries}"
+      end
     end
 
     private
