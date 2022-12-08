@@ -40,7 +40,15 @@ When("I start the laravel queue worker") do
 end
 
 When("I start the laravel queue worker with --tries={int}") do |tries|
-  Maze::Docker.exec(Laravel.fixture, Laravel.queue_worker_command(tries: tries), detach: true)
+  Maze::Docker.exec(Laravel.fixture, Laravel.queue_worker_daemon_command(tries), detach: true)
+end
+
+When("I run the laravel queue worker") do
+  step("I run the laravel queue worker with --tries=1")
+end
+
+When("I run the laravel queue worker with --tries={int}") do |tries|
+  Maze::Docker.exec(Laravel.fixture, Laravel.queue_worker_once_command(tries))
 end
 
 When("I navigate to the route {string}") do |route|
