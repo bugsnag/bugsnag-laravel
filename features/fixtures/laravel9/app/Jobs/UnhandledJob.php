@@ -14,13 +14,6 @@ class UnhandledJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public int $tries;
-
-    public function __construct(int $tries)
-    {
-        $this->tries = $tries;
-    }
-
     /**
      * Execute the job.
      *

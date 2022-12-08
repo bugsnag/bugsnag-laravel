@@ -24,6 +24,27 @@ module Maze
 
         run_docker_compose_command("exec #{flags} #{service} #{command}")
       end
+
+      def cp(service, source:, destination:)
+        # cp only exists in 'docker compose' not 'docker-compose', i.e. only
+        # with a space and not a hyphen
+        # TODO: can we run all docker compose commands with a space?
+        run_docker_space_compose_command("cp #{service}:#{source} #{destination}")
+      end
+
+      private
+
+      def get_docker_space_compose_command(command)
+        project_name = compose_project_name.nil? ? '' : "-p #{compose_project_name}"
+
+        "docker compose #{project_name} -f #{COMPOSE_FILENAME} #{command}"
+      end
+
+      def run_docker_space_compose_command(command, success_codes: nil)
+        command = get_docker_space_compose_command(command)
+
+        @last_command_logs, @last_exit_code = Runner.run_command(command, success_codes: success_codes)
+      end
     end
   end
 end
