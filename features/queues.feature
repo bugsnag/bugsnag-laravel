@@ -1,7 +1,7 @@
 Feature: Queue support
 
 @not-laravel-latest @not-lumen8
-Scenario: Unhandled exceptions are delivered from queues
+Scenario: Unhandled exceptions are delivered from queues when running the queue worker as a daemon
   Given I start the laravel fixture
   And I start the laravel queue worker
   When I navigate to the route "/queue/unhandled"
@@ -23,7 +23,7 @@ Scenario: Unhandled exceptions are delivered from queues
   And the event "severityReason.attributes.framework" equals "Laravel"
 
 @not-laravel-latest @not-lumen8
-Scenario: Unhandled exceptions are delivered from queued jobs with multiple attmpts
+Scenario: Unhandled exceptions are delivered from queued jobs with multiple attmpts when running the queue worker as a daemon
   Given I start the laravel fixture
   And I start the laravel queue worker with --tries=3
   When I navigate to the route "/queue/unhandled"
@@ -83,7 +83,7 @@ Scenario: Unhandled exceptions are delivered from queued jobs with multiple attm
   And the event "severityReason.attributes.framework" equals "Laravel"
 
 @not-laravel-latest @not-lumen8
-Scenario: Handled exceptions are delivered from queues
+Scenario: Handled exceptions are delivered from queues when running the queue worker as a daemon
   Given I start the laravel fixture
   And I start the laravel queue worker
   When I navigate to the route "/queue/handled"
