@@ -53,11 +53,21 @@ class Laravel
       true
     end
 
-    def queue_worker_command(tries:)
+    # the command to run the queue worker for a single job
+    def queue_worker_once_command(tries)
+      if version < "5.3.0"
+        "php artisan queue:work --tries=#{tries}"
+      else
+        "php artisan queue:work --once --tries=#{tries}"
+      end
+    end
+
+    # the command to run the queue worker as a daemon
+    def queue_worker_daemon_command(tries)
       # the command to run the queue worker was 'queue:listen' but changed to
       # 'queue:work' in Laravel 5.3 ('queue:work' exists on older Laravels, but
       # is not quite equivalent)
-      if version < '5.3.0'
+      if version < "5.3.0"
         "php artisan queue:listen --tries=#{tries}"
       else
         "php artisan queue:work --tries=#{tries}"

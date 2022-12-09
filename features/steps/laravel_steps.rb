@@ -14,36 +14,22 @@ When(/^I start the laravel fixture$/) do
   }
 end
 
-# TODO: contribute this back to Maze Runner
-#       https://github.com/bugsnag/maze-runner/pull/425
 module Maze
   class Docker
     class << self
+      # TODO: remove when https://github.com/bugsnag/maze-runner/pull/425 is merged
       def exec(service, command, detach: false)
         flags = detach ? "--detach" : ""
 
         run_docker_compose_command("exec #{flags} #{service} #{command}")
       end
 
+      # TODO: contribute this back to Maze Runner
+      #       probably need a nicer API, capable of doing a copy in either
+      #       direction (right now this can only copy from the service to the
+      #       local machine)
       def cp(service, source:, destination:)
-        # cp only exists in 'docker compose' not 'docker-compose', i.e. only
-        # with a space and not a hyphen
-        # TODO: can we run all docker compose commands with a space?
-        run_docker_space_compose_command("cp #{service}:#{source} #{destination}")
-      end
-
-      private
-
-      def get_docker_space_compose_command(command)
-        project_name = compose_project_name.nil? ? '' : "-p #{compose_project_name}"
-
-        "docker compose #{project_name} -f #{COMPOSE_FILENAME} #{command}"
-      end
-
-      def run_docker_space_compose_command(command, success_codes: nil)
-        command = get_docker_space_compose_command(command)
-
-        @last_command_logs, @last_exit_code = Runner.run_command(command, success_codes: success_codes)
+        run_docker_compose_command("cp #{service}:#{source} #{destination}")
       end
     end
   end
@@ -54,7 +40,15 @@ When("I start the laravel queue worker") do
 end
 
 When("I start the laravel queue worker with --tries={int}") do |tries|
-  Maze::Docker.exec(Laravel.fixture, Laravel.queue_worker_command(tries: tries), detach: true)
+  Maze::Docker.exec(Laravel.fixture, Laravel.queue_worker_daemon_command(tries), detach: true)
+end
+
+When("I run the laravel queue worker") do
+  step("I run the laravel queue worker with --tries=1")
+end
+
+When("I run the laravel queue worker with --tries={int}") do |tries|
+  Maze::Docker.exec(Laravel.fixture, Laravel.queue_worker_once_command(tries))
 end
 
 When("I navigate to the route {string}") do |route|
