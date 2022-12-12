@@ -127,7 +127,7 @@ Scenario: Unhandled exceptions are delivered from queues when running the queue 
   And the event "severityReason.attributes.framework" equals "Laravel"
 
 @not-laravel-latest @not-lumen8
-Scenario: Unhandled exceptions are delivered from queued jobs with multiple attmpts when running the queue worker as a daemon
+Scenario: Unhandled exceptions are delivered from queued jobs with multiple attmpts when running the queue worker once
   Given I start the laravel fixture
   When I navigate to the route "/queue/unhandled"
   Then I should receive no errors
