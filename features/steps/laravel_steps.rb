@@ -119,6 +119,26 @@ Then("the session payload field {string} matches the current major Lumen version
   step("the session payload field '#{path}' matches the regex '^((\\d+\\.){2}\\d+|\\d\\.x-dev)$'")
 end
 
+# TODO: remove when https://github.com/bugsnag/maze-runner/pull/433 is released
+Then("the event has {int} breadcrumb(s)") do |expected|
+  breadcrumbs = Maze::Server.errors.current[:body]['events'].first['breadcrumbs']
+
+  Maze.check.equal(
+    expected,
+    breadcrumbs.length,
+    "Expected event to have '#{expected}' breadcrumbs, but got: #{breadcrumbs}"
+  )
+end
+
+Then("the event has no breadcrumbs") do
+  breadcrumbs = Maze::Server.errors.current[:body]['events'].first['breadcrumbs']
+
+  Maze.check.true(
+    breadcrumbs.nil? || breadcrumbs.empty?,
+    "Expected event not to have breadcrumbs, but got: #{breadcrumbs}"
+  )
+end
+
 # conditionally run a step if the laravel version matches a specified version
 #
 # e.g. this will only check app.type on Laravel 5.2 and above:

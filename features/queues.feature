@@ -1,5 +1,10 @@
 Feature: Queue support
 
+Background:
+  # disable automatic query breadcrumbs as we assert against the specific number
+  # of breadcrumbs in these tests
+  Given I set environment variable "BUGSNAG_QUERY" to "false"
+
 @not-laravel-latest @not-lumen8
 Scenario: Unhandled exceptions are delivered from queues when running the queue worker as a daemon
   Given I start the laravel fixture
@@ -21,6 +26,10 @@ Scenario: Unhandled exceptions are delivered from queues when running the queue 
   And the event "unhandled" is true
   And the event "severityReason.type" equals "unhandledExceptionMiddleware"
   And the event "severityReason.attributes.framework" equals "Laravel"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "before"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "App\Jobs\UnhandledJob::handle"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "exceptionOccurred"
+  And on Laravel versions >= 9.0 the event has 3 breadcrumbs
 
 @not-laravel-latest @not-lumen8
 Scenario: Unhandled exceptions are delivered from queued jobs with multiple attmpts when running the queue worker as a daemon
@@ -45,6 +54,10 @@ Scenario: Unhandled exceptions are delivered from queued jobs with multiple attm
   And the event "unhandled" is true
   And the event "severityReason.type" equals "unhandledExceptionMiddleware"
   And the event "severityReason.attributes.framework" equals "Laravel"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "before"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "App\Jobs\UnhandledJob::handle"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "exceptionOccurred"
+  And on Laravel versions >= 9.0 the event has 3 breadcrumbs
 
   # attempt 2
   When I discard the oldest error
@@ -63,6 +76,10 @@ Scenario: Unhandled exceptions are delivered from queued jobs with multiple attm
   And the event "unhandled" is true
   And the event "severityReason.type" equals "unhandledExceptionMiddleware"
   And the event "severityReason.attributes.framework" equals "Laravel"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "before"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "App\Jobs\UnhandledJob::handle"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "exceptionOccurred"
+  And on Laravel versions >= 9.0 the event has 3 breadcrumbs
 
   # attempt 3
   When I discard the oldest error
@@ -81,6 +98,10 @@ Scenario: Unhandled exceptions are delivered from queued jobs with multiple attm
   And the event "unhandled" is true
   And the event "severityReason.type" equals "unhandledExceptionMiddleware"
   And the event "severityReason.attributes.framework" equals "Laravel"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "before"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "App\Jobs\UnhandledJob::handle"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "exceptionOccurred"
+  And on Laravel versions >= 9.0 the event has 3 breadcrumbs
 
 @not-laravel-latest @not-lumen8
 Scenario: Handled exceptions are delivered from queues when running the queue worker as a daemon
@@ -102,6 +123,9 @@ Scenario: Handled exceptions are delivered from queues when running the queue wo
   And the event "severity" equals "warning"
   And the event "unhandled" is false
   And the event "severityReason.type" equals "handledException"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "before"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "App\Jobs\HandledJob::handle"
+  And on Laravel versions >= 9.0 the event has 2 breadcrumbs
 
 @not-laravel-latest @not-lumen8
 Scenario: Unhandled exceptions are delivered from queues when running the queue worker once
@@ -125,6 +149,11 @@ Scenario: Unhandled exceptions are delivered from queues when running the queue 
   And the event "unhandled" is true
   And the event "severityReason.type" equals "unhandledExceptionMiddleware"
   And the event "severityReason.attributes.framework" equals "Laravel"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "App\Providers\AppServiceProvider::boot"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "before"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "App\Jobs\UnhandledJob::handle"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "exceptionOccurred"
+  And on Laravel versions >= 9.0 the event has 4 breadcrumbs
 
 @not-laravel-latest @not-lumen8
 Scenario: Unhandled exceptions are delivered from queued jobs with multiple attmpts when running the queue worker once
@@ -150,6 +179,11 @@ Scenario: Unhandled exceptions are delivered from queued jobs with multiple attm
   And the event "unhandled" is true
   And the event "severityReason.type" equals "unhandledExceptionMiddleware"
   And the event "severityReason.attributes.framework" equals "Laravel"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "App\Providers\AppServiceProvider::boot"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "before"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "App\Jobs\UnhandledJob::handle"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "exceptionOccurred"
+  And on Laravel versions >= 9.0 the event has 4 breadcrumbs
 
   # attempt 2
   When I discard the oldest error
@@ -170,6 +204,11 @@ Scenario: Unhandled exceptions are delivered from queued jobs with multiple attm
   And the event "unhandled" is true
   And the event "severityReason.type" equals "unhandledExceptionMiddleware"
   And the event "severityReason.attributes.framework" equals "Laravel"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "App\Providers\AppServiceProvider::boot"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "before"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "App\Jobs\UnhandledJob::handle"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "exceptionOccurred"
+  And on Laravel versions >= 9.0 the event has 4 breadcrumbs
 
   # attempt 3
   When I discard the oldest error
@@ -190,6 +229,11 @@ Scenario: Unhandled exceptions are delivered from queued jobs with multiple attm
   And the event "unhandled" is true
   And the event "severityReason.type" equals "unhandledExceptionMiddleware"
   And the event "severityReason.attributes.framework" equals "Laravel"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "App\Providers\AppServiceProvider::boot"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "before"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "App\Jobs\UnhandledJob::handle"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "exceptionOccurred"
+  And on Laravel versions >= 9.0 the event has 4 breadcrumbs
 
 @not-laravel-latest @not-lumen8
 Scenario: Handled exceptions are delivered from queues when running the queue worker once
@@ -212,3 +256,7 @@ Scenario: Handled exceptions are delivered from queues when running the queue wo
   And the event "severity" equals "warning"
   And the event "unhandled" is false
   And the event "severityReason.type" equals "handledException"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "App\Providers\AppServiceProvider::boot"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "before"
+  And on Laravel versions >= 9.0 the event has a "manual" breadcrumb named "App\Jobs\HandledJob::handle"
+  And on Laravel versions >= 9.0 the event has 3 breadcrumbs
