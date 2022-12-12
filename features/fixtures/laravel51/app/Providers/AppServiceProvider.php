@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Bugsnag::leaveBreadcrumb(__METHOD__);
     }
 
     /**

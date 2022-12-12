@@ -17,6 +17,8 @@ class HandledJob extends Job implements SelfHandling, ShouldQueue
      */
     public function handle()
     {
+        Bugsnag::leaveBreadcrumb(__METHOD__);
+
         Bugsnag::notifyException(new Exception('Handled :)'));
     }
 }

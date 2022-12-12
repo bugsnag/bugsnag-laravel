@@ -15,6 +15,7 @@ services:
       - BUGSNAG_REGISTER_OOM_BOOTSTRAPPER
       - BUGSNAG_DISCARD_CLASSES
       - BUGSNAG_REDACTED_KEYS
+      - BUGSNAG_QUERY
     restart: "no"
     ports:
       - target: 8000
