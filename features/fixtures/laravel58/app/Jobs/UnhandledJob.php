@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use RuntimeException;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
@@ -20,6 +21,8 @@ class UnhandledJob implements ShouldQueue
      */
     public function handle()
     {
+        Bugsnag::leaveBreadcrumb(__METHOD__);
+
         throw new RuntimeException('uh oh :o');
     }
 }
