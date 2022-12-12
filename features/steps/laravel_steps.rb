@@ -155,3 +155,30 @@ Then(/^on Laravel versions (>=?|<=?|==) ([0-9.]+) (.*)$/) do |operator, version,
     $logger.info("Skipping step on Laravel v#{Laravel.version}: #{step_to_run}")
   end
 end
+
+# conditionally run a number of steps if the laravel version matches a specified version
+#
+# e.g. this will only run the indented steps on Laravel 5.2 and above:
+#      on Laravel versions > 5.1:
+#         """
+#         the event "app.type" equals "Queue"
+#         the event "other.thing" equals "yes"
+#         """
+Then(/^on Laravel versions (>=?|<=?|==) ([0-9.]+):/) do |operator, version, steps_to_run|
+  should_run_steps = Laravel.version.send(operator, version)
+
+  # make sure this step is debuggable!
+  $logger.debug("Laravel v#{Laravel.version} #{operator} #{version}? #{should_run_steps}")
+
+  if should_run_steps
+    steps_to_run.each_line(chomp: true) do |step_to_run|
+      step(step_to_run)
+    end
+  else
+    indent = " " * 4
+    # e.g. "a step\nanother step\n" -> "    1) a step\n    2) another step"
+    steps_indented = steps_to_run.each_line.map.with_index(1) { |step, i| "#{indent}#{i}) #{step.chomp}" }.join("\n")
+
+    $logger.info("Skipping steps on Laravel v#{Laravel.version}:\n#{steps_indented}")
+  end
+end
