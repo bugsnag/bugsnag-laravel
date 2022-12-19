@@ -8,6 +8,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 
 class UnhandledJob implements ShouldQueue
 {
@@ -20,6 +21,8 @@ class UnhandledJob implements ShouldQueue
      */
     public function handle()
     {
+        Bugsnag::leaveBreadcrumb(__METHOD__);
+
         throw new RuntimeException('uh oh :o');
     }
 }

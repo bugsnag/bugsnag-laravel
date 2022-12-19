@@ -6,6 +6,7 @@ use App\Jobs\Job;
 use RuntimeException;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 
 class UnhandledJob extends Job implements SelfHandling, ShouldQueue
 {
@@ -16,6 +17,8 @@ class UnhandledJob extends Job implements SelfHandling, ShouldQueue
      */
     public function handle()
     {
+        Bugsnag::leaveBreadcrumb(__METHOD__);
+
         throw new RuntimeException('uh oh :o');
     }
 }
