@@ -211,6 +211,9 @@ class BugsnagServiceProvider extends ServiceProvider
         static $batchSendingWasDisabledByUs = false;
 
         $queue->before(function () use (&$batchSendingWasDisabledByUs) {
+            // clear breadcrumbs to stop them leaking between jobs
+            $this->app->bugsnag->clearBreadcrumbs();
+
             // only re-enable batch sending if we're the ones disabling it
             // this allows users to disable batch sending entirely
             if ($batchSendingWasDisabledByUs) {
