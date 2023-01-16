@@ -1,7 +1,7 @@
 Changelog
 =========
 
-## TBD
+## v2.25.1 (2023-01-17)
 
 ### Enhancements
 
