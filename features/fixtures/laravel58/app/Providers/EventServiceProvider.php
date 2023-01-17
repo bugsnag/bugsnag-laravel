@@ -6,6 +6,11 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Queue;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
+use Illuminate\Queue\Events\JobProcessing;
+use Illuminate\Queue\Events\JobProcessed;
+use Illuminate\Queue\Events\JobExceptionOccurred;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -27,8 +32,16 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        parent::boot();
+        Queue::before(function (JobProcessing $event) {
+            Bugsnag::leaveBreadcrumb('before');
+        });
 
-        //
+        Queue::after(function (JobProcessed $event) {
+            Bugsnag::leaveBreadcrumb('after');
+        });
+
+        Queue::exceptionOccurred(function (JobExceptionOccurred $event) {
+            Bugsnag::leaveBreadcrumb('exceptionOccurred');
+        });
     }
 }

@@ -52,6 +52,14 @@ Route::view('/unhandled_view_error', 'unhandlederror');
 Route::view('/handled_view_exception', 'handledexception');
 Route::view('/handled_view_error', 'handlederror');
 
+Route::get('/queue/unhandled', function () {
+    \App\Jobs\UnhandledJob::dispatch();
+});
+
+Route::get('/queue/handled', function () {
+    \App\Jobs\HandledJob::dispatch();
+});
+
 /**
  * Return some diagnostics if an OOM did not happen when it should have.
  *

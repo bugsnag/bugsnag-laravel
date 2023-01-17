@@ -1,6 +1,21 @@
 Changelog
 =========
 
+## v2.25.1 (2023-01-17)
+
+### Enhancements
+
+* Ensure events are sent from queues when using Laravel Vapor
+  [#511](https://github.com/bugsnag/bugsnag-laravel/pull/511)
+
+### Bug fixes
+
+* Fix events from CLI commands always being handled when using the `NunoMaduro\Collision` package
+  [#503](https://github.com/bugsnag/bugsnag-laravel/pull/503)
+
+* Fix breadcrumbs leaking between queued jobs when using Laravel Vapor
+  [#511](https://github.com/bugsnag/bugsnag-laravel/pull/511)
+
 ## 2.25.0 (2022-10-25)
 
 ### Enhancements

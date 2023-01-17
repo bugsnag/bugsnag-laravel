@@ -22,6 +22,8 @@ class HandledJob implements ShouldQueue
      */
     public function handle()
     {
+        Bugsnag::leaveBreadcrumb(__METHOD__);
+
         Bugsnag::notifyException(new Exception('Handled :)'));
     }
 }

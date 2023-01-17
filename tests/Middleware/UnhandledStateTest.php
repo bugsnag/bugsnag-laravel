@@ -159,6 +159,34 @@ class UnhandledStateTest extends TestCase
             ['function' => 'z'],
             ['class' => \Yet\AnotherClass::class],
         ]];
+
+        yield 'backtrace with NunoMaduro\\Collision Adapter' => [[
+            [
+                'file' => '/app/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php',
+                'function' => 'error',
+                'class' => 'Illuminate\\Log\\LogManager',
+            ],
+            [
+                'file' => '/app/app/Exceptions/Handler.php',
+                'function' => 'report',
+                'class' => 'Illuminate\\Foundation\\Exceptions\\Handler',
+            ],
+            [
+                'file' => '/app/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php',
+                'function' => 'report',
+                'class' => 'App\\Exceptions\\Handler',
+            ],
+            [
+                'file' => '/app/vendor/laravel/framework/src/Illuminate/Queue/Worker.php',
+                'function' => 'report',
+                'class' => 'NunoMaduro\\Collision\\Adapters\\Laravel\\ExceptionHandler',
+            ],
+            [
+                'file' => '/app/vendor/laravel/framework/src/Illuminate/Queue/Worker.php',
+                'function' => 'runJob',
+                'class' => 'Illuminate\\Queue\\Worker',
+            ],
+        ]];
     }
 
     public function unhandledBacktraceProviderLumen()

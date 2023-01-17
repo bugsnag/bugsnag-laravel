@@ -2,16 +2,15 @@
 
 namespace App\Jobs;
 
-use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
-use Exception;
+use RuntimeException;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
+use Illuminate\Queue\SerializesModels;
+use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 
-class HandledJob implements ShouldQueue
+class UnhandledJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -24,6 +23,6 @@ class HandledJob implements ShouldQueue
     {
         Bugsnag::leaveBreadcrumb(__METHOD__);
 
-        Bugsnag::notifyException(new Exception('Handled :)'));
+        throw new RuntimeException('uh oh :o');
     }
 }

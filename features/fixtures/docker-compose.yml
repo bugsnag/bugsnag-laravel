@@ -15,6 +15,7 @@ services:
       - BUGSNAG_REGISTER_OOM_BOOTSTRAPPER
       - BUGSNAG_DISCARD_CLASSES
       - BUGSNAG_REDACTED_KEYS
+      - BUGSNAG_QUERY
     restart: "no"
     ports:
       - target: 8000
@@ -34,6 +35,7 @@ services:
       - BUGSNAG_REGISTER_OOM_BOOTSTRAPPER
       - BUGSNAG_DISCARD_CLASSES
       - BUGSNAG_REDACTED_KEYS
+      - BUGSNAG_QUERY
     restart: "no"
     ports:
       - target: 8000
@@ -53,6 +55,7 @@ services:
       - BUGSNAG_REGISTER_OOM_BOOTSTRAPPER
       - BUGSNAG_DISCARD_CLASSES
       - BUGSNAG_REDACTED_KEYS
+      - BUGSNAG_QUERY
     restart: "no"
     ports:
       - target: 8000
@@ -72,13 +75,13 @@ services:
       - BUGSNAG_REGISTER_OOM_BOOTSTRAPPER
       - BUGSNAG_DISCARD_CLASSES
       - BUGSNAG_REDACTED_KEYS
+      - BUGSNAG_QUERY
     restart: "no"
     ports:
       - target: 8000
         published: 61266
 
   laravel8:
-    init: true
     build:
       context: laravel8
       args:
@@ -92,13 +95,13 @@ services:
       - BUGSNAG_REGISTER_OOM_BOOTSTRAPPER
       - BUGSNAG_DISCARD_CLASSES
       - BUGSNAG_REDACTED_KEYS
+      - BUGSNAG_QUERY
     restart: "no"
     ports:
       - target: 8000
         published: 61280
 
   laravel9:
-    init: true
     build:
       context: laravel9
       args:
@@ -112,6 +115,7 @@ services:
       - BUGSNAG_REGISTER_OOM_BOOTSTRAPPER
       - BUGSNAG_DISCARD_CLASSES
       - BUGSNAG_REDACTED_KEYS
+      - BUGSNAG_QUERY
     restart: "no"
     ports:
       - target: 8000
