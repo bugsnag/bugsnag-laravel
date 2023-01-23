@@ -27,6 +27,7 @@ cd laravel-latest
 
 composer require laravel/framework:"$LARAVEL_VERSION" --update-with-dependencies --no-update
 composer config repositories.bugsnag-laravel '{ "type": "path", "url": "../../../", "options": { "symlink": false } }'
+composer config minimum-stability dev
 composer require bugsnag/bugsnag-laravel '*' --no-update
 
 composer update --no-dev
