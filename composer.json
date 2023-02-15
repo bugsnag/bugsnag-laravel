@@ -19,7 +19,7 @@
         "monolog/monolog": "^1.12|^2.0|^3.0"
     },
     "require-dev": {
-        "orchestra/testbench": "^3.1|^4.0|^5.0|^6.0|^7.0",
+        "orchestra/testbench": "^3.1|^4.0|^5.0|^6.0|^7.0|^8.0",
         "phpunit/phpunit": "^4.8.36|^6.3.1|^7.5.15|^8.3.5|^9.3.10"
     },
     "autoload": {
