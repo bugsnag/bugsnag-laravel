@@ -1,6 +1,14 @@
 Changelog
 =========
 
+## v2.26.0 (2023-02-16)
+
+### Enhancements
+
+* Allow installation on Laravel 10 projects
+  [rubenvanerk](https://github.com/rubenvanerk)
+  [#518](https://github.com/bugsnag/bugsnag-laravel/pull/518)
+
 ## v2.25.1 (2023-01-17)
 
 ### Enhancements
