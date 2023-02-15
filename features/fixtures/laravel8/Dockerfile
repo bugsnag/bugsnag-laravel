@@ -14,7 +14,7 @@ COPY . .
 COPY --from=composer:2.2 /usr/bin/composer /usr/local/bin/composer
 
 RUN cp .env.example .env
-RUN composer install
+RUN composer install --no-dev
 RUN php artisan key:generate
 
 # create database & apply migrations
