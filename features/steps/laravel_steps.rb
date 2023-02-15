@@ -80,7 +80,7 @@ Then("the event {string} matches the current major Laravel version") do |path|
     step("the event '#{path}' starts with '#{Laravel.major_version}'")
   end
 
-  step("the event '#{path}' matches '^((\\d+\\.){2}\\d+|\\d\\.x-dev)$'")
+  step("the event '#{path}' matches '^((\\d+\\.){2}\\d+|\\d+\\.x-dev)$'")
 end
 
 Then("the session payload field {string} matches the current major Laravel version") do |path|
@@ -92,7 +92,7 @@ Then("the session payload field {string} matches the current major Laravel versi
     step("the session payload field '#{path}' starts with '#{Laravel.major_version}'")
   end
 
-  step("the session payload field '#{path}' matches the regex '^((\\d+\\.){2}\\d+|\\d\\.x-dev)$'")
+  step("the session payload field '#{path}' matches the regex '^((\\d+\\.){2}\\d+|\\d+\\.x-dev)$'")
 end
 
 Then("the event {string} matches the current major Lumen version") do |path|
@@ -104,7 +104,7 @@ Then("the event {string} matches the current major Lumen version") do |path|
     step("the event '#{path}' starts with '#{Laravel.major_version}'")
   end
 
-  step("the event '#{path}' matches '^((\\d+\\.){2}\\d+|\\d\\.x-dev)$'")
+  step("the event '#{path}' matches '^((\\d+\\.){2}\\d+|\\d+\\.x-dev)$'")
 end
 
 Then("the session payload field {string} matches the current major Lumen version") do |path|
@@ -116,7 +116,7 @@ Then("the session payload field {string} matches the current major Lumen version
     step("the session payload field '#{path}' starts with '#{Laravel.major_version}'")
   end
 
-  step("the session payload field '#{path}' matches the regex '^((\\d+\\.){2}\\d+|\\d\\.x-dev)$'")
+  step("the session payload field '#{path}' matches the regex '^((\\d+\\.){2}\\d+|\\d+\\.x-dev)$'")
 end
 
 # TODO: remove when https://github.com/bugsnag/maze-runner/pull/433 is released
