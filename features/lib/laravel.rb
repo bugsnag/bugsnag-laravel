@@ -87,7 +87,7 @@ class Laravel
       # get and parse the composer.lock file from the fixture
       composer_lock = Tempfile.create("#{fixture}-composer.lock") do |file|
         # copy the composer lock file out of the fixture so we can read it
-        Maze::Docker.cp(fixture, source: "/app/composer.lock", destination: file.path)
+        Maze::Docker.copy_from_container(fixture, from: "/app/composer.lock", to: file.path)
 
         # 'file.read' won't reflect the changes made by docker cp, so we use
         # JSON.load_file to reload the file & parse it
