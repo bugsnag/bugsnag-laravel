@@ -14,27 +14,6 @@ When(/^I start the laravel fixture$/) do
   }
 end
 
-module Maze
-  class Docker
-    class << self
-      # TODO: remove when https://github.com/bugsnag/maze-runner/pull/425 is merged
-      def exec(service, command, detach: false)
-        flags = detach ? "--detach" : ""
-
-        run_docker_compose_command("exec #{flags} #{service} #{command}")
-      end
-
-      # TODO: contribute this back to Maze Runner
-      #       probably need a nicer API, capable of doing a copy in either
-      #       direction (right now this can only copy from the service to the
-      #       local machine)
-      def cp(service, source:, destination:)
-        run_docker_compose_command("cp #{service}:#{source} #{destination}")
-      end
-    end
-  end
-end
-
 When("I start the laravel queue worker") do
   step("I start the laravel queue worker with --tries=1")
 end
@@ -80,7 +59,7 @@ Then("the event {string} matches the current major Laravel version") do |path|
     step("the event '#{path}' starts with '#{Laravel.major_version}'")
   end
 
-  step("the event '#{path}' matches '^((\\d+\\.){2}\\d+|\\d\\.x-dev)$'")
+  step("the event '#{path}' matches '^((\\d+\\.){2}\\d+|\\d+\\.x-dev)$'")
 end
 
 Then("the session payload field {string} matches the current major Laravel version") do |path|
@@ -92,7 +71,7 @@ Then("the session payload field {string} matches the current major Laravel versi
     step("the session payload field '#{path}' starts with '#{Laravel.major_version}'")
   end
 
-  step("the session payload field '#{path}' matches the regex '^((\\d+\\.){2}\\d+|\\d\\.x-dev)$'")
+  step("the session payload field '#{path}' matches the regex '^((\\d+\\.){2}\\d+|\\d+\\.x-dev)$'")
 end
 
 Then("the event {string} matches the current major Lumen version") do |path|
@@ -104,7 +83,7 @@ Then("the event {string} matches the current major Lumen version") do |path|
     step("the event '#{path}' starts with '#{Laravel.major_version}'")
   end
 
-  step("the event '#{path}' matches '^((\\d+\\.){2}\\d+|\\d\\.x-dev)$'")
+  step("the event '#{path}' matches '^((\\d+\\.){2}\\d+|\\d+\\.x-dev)$'")
 end
 
 Then("the session payload field {string} matches the current major Lumen version") do |path|
@@ -116,27 +95,7 @@ Then("the session payload field {string} matches the current major Lumen version
     step("the session payload field '#{path}' starts with '#{Laravel.major_version}'")
   end
 
-  step("the session payload field '#{path}' matches the regex '^((\\d+\\.){2}\\d+|\\d\\.x-dev)$'")
-end
-
-# TODO: remove when https://github.com/bugsnag/maze-runner/pull/433 is released
-Then("the event has {int} breadcrumb(s)") do |expected|
-  breadcrumbs = Maze::Server.errors.current[:body]['events'].first['breadcrumbs']
-
-  Maze.check.equal(
-    expected,
-    breadcrumbs.length,
-    "Expected event to have '#{expected}' breadcrumbs, but got: #{breadcrumbs}"
-  )
-end
-
-Then("the event has no breadcrumbs") do
-  breadcrumbs = Maze::Server.errors.current[:body]['events'].first['breadcrumbs']
-
-  Maze.check.true(
-    breadcrumbs.nil? || breadcrumbs.empty?,
-    "Expected event not to have breadcrumbs, but got: #{breadcrumbs}"
-  )
+  step("the session payload field '#{path}' matches the regex '^((\\d+\\.){2}\\d+|\\d+\\.x-dev)$'")
 end
 
 # conditionally run a step if the laravel version matches a specified version
