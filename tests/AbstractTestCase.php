@@ -81,4 +81,43 @@ abstract class AbstractTestCase extends TestCase
             putenv("{$name}");
         }
     }
+
+    /**
+     * A getter for the laravel app's base path that's backwards compatible with
+     * testbench v3
+     *
+     * @return string
+     */
+    protected static function backwardsCompatibleGetApplicationBasePath()
+    {
+        // testbench v4+
+        if (method_exists(static::class, 'applicationBasePath')) {
+            return static::applicationBasePath();
+        }
+
+        static $applicationBasePath;
+
+        if ($applicationBasePath) {
+            return $applicationBasePath;
+        }
+
+        $packages = ['testbench', 'testbench-core'];
+        $fixtureDirectories = ['fixture', 'laravel'];
+        $sourceDirectories = ['Concerns', 'Traits'];
+        $vendorDirectory = realpath(__DIR__.'/../vendor');
+
+        foreach ($packages as $package) {
+            foreach ($fixtureDirectories as $fixtureDirectory) {
+                foreach ($sourceDirectories as $sourceDirectory) {
+                    $path = "{$vendorDirectory}/orchestra/{$package}/src/{$sourceDirectory}/../../{$fixtureDirectory}";
+
+                    if (is_readable($path)) {
+                        return $applicationBasePath = $path;
+                    }
+                }
+            }
+        }
+
+        throw new Exception('Unable to determine application base path!');
+    }
 }

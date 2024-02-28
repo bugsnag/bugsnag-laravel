@@ -73,7 +73,7 @@ class ServiceProviderTest extends AbstractTestCase
         $this->assertSame($service, $aliasInstance);
     }
 
-    public function serviceAliasProvider()
+    public static function serviceAliasProvider()
     {
         return [
             'bugsnag' => ['bugsnag', Client::class],
@@ -114,8 +114,8 @@ class ServiceProviderTest extends AbstractTestCase
         $projectRootRegex = $this->getProperty($config, 'projectRootRegex');
         $stripPathRegex = $this->getProperty($config, 'stripPathRegex');
 
-        $expectedProjectRootRegex = $this->pathToRegex($this->app->path());
-        $expectedStripPathRegex = $this->pathToRegex($this->app->basePath());
+        $expectedProjectRootRegex = self::pathToRegex($this->app->path());
+        $expectedStripPathRegex = self::pathToRegex($this->app->basePath());
 
         $this->assertSame(
             $expectedStripPathRegex,
@@ -203,7 +203,7 @@ class ServiceProviderTest extends AbstractTestCase
         );
     }
 
-    public function projectRootAndStripPathProvider()
+    public static function projectRootAndStripPathProvider()
     {
         return [
             // If both strings are provided, both options should be set to the
@@ -213,8 +213,8 @@ class ServiceProviderTest extends AbstractTestCase
                 'strip_path' => '/example/strip/path',
                 'project_root_regex' => null,
                 'strip_path_regex' => null,
-                'expected_project_root_regex' => $this->pathToRegex('/example/project/root'),
-                'expected_strip_path_regex' => $this->pathToRegex('/example/strip/path'),
+                'expected_project_root_regex' => self::pathToRegex('/example/project/root'),
+                'expected_strip_path_regex' => self::pathToRegex('/example/strip/path'),
             ],
 
             // If both regexes are provided they should be set verbatim
@@ -235,8 +235,8 @@ class ServiceProviderTest extends AbstractTestCase
                 'strip_path' => null,
                 'project_root_regex' => null,
                 'strip_path_regex' => null,
-                'expected_project_root_regex' => $this->pathToRegex('/example/project/root'),
-                'expected_strip_path_regex' => $this->pathToRegex($this->getBasePath()),
+                'expected_project_root_regex' => self::pathToRegex('/example/project/root'),
+                'expected_strip_path_regex' => self::pathToRegex(self::backwardsCompatibleGetApplicationBasePath()),
             ],
 
             // If only the project root regex is provided, both values should be
@@ -247,7 +247,7 @@ class ServiceProviderTest extends AbstractTestCase
                 'project_root_regex' => '/^example project root regex/',
                 'strip_path_regex' => null,
                 'expected_project_root_regex' => '/^example project root regex/',
-                'expected_strip_path_regex' => $this->pathToRegex($this->getBasePath()),
+                'expected_strip_path_regex' => self::pathToRegex(self::backwardsCompatibleGetApplicationBasePath()),
             ],
 
             // If only the strip path string is provided, both values should be
@@ -258,8 +258,8 @@ class ServiceProviderTest extends AbstractTestCase
                 'strip_path' => '/example/strip/path',
                 'project_root_regex' => null,
                 'strip_path_regex' => null,
-                'expected_project_root_regex' => $this->pathToRegex("{$this->getBasePath()}/app"),
-                'expected_strip_path_regex' => $this->pathToRegex('/example/strip/path'),
+                'expected_project_root_regex' => self::pathToRegex(self::backwardsCompatibleGetApplicationBasePath()."/app"),
+                'expected_strip_path_regex' => self::pathToRegex('/example/strip/path'),
             ],
 
             // If only the strip path regex is provided, the strip path should be
@@ -270,14 +270,14 @@ class ServiceProviderTest extends AbstractTestCase
                 'strip_path' => null,
                 'project_root_regex' => null,
                 'strip_path_regex' => '/^example strip path regex/',
-                'expected_project_root_regex' => $this->pathToRegex("{$this->getBasePath()}/app"),
+                'expected_project_root_regex' => self::pathToRegex(self::backwardsCompatibleGetApplicationBasePath()."/app"),
                 'expected_strip_path_regex' => '/^example strip path regex/',
             ],
 
             // If the regexes are provided and either string value is too then
             // the regexes should take precedence and the string value ignored
             'project root string and both regexes provided' => [
-                'project_root' => $this->pathToRegex('/example/project/root'),
+                'project_root' => self::pathToRegex('/example/project/root'),
                 'strip_path' => null,
                 'project_root_regex' => '/^example project root regex/',
                 'strip_path_regex' => '/^example strip path regex/',
@@ -289,7 +289,7 @@ class ServiceProviderTest extends AbstractTestCase
             // the regexes should take precedence and the string value ignored
             'strip path string and both regexes provided' => [
                 'project_root' => null,
-                'strip_path' => $this->pathToRegex('/example/strip/path'),
+                'strip_path' => self::pathToRegex('/example/strip/path'),
                 'project_root_regex' => '/^example project root regex/',
                 'strip_path_regex' => '/^example strip path regex/',
                 'expected_project_root_regex' => '/^example project root regex/',
@@ -299,8 +299,8 @@ class ServiceProviderTest extends AbstractTestCase
             // If all four options are provided then the regexes should take
             // precedence and the string values ignored
             'all options provided' => [
-                'project_root' => $this->pathToRegex('/example/project/root'),
-                'strip_path' => $this->pathToRegex('/example/strip/path'),
+                'project_root' => self::pathToRegex('/example/project/root'),
+                'strip_path' => self::pathToRegex('/example/strip/path'),
                 'project_root_regex' => '/^example project root regex/',
                 'strip_path_regex' => '/^example strip path regex/',
                 'expected_project_root_regex' => '/^example project root regex/',
@@ -316,7 +316,7 @@ class ServiceProviderTest extends AbstractTestCase
      *
      * @return string
      */
-    private function pathToRegex($path)
+    private static function pathToRegex($path)
     {
         return sprintf('/^%s[\\/]?/i', preg_quote($path, '/'));
     }
@@ -458,7 +458,7 @@ class ServiceProviderTest extends AbstractTestCase
         $this->assertSame($memoryLimitIncrease, $client->getMemoryLimitIncrease());
     }
 
-    public function memoryLimitIncreaseProvider()
+    public static function memoryLimitIncreaseProvider()
     {
         return [
             [null],
