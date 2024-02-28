@@ -1,15 +1,13 @@
 diff --git a/routes/web.php b/routes/web.php
-index b130397..0c687ad 100644
+index 86a06c5..cff4f8b 100644
 --- a/routes/web.php
 +++ b/routes/web.php
-@@ -1,5 +1,6 @@
+@@ -1,7 +1,83 @@
  <?php
  
 +use App\Http\Controllers\TestController;
  use Illuminate\Support\Facades\Route;
  
- /*
-@@ -16,3 +17,78 @@
  Route::get('/', function () {
      return view('welcome');
  });

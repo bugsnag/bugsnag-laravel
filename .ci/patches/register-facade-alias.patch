@@ -1,0 +1,21 @@
+diff --git a/config/app.php b/config/app.php
+index f467267..c4d49fa 100644
+--- a/config/app.php
++++ b/config/app.php
+@@ -1,5 +1,7 @@
+ <?php
+ 
++use Illuminate\Support\Facades\Facade;
++
+ return [
+ 
+     /*
+@@ -123,4 +125,8 @@
+         'store' => env('APP_MAINTENANCE_STORE', 'database'),
+     ],
+ 
++    'aliases' => Facade::defaultAliases()->merge([
++        'Bugsnag' => Bugsnag\BugsnagLaravel\Facades\Bugsnag::class,
++    ])->toArray(),
++
+ ];
