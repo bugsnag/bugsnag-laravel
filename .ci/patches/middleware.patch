@@ -1,17 +1,3 @@
-diff --git a/app/Http/Kernel.php b/app/Http/Kernel.php
-index 36ced13..71cc168 100644
---- a/app/Http/Kernel.php
-+++ b/app/Http/Kernel.php
-@@ -62,5 +62,9 @@ class Kernel extends HttpKernel
-         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
-         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-+        'unMidEx' => \App\Http\Middleware\UnhandledMiddlewareEx::class,
-+        'unMidErr' => \App\Http\Middleware\UnhandledMiddlewareErr::class,
-+        'hanMidEx' => \App\Http\Middleware\HandledMiddlewareEx::class,
-+        'hanMidErr' => \App\Http\Middleware\HandledMiddlewareErr::class,
-     ];
- }
 diff --git a/app/Http/Middleware/HandledMiddlewareErr.php b/app/Http/Middleware/HandledMiddlewareErr.php
 new file mode 100644
 index 0000000..f10e6d5
@@ -96,3 +82,21 @@ index 0000000..3559022
 +        return $next($request);
 +    }
 +}
+diff --git a/bootstrap/app.php b/bootstrap/app.php
+index 36ced13..71cc168 100644
+--- a/bootstrap/app.php
++++ b/bootstrap/app.php
+@@ -11,7 +11,12 @@ return Application::configure(basePath: dirname(__DIR__))
+         health: '/up',
+     )
+     ->withMiddleware(function (Middleware $middleware) {
+-        //
++        $middleware->alias([
++            'unMidEx' => \App\Http\Middleware\UnhandledMiddlewareEx::class,
++            'unMidErr' => \App\Http\Middleware\UnhandledMiddlewareErr::class,
++            'hanMidEx' => \App\Http\Middleware\HandledMiddlewareEx::class,
++            'hanMidErr' => \App\Http\Middleware\HandledMiddlewareErr::class,
++        ]);
+     })
+     ->withExceptions(function (Exceptions $exceptions) {
+         //

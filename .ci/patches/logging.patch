@@ -6,7 +6,7 @@ index 088c204..107a3c7 100644
      'channels' => [
          'stack' => [
              'driver' => 'stack',
--            'channels' => ['single'],
+-            'channels' => explode(',', env('LOG_STACK', 'single')),
 +            'channels' => ['single', 'bugsnag'],
              'ignore_exceptions' => false,
          ],

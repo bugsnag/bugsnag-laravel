@@ -1,21 +1,17 @@
-diff --git a/app/Http/Kernel.php b/app/Http/Kernel.php
-index 17b4866..d1dcc9e 100644
---- a/app/Http/Kernel.php
-+++ b/app/Http/Kernel.php
-@@ -67,4 +67,16 @@ class Kernel extends HttpKernel
-         'hanMidEx' => \App\Http\Middleware\HandledMiddlewareEx::class,
-         'hanMidErr' => \App\Http\Middleware\HandledMiddlewareErr::class,
-     ];
+diff --git a/bootstrap/app.php b/bootstrap/app.php
+index 5cedded..08cc5e5 100644
+--- a/bootstrap/app.php
++++ b/bootstrap/app.php
+@@ -1,9 +1,12 @@
+ <?php
+ 
+ use Illuminate\Foundation\Application;
++use Bugsnag\BugsnagLaravel\OomBootstrapper;
+ use Illuminate\Foundation\Configuration\Exceptions;
+ use Illuminate\Foundation\Configuration\Middleware;
+ 
++(new OomBootstrapper())->bootstrap();
 +
-+    protected function bootstrappers()
-+    {
-+        if (!getenv('BUGSNAG_REGISTER_OOM_BOOTSTRAPPER')) {
-+            return parent::bootstrappers();
-+        }
-+
-+        return array_merge(
-+            [\Bugsnag\BugsnagLaravel\OomBootstrapper::class],
-+            parent::bootstrappers(),
-+        );
-+    }
- }
+ return Application::configure(basePath: dirname(__DIR__))
+     ->withRouting(
+         web: __DIR__.'/../routes/web.php',
