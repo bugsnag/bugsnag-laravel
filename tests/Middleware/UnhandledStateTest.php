@@ -92,7 +92,7 @@ class UnhandledStateTest extends TestCase
         );
     }
 
-    public function unhandledBacktraceProviderLaravel()
+    public static function unhandledBacktraceProviderLaravel()
     {
         yield 'minimal backtrace' => [[
             // the backtrace must go through the Handler::report method
@@ -189,7 +189,7 @@ class UnhandledStateTest extends TestCase
         ]];
     }
 
-    public function unhandledBacktraceProviderLumen()
+    public static function unhandledBacktraceProviderLumen()
     {
         yield 'Lumen (App exception handler)' => [[
             ['class' => \Bugsnag\PsrLogger\AbstractLogger::class, 'function' => 'error'],
@@ -269,7 +269,7 @@ class UnhandledStateTest extends TestCase
         $this->assertSame(['type' => 'handledException'], $this->report->getSeverityReason());
     }
 
-    public function handledBacktraceProviderLaravel()
+    public static function handledBacktraceProviderLaravel()
     {
         yield 'empty backtrace' => [[[]]];
 
@@ -334,7 +334,7 @@ class UnhandledStateTest extends TestCase
         ]];
     }
 
-    public function handledBacktraceProviderLumen()
+    public static function handledBacktraceProviderLumen()
     {
         yield 'Lumen no exception handler' => [[
             ['class' => \Bugsnag\PsrLogger\AbstractLogger::class, 'function' => 'error'],
