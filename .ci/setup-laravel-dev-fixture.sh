@@ -21,7 +21,7 @@ rm -rf laravel-latest
 
 # Ignore dev dependencies because we don't need them to run the Maze Runner tests
 # and they will only introduce more failure points
-composer create-project laravel/laravel laravel-latest --no-dev
+composer create-project laravel/laravel laravel-latest --no-dev "$LARAVEL_VERSION"
 
 cd laravel-latest
 
