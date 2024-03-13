@@ -1,6 +1,14 @@
 Changelog
 =========
 
+## v2.27.0 (2024-03-13)
+
+### Enhancements
+
+* Allow installation on Laravel 11 projects
+  [jonathan-dij](https://github.com/jonathan-dij)
+  [#532](https://github.com/bugsnag/bugsnag-laravel/pull/532)
+
 ## v2.26.0 (2023-02-16)
 
 ### Enhancements
