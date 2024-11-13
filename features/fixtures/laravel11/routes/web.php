@@ -75,7 +75,10 @@ Route::get('/oom/big', function () {
 });
 
 Route::get('/oom/small', function () {
-    ini_set('memory_limit', memory_get_usage() + (1024 * 1024 * 5));
+    // The 5 MiB default limit is not enough to
+    // deliver the OOM error in this scenario.
+    Bugsnag::setMemoryLimitIncrease(1024 * 1024 * 6); // 6 MiB
+    ini_set('memory_limit', memory_get_usage() + (1024 * 1024 * 5)); // 5 MiB
     ini_set('display_errors', true);
 
     $i = 0;
