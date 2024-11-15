@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Application;
 use Bugsnag\BugsnagLaravel\OomBootstrapper;
+use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
@@ -23,4 +24,8 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
-    })->create();
+    })
+    ->booted(function(){
+        Bugsnag::setMemoryLimitIncrease($value = 6 * 1024 * 1024);
+    })
+    ->create();
