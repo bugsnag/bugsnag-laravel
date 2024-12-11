@@ -29,6 +29,8 @@ jobs:
             laravel-fixture: laravel10
           - php-version: '8.3'
             laravel-fixture: laravel11
+          - php-version: '8.4'
+            laravel-fixture: laravel11
           - php-version: '8.0'
             laravel-fixture: lumen8
 
