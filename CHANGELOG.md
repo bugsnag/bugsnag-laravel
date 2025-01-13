@@ -5,8 +5,7 @@ Changelog
 
 This release should ensure compatibility with PHP 8.4 by removing the usage of certain
 deprecated features by:
-- Removing type annotations from parameters defaulting to `null`. Comment typal annotations
-will continue to be present and accurate
+- Removing type annotations from parameters defaulting to `null`. Comment type annotations will continue to be present and accurate
 
 ### Fixes
 
