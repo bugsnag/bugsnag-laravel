@@ -1,6 +1,17 @@
 Changelog
 =========
 
+## v2.28.1 (2025-01-13)
+
+This release should ensure compatibility with PHP 8.4 by removing the usage of certain
+deprecated features by:
+- Removing type annotations from parameters defaulting to `null`. Comment type annotations will continue to be present and accurate
+
+### Fixes
+
+* Ensure PHP 8.4 compatibility
+  [#547](https://github.com/bugsnag/bugsnag-laravel/pull/547)
+
 ## v2.28.0 (2024-06-03)
 
 ### Enhancements
