@@ -161,6 +161,23 @@ services:
       - target: 8000
         published: 61311
 
+  laraveloctane:
+    build:
+      context: laraveloctane
+      args:
+        - PHP_VERSION
+    environment:
+      - BUGSNAG_API_KEY
+      - BUGSNAG_CAPTURE_SESSIONS
+      - SUPERVISOR_PHP_COMMAND
+        # SUPERVISOR_PHP_COMMAND: "/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan octane:start --server=swoole --host=0.0.0.0 --port=8000" # FOR SWOOLE
+        # SUPERVISOR_PHP_COMMAND: "/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan octane:start --server=roadrunner --host=0.0.0.0 --rpc-port=6001 --port=8000" # FOR ROADRUNNER
+        # SUPERVISOR_PHP_COMMAND: "/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan octane:start --server=frankenphp --host=0.0.0.0 --admin-port=2019 --port=8000" # FOR FRANKENPHP
+    restart: "no"
+    ports:
+      - target: 8000
+        published: 61312
+
   laravel-latest:
     build:
       context: laravel-latest
