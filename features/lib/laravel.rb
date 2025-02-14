@@ -21,7 +21,11 @@ class Laravel
     end
 
     def fixture
-      ENV.fetch('LARAVEL_FIXTURE', 'laravel56')
+      fixtureName = ENV.fetch('LARAVEL_FIXTURE', 'laravel56')
+      if fixtureName == "laravelrr" || fixtureName == "laravelfp"
+        fixtureName = "laravel11"
+      end
+      fixtureName
     end
 
     def fixture_port

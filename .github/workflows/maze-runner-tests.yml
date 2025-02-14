@@ -31,6 +31,10 @@ jobs:
             laravel-fixture: laravel11
           - php-version: '8.4'
             laravel-fixture: laravel11
+          - php-version: '8.4'
+            laravel-fixture: laravelrr
+          - php-version: '8.4'
+            laravel-fixture: laravelfp
           - php-version: '8.0'
             laravel-fixture: lumen8
 

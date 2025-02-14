@@ -161,22 +161,37 @@ services:
       - target: 8000
         published: 61311
 
-  laraveloctane:
+  laravelrr:
     build:
-      context: laraveloctane
+      context: laravel11
+      dockerfile: Dockerfile-roadrunner
       args:
         - PHP_VERSION
     environment:
       - BUGSNAG_API_KEY
+      - BUGSNAG_ENDPOINT
+      - BUGSNAG_SESSION_ENDPOINT
       - BUGSNAG_CAPTURE_SESSIONS
-      - SUPERVISOR_PHP_COMMAND
-        # SUPERVISOR_PHP_COMMAND: "/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan octane:start --server=swoole --host=0.0.0.0 --port=8000" # FOR SWOOLE
-        # SUPERVISOR_PHP_COMMAND: "/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan octane:start --server=roadrunner --host=0.0.0.0 --rpc-port=6001 --port=8000" # FOR ROADRUNNER
-        # SUPERVISOR_PHP_COMMAND: "/usr/bin/php -d variables_order=EGPCS /var/www/html/artisan octane:start --server=frankenphp --host=0.0.0.0 --admin-port=2019 --port=8000" # FOR FRANKENPHP
     restart: "no"
     ports:
       - target: 8000
-        published: 61312
+        published: 61311 # must be the same as laravel11
+
+  laravelfp:
+    build:
+      context: laravel11
+      dockerfile: Dockerfile-frankenphp
+      args:
+        - PHP_VERSION
+    environment:
+      - BUGSNAG_API_KEY
+      - BUGSNAG_ENDPOINT
+      - BUGSNAG_SESSION_ENDPOINT
+      - BUGSNAG_CAPTURE_SESSIONS
+    restart: "no"
+    ports:
+      - target: 8000
+        published: 61311  # must be the same as laravel11
 
   laravel-latest:
     build:
