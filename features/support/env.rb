@@ -3,6 +3,8 @@ require_relative "../lib/utils"
 
 PROJECT_ROOT = File.realpath("#{__dir__}/../../")
 FIXTURE_PATH = File.realpath("#{PROJECT_ROOT}/features/fixtures/#{Laravel.fixture}")
+OCTANE_FIXTURES = ['laravelrr', 'laravelfp']
+OCTANE_TARGET_FIXTURE = 'laravel11'
 
 Maze.hooks.before_all do
   # log to console, not a file
@@ -23,6 +25,12 @@ Maze.hooks.before_all do
   if Laravel.fixture != 'laravel-latest'
     if ENV["DEBUG"]
       puts "Installing bugsnag-laravel from '#{PROJECT_ROOT}' to '#{FIXTURE_PATH}'"
+    end
+
+    if OCTANE_FIXTURES.include(Laravel.fixture)
+      path = File.realpath("#{PROJECT_ROOT}/features/fixtures/#{OCTANE_TARGET_FIXTURE}")
+    else
+      path = FIXTURE_PATH
     end
 
     Utils.install_bugsnag(PROJECT_ROOT, FIXTURE_PATH)
