@@ -22,7 +22,7 @@ class Laravel
 
     def fixture
       fixtureName = ENV.fetch('LARAVEL_FIXTURE', 'laravel56')
-      if fixtureName == "laravelrr" || fixtureName == "laravelfp"
+      if fixtureName == "laravelrr" || fixtureName == "laravelfp" || fixtureName == "laravelsw"
         fixtureName = "laravel11"
       end
       fixtureName
