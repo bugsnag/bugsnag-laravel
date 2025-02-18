@@ -4,13 +4,13 @@ Scenario: Exceptions can be discarded by name
   Given I set environment variable "BUGSNAG_DISCARD_CLASSES" to "Exception"
   And I start the laravel fixture
   When I navigate to the route "/unhandled_controller_exception"
-  Then I should receive no requests
+  Then I should receive no error
 
 Scenario: Exceptions can be discarded by regex
   Given I set environment variable "BUGSNAG_DISCARD_CLASSES" to "/Exception$/"
   And I start the laravel fixture
   When I navigate to the route "/unhandled_controller_exception"
-  Then I should receive no requests
+  Then I should receive no error
 
 Scenario: Exceptions will be delivered when discard classes does not match
   Given I set environment variable "BUGSNAG_DISCARD_CLASSES" to "DifferentException,/^NotThatException$/"
