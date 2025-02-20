@@ -1,0 +1,65 @@
+Feature: Unhandled exceptions for middleware support
+
+Scenario Outline: Unhandled exceptions are delivered from middleware
+  When I start the service <octanesrv>
+  And I wait for the host "localhost" to open port "61311"
+  When I navigate to the route "/unhandled_middleware_exception"
+  Then I wait to receive an error
+  And the error is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
+  And the exception "errorClass" equals "Exception"
+  And the exception "message" starts with "Unhandled middleware exception"
+  And the event "metaData.request.httpMethod" equals "GET"
+  And the event "app.type" equals "HTTP"
+  And the event "context" equals "GET /unhandled_middleware_exception"
+  And the event "severity" equals "error"
+  And the event "unhandled" is true
+  And the event "severityReason.type" equals "unhandledExceptionMiddleware"
+  And the event "severityReason.attributes.framework" equals "Laravel"
+
+  Examples:
+    | octanesrv   |
+    | "laravelrr" |
+    | "laravelfp" |
+    | "laravelsw" |
+
+Scenario Outline: Unhandled errors are delivered from middleware
+  When I start the service <octanesrv>
+  And I wait for the host "localhost" to open port "61311"
+  When I navigate to the route "/unhandled_middleware_error"
+  Then I wait to receive an error
+  And the error is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
+  And the exception "errorClass" ends with "Error"
+  And the exception "message" starts with "Call to undefined function"
+  And the exception "message" ends with "foo()"
+  And the event "metaData.request.httpMethod" equals "GET"
+  And the event "app.type" equals "HTTP"
+  And the event "context" equals "GET /unhandled_middleware_error"
+  And the event "severity" equals "error"
+  And the event "unhandled" is true
+  And the event "severityReason.type" equals "unhandledExceptionMiddleware"
+  And the event "severityReason.attributes.framework" equals "Laravel"
+
+  Examples:
+    | octanesrv   |
+    | "laravelrr" |
+    | "laravelfp" |
+    | "laravelsw" |
+
+@requires-sessions
+Scenario Outline: Sessions are correct in unhandled exceptions from middleware
+  Given I enable session tracking
+  When I start the service <octanesrv>
+  And I wait for the host "localhost" to open port "61311"
+  When I navigate to the route "/unhandled_middleware_exception"
+  And I wait to receive a session
+  Then the session is valid for the session reporting API version "1.0" for the "Bugsnag Laravel" notifier
+  When I wait to receive an error
+  Then the error is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
+  And the error payload field "events.0.session.events.unhandled" equals 1
+  And the error payload field "events.0.session.events.handled" equals 0
+
+  Examples:
+    | octanesrv   |
+    | "laravelrr" |
+    | "laravelfp" |
+    | "laravelsw" |

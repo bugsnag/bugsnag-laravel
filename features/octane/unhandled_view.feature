@@ -1,0 +1,72 @@
+Feature: Unhandled exceptions for views support
+
+Scenario Outline: Unhandled exceptions are delivered from views
+  When I start the service <octanesrv>
+  And I wait for the host "localhost" to open port "61311"
+  When I navigate to the route "/unhandled_view_exception"
+  Then I wait to receive an error
+  And the error is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
+  And the exception "errorClass" matches one of the following:
+    | ErrorException                                     |
+    | Illuminate\\View\\ViewException                    |
+    | Facade\\Ignition\\Exceptions\\ViewException        |
+    | Spatie\\LaravelIgnition\\Exceptions\\ViewException |
+  And the exception "message" starts with "Unhandled exception"
+  And the event "metaData.request.httpMethod" equals "GET"
+  And the event "app.type" equals "HTTP"
+  And the event "context" equals "GET /unhandled_view_exception"
+  And the event "severity" equals "error"
+  And the event "unhandled" is true
+  And the event "severityReason.type" equals "unhandledExceptionMiddleware"
+  And the event "severityReason.attributes.framework" equals "Laravel"
+
+  Examples:
+    | octanesrv   |
+    | "laravelrr" |
+    | "laravelfp" |
+    | "laravelsw" |
+
+Scenario Outline: Unhandled errors are delivered from views
+  When I start the service <octanesrv>
+  And I wait for the host "localhost" to open port "61311"
+  When I navigate to the route "/unhandled_view_error"
+  Then I wait to receive an error
+  And the error is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
+  And the exception "errorClass" matches one of the following:
+    | ErrorException                                     |
+    | Illuminate\\View\\ViewException                    |
+    | Facade\\Ignition\\Exceptions\\ViewException        |
+    | Spatie\\LaravelIgnition\\Exceptions\\ViewException |
+  And the exception "message" starts with "Call to undefined function foo()"
+  And the event "metaData.request.httpMethod" equals "GET"
+  And the event "app.type" equals "HTTP"
+  And the event "context" equals "GET /unhandled_view_error"
+  And the event "severity" equals "error"
+  And the event "unhandled" is true
+  And the event "severityReason.type" equals "unhandledExceptionMiddleware"
+  And the event "severityReason.attributes.framework" equals "Laravel"
+
+  Examples:
+    | octanesrv   |
+    | "laravelrr" |
+    | "laravelfp" |
+    | "laravelsw" |
+
+@requires-sessions
+Scenario Outline: Sessions are correct in unhandled exceptions from views
+  Given I enable session tracking
+  When I start the service <octanesrv>
+  And I wait for the host "localhost" to open port "61311"
+  When I navigate to the route "/unhandled_view_exception"
+  And I wait to receive a session
+  Then the session is valid for the session reporting API version "1.0" for the "Bugsnag Laravel" notifier
+  When I wait to receive an error
+  Then the error is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
+  And the error payload field "events.0.session.events.unhandled" equals 1
+  And the error payload field "events.0.session.events.handled" equals 0
+
+  Examples:
+    | octanesrv   |
+    | "laravelrr" |
+    | "laravelfp" |
+    | "laravelsw" |
