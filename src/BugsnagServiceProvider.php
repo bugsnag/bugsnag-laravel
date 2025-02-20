@@ -6,6 +6,7 @@ use Bugsnag\Breadcrumbs\Breadcrumb;
 use Bugsnag\BugsnagLaravel\Middleware\UnhandledState;
 use Bugsnag\BugsnagLaravel\Queue\Tracker;
 use Bugsnag\BugsnagLaravel\Request\LaravelResolver;
+use Bugsnag\BugsnagLaravel\OctaneEventSubscriber;
 use Bugsnag\Callbacks\CustomUser;
 use Bugsnag\Client;
 use Bugsnag\Configuration;
@@ -26,6 +27,7 @@ use Illuminate\Queue\QueueManager;
 use Illuminate\Routing\Events\RouteMatched;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Context;
+use Illuminate\Support\Facades\Event;
 use Laravel\Lumen\Application as LumenApplication;
 use Monolog\Handler\PsrHandler;
 use Monolog\Logger;
@@ -58,6 +60,12 @@ class BugsnagServiceProvider extends ServiceProvider
         // which can take a non-trivial amount of memory
         if (class_exists(OomBootstrapper::class, false) && !$this->app->runningUnitTests()) {
             $this->app->make('bugsnag');
+        }
+
+        // Octane support - register event listeners to flush Bugsnag data on request/task/worker termination
+        // TODO set up automatic breadcrumbs for each event
+        if ($this->app->bound('octane')) {
+            Event::subscribe(OctaneEventSubscriber::class);
         }
     }
 

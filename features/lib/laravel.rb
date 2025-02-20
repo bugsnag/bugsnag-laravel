@@ -3,6 +3,8 @@ require 'yaml'
 require 'json'
 require 'tempfile'
 
+OCTANE_FIXTURES = ['laravelrr', 'laravelfp', 'laravelsw']
+
 class Laravel
   class << self
     attr_reader :last_response
@@ -21,7 +23,11 @@ class Laravel
     end
 
     def fixture
-      ENV.fetch('LARAVEL_FIXTURE', 'laravel56')
+      fixtureName = ENV.fetch('LARAVEL_FIXTURE', 'laravel56')
+      if OCTANE_FIXTURES.include?(fixtureName)
+        fixtureName = "laravel11"
+      end
+      fixtureName
     end
 
     def fixture_port
