@@ -14,16 +14,13 @@ class OctaneEventSubscriber
 {
     /**
      * Reset all data between requests, tasks and worker resets in Octane.
-     * 
-     * @param \Illuminate\Contracts\Container\Container $app
      *
      * @return void
      */
-    protected function cleanup(Container $app)
+    protected function cleanup()
     {
         Bugsnag::flush();
         Bugsnag::clearBreadcrumbs();
-        $app->make(Tracker::class)->clear();
         Bugsnag::clearFeatureFlags();
         // Reset metadata
         // Bugsnag's default values are set in a report callback
@@ -33,17 +30,17 @@ class OctaneEventSubscriber
 
     public function handleRequestTerminated(RequestTerminated $event): void
     {
-        $this->cleanup($event->app);
+        $this->cleanup();
     }
 
     public function handleTaskTerminated(TaskTerminated $event): void
     {
-        $this->cleanup($event->app);
+        $this->cleanup();
     }
 
     public function handleWorkerStopping(WorkerStopping $event): void
     {
-        $this->cleanup($event->app);
+        $this->cleanup();
     }
  
     /**
