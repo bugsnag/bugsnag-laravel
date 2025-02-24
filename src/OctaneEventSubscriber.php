@@ -35,43 +35,57 @@ class OctaneEventSubscriber
         Bugsnag::setMetaData([], false);
     }
 
+    /**
+     * Leave breadcrumb if enabled in config
+     *
+     * @param string $crumbText message for the breadcrumb
+     *
+     * @return void
+     */
+    protected function breadcrumb($crumbText): void {
+        $bsgconfig = config('bugsnag');
+        if (isset($bsgconfig['octane_breadcrumbs']) && $bsgconfig['octane_breadcrumbs']) {
+            Bugsnag::leaveBreadcrumb($crumbText, Breadcrumb::PROCESS_TYPE);
+        }
+    }
+
     public function handleRequestHandled(RequestHandled $event) : void {
-        Bugsnag::leaveBreadcrumb('Octane request handled', Breadcrumb::PROCESS_TYPE);
+        $this->breadcrumb('Octane request handled');
     }
     public function handleRequestReceived(RequestReceived $event) : void {
-        Bugsnag::leaveBreadcrumb('Octane request received', Breadcrumb::PROCESS_TYPE);
+        $this->breadcrumb('Octane request received');
     }
     public function handleRequestTerminated(RequestTerminated $event): void
     {
-        Bugsnag::leaveBreadcrumb('Octane request terminated', Breadcrumb::PROCESS_TYPE);
+        $this->breadcrumb('Octane request terminated');
         $this->cleanup();
     }
 
     public function handleTaskReceived(TaskReceived $event) : void {
-        Bugsnag::leaveBreadcrumb('Octane task received', Breadcrumb::PROCESS_TYPE);
+        $this->breadcrumb('Octane task received');
     }
     public function handleTaskTerminated(TaskTerminated $event): void
     {
-        Bugsnag::leaveBreadcrumb('Octane task terminated', Breadcrumb::PROCESS_TYPE);
+        $this->breadcrumb('Octane task terminated');
         $this->cleanup();
     }
 
     public function handleTickReceived(TickReceived $event) : void {
-        Bugsnag::leaveBreadcrumb('Octane tick received', Breadcrumb::PROCESS_TYPE);
+        $this->breadcrumb('Octane tick received');
     }
     public function handleTickTerminated(TickTerminated $event) : void {
-        Bugsnag::leaveBreadcrumb('Octane tick terminated', Breadcrumb::PROCESS_TYPE);
+        $this->breadcrumb('Octane tick terminated');
     }
 
     public function handleWorkerStarting(WorkerStarting $event) : void {
-        Bugsnag::leaveBreadcrumb('Octane worker starting', Breadcrumb::PROCESS_TYPE);
+        $this->breadcrumb('Octane worker starting');
     }
     public function handleWorkerErrorOccurred(WorkerErrorOccurred $event) : void {
-        Bugsnag::leaveBreadcrumb('Octane worker error occurred', Breadcrumb::PROCESS_TYPE);
+        $this->breadcrumb('Octane worker error occurred');
     }
     public function handleWorkerStopping(WorkerStopping $event): void
     {
-        Bugsnag::leaveBreadcrumb('Octane worker stopping', Breadcrumb::PROCESS_TYPE);
+        $this->breadcrumb('Octane worker stopping');
         $this->cleanup();
     }
  

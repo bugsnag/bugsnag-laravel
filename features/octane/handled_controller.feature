@@ -23,6 +23,7 @@ Scenario Outline: Handled exceptions are delivered from controllers
     | "laravelsw" |
 
 Scenario Outline: Handled errors are delivered from controllers
+  Given I set environment variable "BUGSNAG_OCTANE_BREADCRUMBS" to "false"
   When I start the service <octanesrv>
   And I wait for the host "localhost" to open port "61311"
   When I navigate to the route "/handled_controller_error"
@@ -36,7 +37,7 @@ Scenario Outline: Handled errors are delivered from controllers
   And the event "severity" equals "warning"
   And the event "unhandled" is false
   And the event "severityReason.type" equals "handledError"
-  And the event has a "process" breadcrumb named "Octane request received"
+  And the event does not have a "process" breadcrumb with message "Octane request received"
 
   Examples:
     | octanesrv   |
