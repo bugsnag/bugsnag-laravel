@@ -211,102 +211,102 @@ class ServiceProviderTest extends AbstractTestCase
             // If both strings are provided, both options should be set to the
             // regex version of the given strings
             'both strings provided' => [
-                'project_root' => '/example/project/root',
-                'strip_path' => '/example/strip/path',
-                'project_root_regex' => null,
-                'strip_path_regex' => null,
-                'expected_project_root_regex' => self::pathToRegex('/example/project/root'),
-                'expected_strip_path_regex' => self::pathToRegex('/example/strip/path'),
+                '/example/project/root',
+                '/example/strip/path',
+                null,
+                null,
+                self::pathToRegex('/example/project/root'),
+                self::pathToRegex('/example/strip/path'),
             ],
 
             // If both regexes are provided they should be set verbatim
             'both regexes provided' => [
-                'project_root' => null,
-                'strip_path' => null,
-                'project_root_regex' => '/^example project root regex/',
-                'strip_path_regex' => '/^example strip path regex/',
-                'expected_project_root_regex' => '/^example project root regex/',
-                'expected_strip_path_regex' => '/^example strip path regex/',
+                null,
+                null,
+                '/^example project root regex/',
+                '/^example strip path regex/',
+                '/^example project root regex/',
+                '/^example strip path regex/',
             ],
 
             // If only the project root string is provided, the project root should
             // be set to the regex version of the string and the strip path to
             // the application base path
             'only project root string provided' => [
-                'project_root' => '/example/project/root',
-                'strip_path' => null,
-                'project_root_regex' => null,
-                'strip_path_regex' => null,
-                'expected_project_root_regex' => self::pathToRegex('/example/project/root'),
-                'expected_strip_path_regex' => self::pathToRegex(self::backwardsCompatibleGetApplicationBasePath()),
+                '/example/project/root',
+                null,
+                null,
+                null,
+                self::pathToRegex('/example/project/root'),
+                self::pathToRegex(self::backwardsCompatibleGetApplicationBasePath()),
             ],
 
             // If only the project root regex is provided, both values should be
             // set to the same regex
             'only project root regex provided' => [
-                'project_root' => null,
-                'strip_path' => null,
-                'project_root_regex' => '/^example project root regex/',
-                'strip_path_regex' => null,
-                'expected_project_root_regex' => '/^example project root regex/',
-                'expected_strip_path_regex' => self::pathToRegex(self::backwardsCompatibleGetApplicationBasePath()),
+                null,
+                null,
+                '/^example project root regex/',
+                null,
+                '/^example project root regex/',
+                self::pathToRegex(self::backwardsCompatibleGetApplicationBasePath()),
             ],
 
             // If only the strip path string is provided, both values should be
             // set — the stip path to the regex version of the string and the
             // project root with "/app" appended
             'only strip path string provided' => [
-                'project_root' => null,
-                'strip_path' => '/example/strip/path',
-                'project_root_regex' => null,
-                'strip_path_regex' => null,
-                'expected_project_root_regex' => self::pathToRegex(self::backwardsCompatibleGetApplicationBasePath()."/app"),
-                'expected_strip_path_regex' => self::pathToRegex('/example/strip/path'),
+                null,
+                '/example/strip/path',
+                null,
+                null,
+                self::pathToRegex(self::backwardsCompatibleGetApplicationBasePath()."/app"),
+                self::pathToRegex('/example/strip/path'),
             ],
 
             // If only the strip path regex is provided, the strip path should be
             // set verbatim and the project root should be set to the application
             // path (i.e. "/base/path/app")
             'only strip path regex provided' => [
-                'project_root' => null,
-                'strip_path' => null,
-                'project_root_regex' => null,
-                'strip_path_regex' => '/^example strip path regex/',
-                'expected_project_root_regex' => self::pathToRegex(self::backwardsCompatibleGetApplicationBasePath()."/app"),
-                'expected_strip_path_regex' => '/^example strip path regex/',
+                null,
+                null,
+                null,
+                '/^example strip path regex/',
+                self::pathToRegex(self::backwardsCompatibleGetApplicationBasePath()."/app"),
+                '/^example strip path regex/',
             ],
 
             // If the regexes are provided and either string value is too then
             // the regexes should take precedence and the string value ignored
             'project root string and both regexes provided' => [
-                'project_root' => self::pathToRegex('/example/project/root'),
-                'strip_path' => null,
-                'project_root_regex' => '/^example project root regex/',
-                'strip_path_regex' => '/^example strip path regex/',
-                'expected_project_root_regex' => '/^example project root regex/',
-                'expected_strip_path_regex' => '/^example strip path regex/',
+                self::pathToRegex('/example/project/root'),
+                null,
+                '/^example project root regex/',
+                '/^example strip path regex/',
+                '/^example project root regex/',
+                '/^example strip path regex/',
             ],
 
             // If the regexes are provided and either string value is too then
             // the regexes should take precedence and the string value ignored
             'strip path string and both regexes provided' => [
-                'project_root' => null,
-                'strip_path' => self::pathToRegex('/example/strip/path'),
-                'project_root_regex' => '/^example project root regex/',
-                'strip_path_regex' => '/^example strip path regex/',
-                'expected_project_root_regex' => '/^example project root regex/',
-                'expected_strip_path_regex' => '/^example strip path regex/',
+                null,
+                self::pathToRegex('/example/strip/path'),
+                '/^example project root regex/',
+                '/^example strip path regex/',
+                '/^example project root regex/',
+                '/^example strip path regex/',
             ],
 
             // If all four options are provided then the regexes should take
             // precedence and the string values ignored
             'all options provided' => [
-                'project_root' => self::pathToRegex('/example/project/root'),
-                'strip_path' => self::pathToRegex('/example/strip/path'),
-                'project_root_regex' => '/^example project root regex/',
-                'strip_path_regex' => '/^example strip path regex/',
-                'expected_project_root_regex' => '/^example project root regex/',
-                'expected_strip_path_regex' => '/^example strip path regex/',
+                self::pathToRegex('/example/project/root'),
+                self::pathToRegex('/example/strip/path'),
+                '/^example project root regex/',
+                '/^example strip path regex/',
+                '/^example project root regex/',
+                '/^example strip path regex/',
             ],
         ];
     }
