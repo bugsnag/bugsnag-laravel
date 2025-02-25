@@ -1,8 +1,7 @@
 Feature: Unhandled exceptions for middleware support
 
 Scenario Outline: Unhandled exceptions are delivered from middleware
-  When I start the service <octanesrv>
-  And I wait for the host "localhost" to open port "61311"
+  Given I start the laravel octane fixture <octanesrv>
   When I navigate to the route "/unhandled_middleware_exception"
   Then I wait to receive an error
   And the error is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
@@ -23,8 +22,7 @@ Scenario Outline: Unhandled exceptions are delivered from middleware
     | "laravelsw" |
 
 Scenario Outline: Unhandled errors are delivered from middleware
-  When I start the service <octanesrv>
-  And I wait for the host "localhost" to open port "61311"
+  Given I start the laravel octane fixture <octanesrv>
   When I navigate to the route "/unhandled_middleware_error"
   Then I wait to receive an error
   And the error is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
@@ -48,8 +46,7 @@ Scenario Outline: Unhandled errors are delivered from middleware
 @requires-sessions
 Scenario Outline: Sessions are correct in unhandled exceptions from middleware
   Given I enable session tracking
-  When I start the service <octanesrv>
-  And I wait for the host "localhost" to open port "61311"
+  And I start the laravel octane fixture <octanesrv>
   When I navigate to the route "/unhandled_middleware_exception"
   And I wait to receive a session
   Then the session is valid for the session reporting API version "1.0" for the "Bugsnag Laravel" notifier
