@@ -14,6 +14,13 @@ When(/^I start the laravel fixture$/) do
   }
 end
 
+When("I start the laravel octane fixture {string}") do |fixture|
+  steps %{
+    When I start the service "#{fixture}"
+    And I wait for the host "localhost" to open port "#{Laravel.fixture_port}"
+  }
+end
+
 When("I start the laravel queue worker") do
   step("I start the laravel queue worker with --tries=1")
 end

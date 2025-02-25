@@ -33,6 +33,7 @@ Maze.hooks.before do
   Maze::Runner.environment["BUGSNAG_API_KEY"] = $api_key
   Maze::Runner.environment["BUGSNAG_ENDPOINT"] = "http://#{Utils.current_ip}:#{Maze.config.port}/notify"
   Maze::Runner.environment["BUGSNAG_SESSION_ENDPOINT"] = "http://#{Utils.current_ip}:#{Maze.config.port}/sessions"
+  Maze::Runner.environment['LARAVEL_FIXTURE_PORT'] = Laravel.fixture_port.to_s
   Laravel.reset!
 end
 

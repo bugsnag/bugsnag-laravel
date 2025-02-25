@@ -1,8 +1,7 @@
 Feature: Handled exceptions in controllers support
 
 Scenario Outline: Handled exceptions are delivered from controllers
-  When I start the service <octanesrv>
-  And I wait for the host "localhost" to open port "61311"
+  Given I start the laravel octane fixture <octanesrv>
   When I navigate to the route "/handled_controller_exception"
   Then I wait to receive an error
   And the error is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
@@ -24,8 +23,7 @@ Scenario Outline: Handled exceptions are delivered from controllers
 
 Scenario Outline: Handled errors are delivered from controllers
   Given I set environment variable "BUGSNAG_OCTANE_BREADCRUMBS" to "false"
-  When I start the service <octanesrv>
-  And I wait for the host "localhost" to open port "61311"
+  And I start the laravel octane fixture <octanesrv>
   When I navigate to the route "/handled_controller_error"
   Then I wait to receive an error
   And the error is valid for the error reporting API version "4.0" for the "Bugsnag Laravel" notifier
@@ -48,8 +46,7 @@ Scenario Outline: Handled errors are delivered from controllers
 @requires-sessions
 Scenario Outline: Sessions are correct in handled exceptions from controllers
   Given I enable session tracking
-  When I start the service <octanesrv>
-  And I wait for the host "localhost" to open port "61311"
+  And I start the laravel octane fixture <octanesrv>
   When I navigate to the route "/handled_controller_exception"
   And I wait to receive a session
   Then the session is valid for the session reporting API version "1.0" for the "Bugsnag Laravel" notifier
