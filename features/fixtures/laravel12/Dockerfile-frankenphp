@@ -1,0 +1,29 @@
+ARG PHP_VERSION
+FROM php:$PHP_VERSION
+
+RUN apt-get update && \
+  apt-get install -y --no-install-recommends \
+  git \
+  unzip \
+  wget \
+  zip
+
+WORKDIR /app
+
+COPY . .
+COPY --from=composer /usr/bin/composer /usr/local/bin/composer
+
+RUN curl https://frankenphp.dev/install.sh | sh
+RUN mv frankenphp /usr/local/bin/
+
+RUN cp .env.example .env
+RUN docker-php-ext-install sockets pcntl posix
+RUN composer install --no-dev
+RUN composer require laravel/octane
+RUN php artisan key:generate
+RUN php artisan octane:install --server=frankenphp
+
+# create database & apply migrations
+RUN touch database/database.sqlite && php artisan migrate --no-interaction
+
+CMD php -d variables_order=EGPCS artisan octane:start --server=frankenphp --host=0.0.0.0 --admin-port=2019 --port=8000

@@ -163,7 +163,7 @@ services:
 
   laravelrr:
     build:
-      context: laravel11
+      context: ${LARAVEL_FIXTURE}
       dockerfile: Dockerfile-roadrunner
       args:
         - PHP_VERSION
@@ -180,11 +180,11 @@ services:
     restart: "no"
     ports:
       - target: 8000
-        published: 61311 # must be the same as laravel11
+        published: ${LARAVEL_FIXTURE_PORT} # must be the same as laravel11
 
   laravelfp:
     build:
-      context: laravel11
+      context: ${LARAVEL_FIXTURE}
       dockerfile: Dockerfile-frankenphp
       args:
         - PHP_VERSION
@@ -201,11 +201,11 @@ services:
     restart: "no"
     ports:
       - target: 8000
-        published: 61311  # must be the same as laravel11
+        published: ${LARAVEL_FIXTURE_PORT}  # must be the same as laravel11
 
   laravelsw:
     build:
-      context: laravel11
+      context: ${LARAVEL_FIXTURE}
       dockerfile: Dockerfile-swoole
       args:
         - PHP_VERSION
@@ -222,7 +222,7 @@ services:
     restart: "no"
     ports:
       - target: 8000
-        published: 61311  # must be the same as laravel11
+        published: ${LARAVEL_FIXTURE_PORT}  # must be the same as laravel11
 
   laravel12:
     build:
