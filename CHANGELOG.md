@@ -1,6 +1,13 @@
 Changelog
 =========
 
+## v2.29.0 (2025-02-26)
+
+* Adds support for laravel 12 [#553](https://github.com/bugsnag/bugsnag-laravel/pull/553)
+* Adds support for running laravel using octane:
+  - [#551](https://github.com/bugsnag/bugsnag-laravel/pull/551)
+  - [#552](https://github.com/bugsnag/bugsnag-laravel/pull/552)
+
 ## v2.28.1 (2025-01-13)
 
 This release should ensure compatibility with PHP 8.4 by removing the usage of certain
