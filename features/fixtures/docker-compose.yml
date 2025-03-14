@@ -211,6 +211,7 @@ services:
       args:
         - PHP_VERSION
         - OCTANE_VERSION=${OCTANE_VERSION:-2.8.2}
+        - SWOOLE_VERSION=${SWOOLE_VERSION:-6.0.1}
     environment:
       - BUGSNAG_API_KEY
       - BUGSNAG_ENDPOINT
