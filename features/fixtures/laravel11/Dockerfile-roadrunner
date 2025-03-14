@@ -20,8 +20,8 @@ RUN composer install --no-dev
 ARG OCTANE_VERSION
 RUN composer require laravel/octane:$OCTANE_VERSION
 
-ARG ROADRUNNER_VERSION
-RUN composer require spiral/roadrunner-cli:$ROADRUNNER_VERSION
+ARG ROADRUNNER_CLI_VERSION
+RUN composer require spiral/roadrunner-cli:$ROADRUNNER_CLI_VERSION
 
 RUN ./vendor/bin/rr get-binary
 RUN php artisan key:generate
