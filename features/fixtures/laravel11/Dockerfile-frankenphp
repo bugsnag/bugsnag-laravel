@@ -13,7 +13,8 @@ WORKDIR /app
 COPY . .
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
-RUN curl https://frankenphp.dev/install.sh | sh
+ARG FRANKENPHP_VERSION
+RUN curl -L "https://github.com/dunglas/frankenphp/releases/tag/${FRANKENPHP_VERSION}/download/frankenphp-linux-aarch64" -o "/app/frankenphp"
 RUN mv frankenphp /usr/local/bin/
 
 RUN cp .env.example .env
