@@ -17,7 +17,10 @@ COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 RUN cp .env.example .env
 RUN docker-php-ext-install sockets pcntl posix
 RUN composer install --no-dev
-RUN composer require laravel/octane
+
+ARG OCTANE_VERSION
+RUN composer require laravel/octane:$OCTANE_VERSION
+
 RUN pecl install swoole
 RUN docker-php-ext-enable swoole
 RUN php artisan key:generate

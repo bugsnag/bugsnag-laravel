@@ -66,8 +66,10 @@ jobs:
       matrix:
         include:
           - php-version: '8.4'
+            octane-version: '2.8.2'
             laravel-fixture: laravel11
           - php-version: '8.4'
+            octane-version: '2.8.2'
             laravel-fixture: laravel12
 
     steps:
@@ -88,5 +90,6 @@ jobs:
     - run: bundle exec maze-runner --no-source ./features/octane
       env:
         PHP_VERSION: ${{ matrix.php-version }}
+        OCTANE_VERSION: ${{ matrix.octane-version }}
         LARAVEL_FIXTURE: ${{ matrix.laravel-fixture }}
         COMPOSER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
