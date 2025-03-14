@@ -168,6 +168,7 @@ services:
       args:
         - PHP_VERSION
         - OCTANE_VERSION=${OCTANE_VERSION:-2.8.2}
+        - ROADRUNNER_VERSION=${ROADRUNNER_VERSION:-v2024.3.5}
     environment:
       - BUGSNAG_API_KEY
       - BUGSNAG_ENDPOINT
