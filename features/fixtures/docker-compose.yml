@@ -235,7 +235,6 @@ services:
       context: laravel12
       args:
         - PHP_VERSION
-        - OCTANE_VERSION=${OCTANE_VERSION:-2.8.2}
     environment:
       - BUGSNAG_API_KEY
       - BUGSNAG_ENDPOINT
