@@ -13,13 +13,17 @@ WORKDIR /app
 COPY . .
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
-RUN curl https://frankenphp.dev/install.sh | sh
+ARG FRANKENPHP_VERSION
+RUN curl -L "https://github.com/dunglas/frankenphp/releases/tag/${FRANKENPHP_VERSION}/download/frankenphp-linux-aarch64" -o "/app/frankenphp"
 RUN mv frankenphp /usr/local/bin/
 
 RUN cp .env.example .env
 RUN docker-php-ext-install sockets pcntl posix
 RUN composer install --no-dev
-RUN composer require laravel/octane
+
+ARG OCTANE_VERSION
+
+RUN composer require laravel/octane:$OCTANE_VERSION
 RUN php artisan key:generate
 RUN php artisan octane:install --server=frankenphp
 
