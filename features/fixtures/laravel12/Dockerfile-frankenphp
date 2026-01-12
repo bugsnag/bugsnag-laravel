@@ -1,5 +1,5 @@
 ARG PHP_VERSION
-FROM php:$PHP_VERSION
+FROM dunglas/frankenphp:php$PHP_VERSION
 
 RUN apt-get update && \
   apt-get install -y --no-install-recommends \
@@ -12,9 +12,6 @@ WORKDIR /app
 
 COPY . .
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
-
-RUN curl https://frankenphp.dev/install.sh | sh
-RUN mv frankenphp /usr/local/bin/
 
 RUN cp .env.example .env
 RUN docker-php-ext-install sockets pcntl posix

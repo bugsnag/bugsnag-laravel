@@ -71,6 +71,8 @@ jobs:
             laravel-fixture: laravel11
           - php-version: '8.4'
             laravel-fixture: laravel12
+          - php-version: '8.5'
+            laravel-fixture: laravel12
 
     steps:
     - uses: actions/checkout@v2
