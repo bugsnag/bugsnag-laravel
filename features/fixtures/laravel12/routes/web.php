@@ -75,7 +75,7 @@ Route::get('/oom/big', function () {
 });
 
 Route::get('/oom/small', function () {
-    ini_set('memory_limit', memory_get_usage() + (1024 * 1024 * 5));
+    ini_set('memory_limit', memory_get_usage() + (1024 * 1024 * 10));
     ini_set('display_errors', true);
 
     $i = 0;
@@ -84,6 +84,8 @@ Route::get('/oom/small', function () {
 
     while ($i++ < 12345678) {
         $a = new stdClass;
+        $s = str_repeat('a', 1024 * (512 + $i));
+        $a->s = $s;
         $a->b = $a;
     }
 
