@@ -74,7 +74,7 @@ jobs:
             octane-version: '2.8.2'
             laravel-fixture: laravel12
           - php-version: '8.5'
-            octane-version: '2.8.2'
+            octane-version: '2.13.4'
             laravel-fixture: laravel12
 
     steps:
