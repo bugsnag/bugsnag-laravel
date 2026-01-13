@@ -1,25 +1,15 @@
 --TEST--
-The OomBootstrapper should not crash when bugsnag is in the DI container
+The OomBootstrapper should not crash when bugsnag is not in the DI container
 --FILE--
 <?php
 
 use Bugsnag\BugsnagLaravel\OomBootstrapper;
 
-class FakeClient
-{
-    public function getMemoryLimitIncrease()
-    {
-        echo "'getMemoryLimitIncrease' was called!\n";
-
-        return 12345;
-    }
-}
-
 function app($alias = null) {
     echo "'app' was called!\n";
 
     if ($alias === 'bugsnag') {
-        return new FakeClient();
+        return null;
     }
 
     if ($alias !== null) {
@@ -29,7 +19,7 @@ function app($alias = null) {
     throw new BadFunctionCallException("This fake 'app' should always be called with an alias");
 }
 
-require __DIR__.'/../../src/OomBootstrapper.php';
+require __DIR__.'/../../../src/OomBootstrapper.php';
 
 (new OomBootstrapper())->bootstrap();
 
@@ -48,15 +38,12 @@ echo "No OOM!\n";
 ?>
 --SKIPIF--
 <?php
-if (PHP_MAJOR_VERSION < 7) {
-    echo "SKIP - PHP 5 does not run OOM in this test";
-}
-if (PHP_VERSION_ID >= 80500) {
-    echo 'SKIP — this test has a different output in PHP 8.5+';
+if (PHP_VERSION_ID < 80500) {
+    echo 'SKIP — this case is already tested in PHP <8.5';
 }
 ?>
 --EXPECTF--
 Fatal error: Allowed memory size of %d bytes exhausted (tried to allocate %d bytes) in %s on line %d
+Stack trace:
+#0 {main}
 'app' was called!
-'getMemoryLimitIncrease' was called!
-'getMemoryLimitIncrease' was called!
