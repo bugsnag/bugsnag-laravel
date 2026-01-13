@@ -1,5 +1,6 @@
 ARG PHP_VERSION
-FROM dunglas/frankenphp:php$PHP_VERSION
+ARG FRANKENPHP_VERSION
+FROM dunglas/frankenphp:$FRANKENPHP_VERSION-php$PHP_VERSION
 
 RUN apt-get update && \
   apt-get install -y --no-install-recommends \
@@ -18,8 +19,8 @@ RUN docker-php-ext-install sockets pcntl posix
 RUN composer install --no-dev
 
 ARG OCTANE_VERSION
-
 RUN composer require laravel/octane:$OCTANE_VERSION
+
 RUN php artisan key:generate
 RUN php artisan octane:install --server=frankenphp
 

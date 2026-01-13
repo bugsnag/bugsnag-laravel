@@ -1,5 +1,6 @@
 ARG PHP_VERSION
-FROM dunglas/frankenphp:php$PHP_VERSION
+ARG FRANKENPHP_VERSION
+FROM dunglas/frankenphp:$FRANKENPHP_VERSION-php$PHP_VERSION
 
 RUN apt-get update && \
   apt-get install -y --no-install-recommends \

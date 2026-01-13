@@ -191,7 +191,7 @@ services:
       args:
         - PHP_VERSION
         - OCTANE_VERSION=${OCTANE_VERSION:-2.8.2}
-        - FRANKENPHP_VERSION=${FRANKENPHP_VERSION:-v1.4.4}
+        - FRANKENPHP_VERSION=${FRANKENPHP_VERSION:-1.4.4}
     environment:
       - BUGSNAG_API_KEY
       - BUGSNAG_ENDPOINT
