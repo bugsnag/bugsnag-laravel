@@ -91,6 +91,7 @@ jobs:
 
     - run: bundle exec maze-runner --no-source ./features/octane
       env:
+        DEBUG: 1
         PHP_VERSION: ${{ matrix.php-version }}
         OCTANE_VERSION: ${{ matrix.octane-version }}
         LARAVEL_FIXTURE: ${{ matrix.laravel-fixture }}
