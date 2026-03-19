@@ -1,4 +1,4 @@
-# Setup script for anyone working in a scaler environment.  This script assumes that the root certificate is present
+# Setup script for anyone working in a Zscaler environment.  This script assumes that the root certificate is present
 # at ~/.zscaler-root-ca.pem and copies it into place in each of the test fixture so that the Docker builds can install
 # it into the built images.  This is not need on CI or in other non-Zscaler environments.
 
