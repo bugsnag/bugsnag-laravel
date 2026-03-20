@@ -10,3 +10,5 @@ maze-runner.log
 /features/fixtures/*/bugsnag-laravel
 /features/fixtures/laravel-latest/*
 !/features/fixtures/laravel-latest/.gitignore
+bugsnag-laravel.iml
+.zscaler-root-ca.pem
