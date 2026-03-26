@@ -14,7 +14,7 @@ Route::get('crash', function () {
 
 Route::get('notify', function () {
     Bugsnag::notifyException(new RuntimeException("A notified exception"));
-    return 'An exception has been notified.  Check your dashboard to view it!';
+    return 'An exception has been notified. Check your dashboard to view it!';
 });
 
 Route::get('metadata', function () {
@@ -43,7 +43,7 @@ Route::get('notify-with-metadata', function () {
         }
     );
 
-    return 'An exception has been notified.  Check your dashboard to view it!';
+    return 'An exception has been notified. Check your dashboard to view it!';
 });
 
 Route::get('severity', function () {
@@ -54,5 +54,5 @@ Route::get('severity', function () {
         }
     );
 
-    return 'An exception has been notified.  Check your dashboard to view it!';
+    return 'An exception has been notified. Check your dashboard to view it!';
 });
