@@ -32,6 +32,16 @@ To get set up, follow the instructions below. Don't forget to replace the placeh
     php artisan key:generate
     ```
 
+1. Create SQLite database file
+    ```shell
+    touch database/database.sqlite
+    ```
+
+1. Run migrations
+    ```shell
+    php artisan migrate
+    ```
+
 1. Run the application.
     ```shell
     php artisan serve
