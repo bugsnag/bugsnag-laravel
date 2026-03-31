@@ -17,6 +17,7 @@ use Illuminate\Contracts\Logging\Log;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Context;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 class ServiceProviderTest extends AbstractTestCase
 {
@@ -57,6 +58,7 @@ class ServiceProviderTest extends AbstractTestCase
     /**
      * @dataProvider serviceAliasProvider
      */
+    #[DataProvider('serviceAliasProvider')]
     public function testItRegistersAnAliasForEachService($serviceId, $alias)
     {
         $this->assertTrue(
@@ -143,6 +145,7 @@ class ServiceProviderTest extends AbstractTestCase
      *
      * @dataProvider projectRootAndStripPathProvider
      */
+    #[DataProvider('projectRootAndStripPathProvider')]
     public function testProjectRootAndStripPathAreSetCorrectly(
         $projectRoot,
         $stripPath,
@@ -441,6 +444,7 @@ class ServiceProviderTest extends AbstractTestCase
      *
      * @dataProvider memoryLimitIncreaseProvider
      */
+    #[DataProvider('memoryLimitIncreaseProvider')]
     public function testMemoryLimitIncreaseIsSetCorrectly($memoryLimitIncrease)
     {
         /** @var \Illuminate\Config\Repository $laravelConfig */
