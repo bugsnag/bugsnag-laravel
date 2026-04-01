@@ -25,8 +25,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })
-    ->booted(function(){
+    ->booted(function () {
         // Laravel 13 with Symfony 8.0 requires more memory for OOM handling
-        Bugsnag::setMemoryLimitIncrease($value = 6 * 1024 * 1024);
+        Bugsnag::setMemoryLimitIncrease(6 * 1024 * 1024);
     })
     ->create();
