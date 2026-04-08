@@ -1,0 +1,36 @@
+ARG PHP_VERSION
+FROM php:$PHP_VERSION
+
+RUN apt-get update && \
+  apt-get install -y --no-install-recommends \
+  git \
+  unzip \
+  wget \
+  zip \
+  libbrotli-dev \
+  libssl-dev \
+  pkg-config
+
+WORKDIR /app
+
+COPY . .
+COPY --from=composer /usr/bin/composer /usr/local/bin/composer
+
+RUN cp .env.example .env
+RUN docker-php-ext-install sockets pcntl posix
+RUN composer install --no-dev
+
+ARG OCTANE_VERSION
+RUN composer require laravel/octane:$OCTANE_VERSION
+
+ARG SWOOLE_VERSION
+RUN pecl install swoole-$SWOOLE_VERSION
+
+RUN docker-php-ext-enable swoole
+RUN php artisan key:generate
+RUN php artisan octane:install --server=swoole
+
+# create database & apply migrations
+RUN touch database/database.sqlite && php artisan migrate --no-interaction
+
+CMD php -d variables_order=EGPCS artisan octane:start --server=swoole --host=0.0.0.0 --rpc-port=6001 --port=8000

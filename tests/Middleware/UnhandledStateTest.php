@@ -22,6 +22,9 @@ use Bugsnag\BugsnagLaravel\Tests\Stubs\DebugBacktraceStub;
 use Bugsnag\Configuration;
 use Bugsnag\Report;
 use Exception;
+use PHPUnit\Framework\Attributes\After;
+use PHPUnit\Framework\Attributes\Before;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit_Framework_TestCase as TestCase;
 
 class UnhandledStateTest extends TestCase
@@ -44,6 +47,7 @@ class UnhandledStateTest extends TestCase
     /**
      * @before
      */
+    #[Before]
     protected function beforeEach()
     {
         $this->report = Report::fromPHPThrowable(
@@ -61,6 +65,7 @@ class UnhandledStateTest extends TestCase
     /**
      * @after
      */
+    #[After]
     protected function afterEach()
     {
         DebugBacktraceStub::clear();
@@ -72,6 +77,8 @@ class UnhandledStateTest extends TestCase
      * @dataProvider unhandledBacktraceProviderLaravel
      * @dataProvider unhandledBacktraceProviderLumen
      */
+    #[DataProvider('unhandledBacktraceProviderLaravel')]
+    #[DataProvider('unhandledBacktraceProviderLumen')]
     public function testReportIsUnhandled(array $backtrace)
     {
         DebugBacktraceStub::set($backtrace);
@@ -259,6 +266,8 @@ class UnhandledStateTest extends TestCase
      * @dataProvider handledBacktraceProviderLaravel
      * @dataProvider handledBacktraceProviderLumen
      */
+    #[DataProvider('handledBacktraceProviderLaravel')]
+    #[DataProvider('handledBacktraceProviderLumen')]
     public function testReportIsHandled(array $backtrace)
     {
         DebugBacktraceStub::set($backtrace);
