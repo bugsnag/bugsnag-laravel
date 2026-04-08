@@ -76,7 +76,7 @@ Route::get('/oom/big', function () {
 
 Route::get('/oom/small', function () {
     ini_set('memory_limit', memory_get_usage() + (1024 * 1024 * 10));
-    ini_set('display_errors', true);
+    ini_set('display_errors', false);
 
     $i = 0;
 

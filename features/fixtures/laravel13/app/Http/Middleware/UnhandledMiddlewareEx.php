@@ -10,6 +10,5 @@ class UnhandledMiddlewareEx
     public function handle($request, Closure $next)
     {
         throw new Exception('Unhandled middleware exception');
-        return $next($request);
     }
 }
