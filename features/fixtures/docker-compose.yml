@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   laravel51:
     build:
@@ -167,6 +165,8 @@ services:
       dockerfile: Dockerfile-roadrunner
       args:
         - PHP_VERSION
+        - OCTANE_VERSION=${OCTANE_VERSION:-2.17.1}
+        - ROADRUNNER_CLI_VERSION=${ROADRUNNER_CLI_VERSION:-v2.7.2}
     environment:
       - BUGSNAG_API_KEY
       - BUGSNAG_ENDPOINT
@@ -188,6 +188,8 @@ services:
       dockerfile: Dockerfile-frankenphp
       args:
         - PHP_VERSION
+        - OCTANE_VERSION=${OCTANE_VERSION:-2.8.2}
+        - FRANKENPHP_VERSION=${FRANKENPHP_VERSION:-1.4.4}
     environment:
       - BUGSNAG_API_KEY
       - BUGSNAG_ENDPOINT
@@ -209,6 +211,8 @@ services:
       dockerfile: Dockerfile-swoole
       args:
         - PHP_VERSION
+        - OCTANE_VERSION=${OCTANE_VERSION:-2.8.2}
+        - SWOOLE_VERSION=${SWOOLE_VERSION:-6.0.1}
     environment:
       - BUGSNAG_API_KEY
       - BUGSNAG_ENDPOINT
@@ -243,6 +247,27 @@ services:
     ports:
       - target: 8000
         published: 61312
+
+  laravel13:
+    build:
+      context: laravel13
+      args:
+        - PHP_VERSION
+    environment:
+      - BUGSNAG_API_KEY
+      - BUGSNAG_ENDPOINT
+      - BUGSNAG_SESSION_ENDPOINT
+      - BUGSNAG_CAPTURE_SESSIONS
+      - BUGSNAG_USE_CUSTOM_GUZZLE
+      - BUGSNAG_REGISTER_OOM_BOOTSTRAPPER
+      - BUGSNAG_DISCARD_CLASSES
+      - BUGSNAG_REDACTED_KEYS
+      - BUGSNAG_QUERY
+    restart: "no"
+    ports:
+      - target: 8000
+        published: 61313
+
 
   laravel-latest:
     build:

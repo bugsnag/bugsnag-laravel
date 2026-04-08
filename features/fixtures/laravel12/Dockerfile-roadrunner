@@ -1,6 +1,10 @@
 ARG PHP_VERSION
 FROM php:$PHP_VERSION
 
+# Only applicable to development environments running scaler
+COPY .zscaler-root-ca.pem* /usr/local/share/ca-certificates/
+RUN if [ -f /usr/local/share/ca-certificates/.zscaler-root-ca.pem ]; then cat /usr/local/share/ca-certificates/.zscaler-root-ca.pem >> /etc/ssl/certs/ca-certificates.crt; fi
+
 RUN apt-get update && \
   apt-get install -y --no-install-recommends \
   git \
@@ -16,7 +20,13 @@ COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 RUN cp .env.example .env
 RUN docker-php-ext-install sockets pcntl posix
 RUN composer install --no-dev
-RUN composer require laravel/octane spiral/roadrunner-cli
+
+ARG OCTANE_VERSION
+RUN composer require laravel/octane:$OCTANE_VERSION
+
+ARG ROADRUNNER_CLI_VERSION
+RUN composer require spiral/roadrunner-cli:$ROADRUNNER_CLI_VERSION
+
 RUN ./vendor/bin/rr get-binary
 RUN php artisan key:generate
 RUN php artisan octane:install --server=roadrunner

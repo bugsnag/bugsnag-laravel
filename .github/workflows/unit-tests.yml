@@ -9,6 +9,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      COMPOSER_NO_SECURITY_BLOCKING: 1
     strategy:
       fail-fast: false
       matrix:
@@ -122,6 +124,14 @@ jobs:
             laravel-version: '12.*'
           - php-version: '8.4'
             laravel-version: '12.*'
+          - php-version: '8.5'
+            laravel-version: '12.*'
+          - php-version: '8.3'
+            laravel-version: '13.*'
+          - php-version: '8.4'
+            laravel-version: '13.*'
+          - php-version: '8.5'
+            laravel-version: '13.*'
 
     steps:
     - uses: actions/checkout@v2

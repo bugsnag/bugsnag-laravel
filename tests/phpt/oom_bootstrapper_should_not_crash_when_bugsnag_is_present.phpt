@@ -51,6 +51,9 @@ echo "No OOM!\n";
 if (PHP_MAJOR_VERSION < 7) {
     echo "SKIP - PHP 5 does not run OOM in this test";
 }
+if (PHP_VERSION_ID >= 80500) {
+    echo 'SKIP — this test has a different output in PHP 8.5+';
+}
 ?>
 --EXPECTF--
 Fatal error: Allowed memory size of %d bytes exhausted (tried to allocate %d bytes) in %s on line %d
