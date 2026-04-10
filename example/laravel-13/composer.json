@@ -5,18 +5,9 @@
     "description": "The skeleton application for the Laravel framework.",
     "keywords": ["laravel", "framework"],
     "license": "MIT",
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../../",
-            "options": {
-                "symlink": true
-            }
-        }
-    ],
     "require": {
         "php": "^8.3",
-        "bugsnag/bugsnag-laravel": "dev-feature/PLAT-15989",
+        "bugsnag/bugsnag-laravel": "^2.0",
         "laravel/framework": "^13.0",
         "laravel/tinker": "^3.0"
     },
