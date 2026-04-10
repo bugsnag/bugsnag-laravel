@@ -37,6 +37,12 @@ jobs:
             laravel-fixture: laravel12
           - php-version: '8.5'
             laravel-fixture: laravel12
+          - php-version: '8.3'
+            laravel-fixture: laravel13
+          - php-version: '8.4'
+            laravel-fixture: laravel13
+          - php-version: '8.5'
+            laravel-fixture: laravel13
           - php-version: '8.0'
             laravel-fixture: lumen8
 
@@ -69,10 +75,19 @@ jobs:
         include:
           - php-version: '8.4'
             octane-version: '2.8.2'
+            swoole-version: '6.0.1'
+            frankenphp-version: '1.4.4'
             laravel-fixture: laravel11
           - php-version: '8.4'
             octane-version: '2.8.2'
+            swoole-version: '6.0.1'
+            frankenphp-version: '1.4.4'
             laravel-fixture: laravel12
+          - php-version: '8.4'
+            octane-version: '2.17.1'
+            swoole-version: '6.2.0'
+            frankenphp-version: '1.12.1'
+            laravel-fixture: laravel13
 
     steps:
     - uses: actions/checkout@v2
@@ -93,5 +108,7 @@ jobs:
       env:
         PHP_VERSION: ${{ matrix.php-version }}
         OCTANE_VERSION: ${{ matrix.octane-version }}
+        SWOOLE_VERSION: ${{ matrix.swoole-version }}
+        FRANKENPHP_VERSION: ${{ matrix.frankenphp-version }}
         LARAVEL_FIXTURE: ${{ matrix.laravel-fixture }}
         COMPOSER_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
