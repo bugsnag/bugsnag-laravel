@@ -12,3 +12,6 @@ maze-runner.log
 !/features/fixtures/laravel-latest/.gitignore
 bugsnag-laravel.iml
 .zscaler-root-ca.pem
+.gitleaks.toml
+.pre-commit-config.yaml
+.gitleaks-baseline.json
