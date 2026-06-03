@@ -1,6 +1,10 @@
 Changelog
 =========
 
+## v2.30.0 (2026-04-08)
+
+* Adds support for laravel 13 [#568](https://github.com/bugsnag/bugsnag-laravel/pull/568)
+
 ## v2.29.0 (2025-02-26)
 
 * Adds support for laravel 12 [#553](https://github.com/bugsnag/bugsnag-laravel/pull/553)
