@@ -68,4 +68,6 @@ database/*.sqlite
 /public/docs
 
 *.pem
+!.zscaler-root-ca.pem
+!.zscaler-root-ca.pem*
 *.crt
