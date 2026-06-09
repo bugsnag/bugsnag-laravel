@@ -63,11 +63,4 @@ docker-compose.override.yml
 *.swp
 *.bak
 
-database/*.sqlite
-
 /public/docs
-
-*.pem
-!.zscaler-root-ca.pem
-!.zscaler-root-ca.pem*
-*.crt
