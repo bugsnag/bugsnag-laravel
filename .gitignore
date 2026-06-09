@@ -5,7 +5,7 @@
 /.idea
 Gemfile.lock
 maze_output
-maze_runner.log
+maze-runner.log
 .phpunit.result.cache
 /features/fixtures/*/bugsnag-laravel
 /features/fixtures/laravel-latest/*
