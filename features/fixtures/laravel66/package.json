@@ -17,5 +17,9 @@
         "resolve-url-loader": "^2.3.1",
         "sass": "^1.15.2",
         "sass-loader": "^7.1.0"
+    },
+    "overrides": {
+        "postcss": "^8.5.10",
+        "tar": "^7.5.16"
     }
 }
