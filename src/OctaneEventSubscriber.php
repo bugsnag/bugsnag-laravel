@@ -35,7 +35,7 @@ class OctaneEventSubscriber
         // so it will be filled again on the next report
         Bugsnag::setMetaData([], false);
         app(Tracker::class)->clear();
-        // runningInConsole() is always false in Octane workers
+        // Reset the fallback type for the next request/task
         Bugsnag::setFallbackType(app()->runningInConsole() ? 'Console' : 'HTTP');
     }
 
