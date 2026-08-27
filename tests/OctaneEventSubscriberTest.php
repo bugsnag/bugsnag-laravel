@@ -14,6 +14,8 @@ class OctaneEventSubscriberTest extends AbstractTestCase
      * queue->before sets the Tracker and changes the fallback type to 'Queue'.
      * cleanup() must undo both so subsequent HTTP reports on the same worker
      * are not poisoned with queue context.
+     *
+     * @requires PHP 7.1
      */
     public function testCleanupClearsTrackerAndResetsFallbackType()
     {
