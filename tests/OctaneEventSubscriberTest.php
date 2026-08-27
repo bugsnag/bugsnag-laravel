@@ -15,7 +15,7 @@ class OctaneEventSubscriberTest extends AbstractTestCase
      * cleanup() must undo both so subsequent HTTP reports on the same worker
      * are not poisoned with queue context.
      */
-    public function testCleanupClearsTrackerAndResetsFallbackType(): void
+    public function testCleanupClearsTrackerAndResetsFallbackType()
     {
         /** @var Tracker $tracker */
         $tracker = $this->app->make(Tracker::class);
