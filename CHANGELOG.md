@@ -1,6 +1,10 @@
 Changelog
 =========
 
+## v2.31.0 (2026-09-10)
+
+* Ensure Octane workers reset queue tracking and reporting state between lifecycle events [#579](https://github.com/bugsnag/bugsnag-laravel/pull/579)
+
 ## v2.30.0 (2026-04-08)
 
 * Adds support for laravel 13 [#568](https://github.com/bugsnag/bugsnag-laravel/pull/568)
