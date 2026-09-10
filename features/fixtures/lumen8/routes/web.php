@@ -97,7 +97,7 @@ $router->get('/oom/big', function () {
 });
 
 $router->get('/oom/small', function () {
-    ini_set('memory_limit', memory_get_usage() + (1024 * 1024 * 2));
+    ini_set('memory_limit', memory_get_usage() + (1024 * 1024 * 5));
     ini_set('display_errors', true);
 
     $i = 0;

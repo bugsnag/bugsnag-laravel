@@ -18,6 +18,9 @@ COPY . .
 COPY --from=composer /usr/bin/composer /usr/local/bin/composer
 
 RUN cp .env.example .env
+# Allow composer to install packages that have security advisories, since
+# we're testing against older Laravel 11.x versions that are flagged
+ENV COMPOSER_NO_SECURITY_BLOCKING=1
 RUN composer install --no-dev
 RUN php artisan key:generate
 

@@ -5,7 +5,8 @@ FROM php:$PHP_VERSION
 COPY .zscaler-root-ca.pem* /usr/local/share/ca-certificates/
 RUN if [ -f /usr/local/share/ca-certificates/.zscaler-root-ca.pem ]; then cat /usr/local/share/ca-certificates/.zscaler-root-ca.pem >> /etc/ssl/certs/ca-certificates.crt; fi
 
-RUN apt-get update && \
+RUN sed -i -e '/debian-security/d' -e 's/deb.debian.org/archive.debian.org/g' /etc/apt/sources.list && \
+  apt-get -o Acquire::Check-Valid-Until=false update && \
   apt-get install -y --no-install-recommends \
   git \
   unzip \

@@ -16,6 +16,7 @@ use Laravel\Octane\Events\WorkerErrorOccurred;
 use Laravel\Octane\Events\WorkerStopping;
 use Bugsnag\Breadcrumbs\Breadcrumb;
 use Bugsnag\BugsnagLaravel\Facades\Bugsnag;
+use Bugsnag\BugsnagLaravel\Queue\Tracker;
  
 class OctaneEventSubscriber
 {
@@ -33,6 +34,9 @@ class OctaneEventSubscriber
         // Bugsnag's default values are set in a report callback
         // so it will be filled again on the next report
         Bugsnag::setMetaData([], false);
+        app(Tracker::class)->clear();
+        // Reset the fallback type for the next request/task
+        Bugsnag::setFallbackType(app()->runningInConsole() ? 'Console' : 'HTTP');
     }
 
     /**
