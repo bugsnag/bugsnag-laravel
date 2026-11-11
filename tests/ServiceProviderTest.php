@@ -437,6 +437,20 @@ class ServiceProviderTest extends AbstractTestCase
         $this->assertSame($guzzleClient, $actual);
     }
 
+    public function testTheClientCanBeGarbageCollectedOnceTheContainerReleasesIt()
+    {
+        if (!class_exists('WeakReference')) {
+            $this->markTestSkipped('WeakReference is only available on PHP 7.4+');
+        }
+
+        $reference = \WeakReference::create($this->app->make(Client::class));
+
+        $this->app->forgetInstance('bugsnag');
+        gc_collect_cycles();
+
+        $this->assertNull($reference->get());
+    }
+
     /**
      * @param int|null $memoryLimitIncrease
      *

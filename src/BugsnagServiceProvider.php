@@ -3,6 +3,7 @@
 namespace Bugsnag\BugsnagLaravel;
 
 use Bugsnag\Breadcrumbs\Breadcrumb;
+use Bugsnag\BugsnagLaravel\Internal\WeakShutdownStrategy;
 use Bugsnag\BugsnagLaravel\Middleware\UnhandledState;
 use Bugsnag\BugsnagLaravel\Queue\Tracker;
 use Bugsnag\BugsnagLaravel\Request\LaravelResolver;
@@ -265,7 +266,12 @@ class BugsnagServiceProvider extends ServiceProvider
     {
         $this->app->singleton('bugsnag', function (Container $app) {
             $config = $app->config->get('bugsnag');
-            $client = new Client(new Configuration($config['api_key']), new LaravelResolver($app), $this->getGuzzle($config));
+            $client = new Client(
+                new Configuration($config['api_key']),
+                new LaravelResolver($app),
+                $this->getGuzzle($config),
+                new WeakShutdownStrategy()
+            );
 
             $this->setupCallbacks($client, $app, $config);
             $this->setupPaths($client, $app, $config);
