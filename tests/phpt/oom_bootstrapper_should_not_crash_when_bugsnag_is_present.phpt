@@ -11,7 +11,9 @@ class FakeClient
     {
         echo "'getMemoryLimitIncrease' was called!\n";
 
-        return 12345;
+        // Memory usage after an OOM can be a whole 2MB chunk over the limit,
+        // so a tiny increase is rejected by PHP. Use the client's 5MB default
+        return 5 * 1024 * 1024;
     }
 }
 
@@ -50,6 +52,9 @@ echo "No OOM!\n";
 <?php
 if (PHP_MAJOR_VERSION < 7) {
     echo "SKIP - PHP 5 does not run OOM in this test";
+}
+if (PHP_VERSION_ID < 80200) {
+    echo 'SKIP — PHP < 8.2 does not run shutdown functions after an OOM, see pre-php8.2';
 }
 if (PHP_VERSION_ID >= 80500) {
     echo 'SKIP — this test has a different output in PHP 8.5+';
