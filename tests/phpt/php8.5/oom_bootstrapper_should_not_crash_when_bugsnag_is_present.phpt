@@ -11,7 +11,9 @@ class FakeClient
     {
         echo "'getMemoryLimitIncrease' was called!\n";
 
-        return 12345;
+        // Memory usage after an OOM can be a whole 2MB chunk over the limit,
+        // so a tiny increase is rejected by PHP. Use the client's 5MB default
+        return 5 * 1024 * 1024;
     }
 }
 

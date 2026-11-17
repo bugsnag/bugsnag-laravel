@@ -41,6 +41,9 @@ echo "No OOM!\n";
 if (PHP_MAJOR_VERSION < 7) {
     echo "SKIP - PHP 5 does not run OOM in this test";
 }
+if (PHP_VERSION_ID < 80200) {
+    echo 'SKIP — PHP < 8.2 does not run shutdown functions after an OOM, see pre-php8.2';
+}
 if (PHP_VERSION_ID >= 80500) {
     echo 'SKIP — this test has a different output in PHP 8.5+';
 }

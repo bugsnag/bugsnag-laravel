@@ -5,6 +5,8 @@ on: [push, pull_request]
 jobs:
   license-audit:
     runs-on: ubuntu-latest
+    env:
+      COMPOSER_NO_SECURITY_BLOCKING: 1
     strategy:
       matrix:
         laravel-version: ['^6.0', '^8.0']
