@@ -16,7 +16,7 @@
     "require": {
         "php": "^8.2",
         "bugsnag/bugsnag-laravel": "dev-main as 99.99.99",
-        "laravel/framework": "^11.9",
+        "laravel/framework": "^11.56.1",
         "laravel/tinker": "^2.9"
     },
     "require-dev": {
